@@ -111,6 +111,16 @@
       transform: translateY(-4px);
       box-shadow: 0 20px 60px rgba(26,22,18,0.18);
     }
+    .booking-card-highlight {
+      animation: cardHighlightPulse 0.6s ease-out;
+      box-shadow: 0 0 0 3px var(--gold), 0 20px 60px rgba(26,22,18,0.25) !important;
+      transform: translateY(-8px) !important;
+    }
+    @keyframes cardHighlightPulse {
+      0% { box-shadow: 0 0 0 0 var(--gold); }
+      70% { box-shadow: 0 0 0 10px transparent; }
+      100% { box-shadow: 0 0 0 3px var(--gold); }
+    }
     .booking-card-img {
       width: 100%;
       height: 180px;
@@ -580,8 +590,16 @@
     let itineraryData = [];
     let currentItineraryDestination = null;
     let currentDay = 1;
+    let pendingDestination = null;
 
     document.addEventListener('DOMContentLoaded', () => {
+      // Check for destination parameter in URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const destParam = urlParams.get('destination');
+      if (destParam) {
+        pendingDestination = decodeURIComponent(destParam);
+      }
+
       Promise.all([
         fetch('travel_recommendation_api.json').then(r => r.json()),
         fetch('itineraries.json').then(r => r.json())
@@ -591,8 +609,35 @@
         renderBookings();
         initBookingSearch();
         initNewsletter();
+
+        // If we have a pending destination from URL, highlight and scroll to it
+        if (pendingDestination) {
+          handlePendingDestination();
+        }
+      }).catch(err => {
+        console.error('Failed to load data:', err);
+        const grid = document.getElementById('bookingsGrid');
+        if (grid) {
+          grid.innerHTML = '<div class="bookings-empty"><h3>Failed to load destinations</h3><p>Please refresh the page</p></div>';
+        }
       });
     });
+
+    function handlePendingDestination() {
+      // Find the destination card and scroll to it
+      setTimeout(() => {
+        const cards = document.querySelectorAll('.booking-card');
+        cards.forEach(card => {
+          const title = card.querySelector('h3');
+          if (title && title.textContent === pendingDestination) {
+            card.classList.add('booking-card-highlight');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            // Remove highlight after 3 seconds
+            setTimeout(() => card.classList.remove('booking-card-highlight'), 5000);
+          }
+        });
+      }, 100);
+    }
 
     function flattenBookings(data) {
       const bookings = [];
@@ -636,6 +681,17 @@
     function renderBookings(filter = '') {
       const grid = document.getElementById('bookingsGrid');
       if (!grid) return;
+
+      // Handle case when data is not yet loaded
+      if (allBookings.length === 0) {
+        grid.innerHTML = `
+          <div class="bookings-empty">
+            <h3>Loading destinations...</h3>
+            <p>Please wait while we fetch travel destinations</p>
+          </div>
+        `;
+        return;
+      }
 
       let filtered = allBookings;
       if (filter) {
@@ -695,9 +751,16 @@
     function initBookingSearch() {
       const input = document.getElementById('bookingSearchInput');
       if (input) {
+        // Handle Enter key for immediate search
+        input.addEventListener('keyup', (e) => {
+          if (e.key === 'Enter') {
+            renderBookings(input.value.trim());
+          }
+        });
+        // Handle input for live filtering
         input.addEventListener('input', debounce((e) => {
           renderBookings(e.target.value.trim());
-        }, 200));
+        }, 300));
       }
     }
 

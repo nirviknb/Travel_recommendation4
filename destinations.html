@@ -985,10 +985,9 @@
     }
 
     function bookDetailDestination(name, imageUrl, type) {
-      closeDetailOverlay();
-      setTimeout(() => {
-        openBookingModal(name, imageUrl, type);
-      }, 300);
+      // Navigate to bookings page with destination pre-selected
+      const encodedDest = encodeURIComponent(name);
+      window.location.href = `bookings.html?destination=${encodedDest}`;
     }
 
     // Escape HTML helper for this page
