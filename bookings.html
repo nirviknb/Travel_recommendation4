@@ -266,13 +266,23 @@
   <!-- MAIN CONTENT -->
   <main class="bookings-section" id="main">
     <div class="bookings-controls">
-      <div class="bookings-search">
+      <div class="bookings-search autocomplete-wrap">
         <span class="search-icon">⌕</span>
-        <input type="text" id="bookingSearchInput" placeholder="Search destinations..." aria-label="Search destinations" />
+        <input type="text" id="bookingSearchInput" class="search-input" placeholder="Search destinations..." autocomplete="off" aria-label="Search destinations" aria-autocomplete="list" aria-controls="bookingAutocomplete" />
+        <button class="btn-search" onclick="handleBookingSearch()">Search</button>
+        <div class="autocomplete-dropdown" id="bookingAutocomplete"></div>
       </div>
     </div>
-    <div class="bookings-grid" id="bookingsGrid">
-      <!-- Populated by JS -->
+    <div class="results-section" id="results" style="display:block">
+      <div class="results-header" id="resultsHeader" style="display:block">
+        <div class="results-info">
+          <h2 class="results-title" id="resultsTitle">All Destinations</h2>
+          <span class="results-count" id="resultsCount"></span>
+        </div>
+      </div>
+      <div class="results-grid" id="bookingsGrid">
+        <!-- Populated by JS -->
+      </div>
     </div>
   </main>
 
@@ -725,6 +735,8 @@
 
     function renderBookings(filter = '') {
       const grid = document.getElementById('bookingsGrid');
+      const title = document.getElementById('resultsTitle');
+      const count = document.getElementById('resultsCount');
       if (!grid) return;
 
       // Handle case when data is not yet loaded
@@ -738,17 +750,26 @@
         return;
       }
 
-      console.log('Rendering with filter:', filter);
+      // Update header
+      if (filter) {
+        title.textContent = 'Search results';
+        count.textContent = `${allBookings.length} recommendations found`;
+      } else {
+        title.textContent = 'All Destinations';
+        count.textContent = `${allBookings.length} destinations available`;
+      }
+
       let filtered = allBookings;
       if (filter) {
         const searchTerm = filter.toLowerCase();
         filtered = filtered.filter(b => 
           b.name.toLowerCase().includes(searchTerm) ||
           (b.description && b.description.toLowerCase().includes(searchTerm)) ||
-          (b.country && b.country.toLowerCase().includes(searchTerm))
+          (b.country && b.country.toLowerCase().includes(searchTerm)) ||
+          (b.typeLabel && b.typeLabel.toLowerCase().includes(searchTerm))
         );
+        count.textContent = `${filtered.length} recommendation${filtered.length !== 1 ? 's' : ''} found`;
       }
-      console.log('Found matching destinations:', filtered.length);
 
       if (filtered.length === 0) {
         grid.innerHTML = `
@@ -760,33 +781,63 @@
         return;
       }
 
-      grid.innerHTML = filtered.map(dest => {
+      grid.innerHTML = filtered.map((dest, index) => {
         const reviews = reviewsData[dest.name] || { rating: 4.5, reviews: Math.floor(Math.random() * 500 + 100) };
+        const rating = Math.round(reviews.rating * 10) / 10;
         const stars = '★'.repeat(Math.floor(reviews.rating));
+        const weather = getMockWeather(dest.timezone);
+        const isFav = getFavorites().includes(dest.name);
+        
+        // Get coords for map
+        const coords = destCoords[dest.name];
+        const mapHtml = coords ? getMapPreviewHTML(dest.name, coords) : '';
+        
+        const escapedName = escapeHtml(dest.name);
+        const escapedDesc = escapeHtml(dest.description || '');
         
         return `
-          <div class="booking-card">
-            <img class="booking-card-img" src="${dest.imageUrl}" alt="${dest.name}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600'" />
-            <div class="booking-card-body">
-              <div class="booking-card-type">🏖️ ${dest.typeLabel}</div>
-              <h3>${dest.name}</h3>
-              <p>${dest.description}</p>
-              <div class="booking-card-meta">
-                <div class="booking-card-days">
-                  <span>⏱️</span>
-                  <strong>${dest.days}</strong> ${dest.days === 1 ? 'day' : 'days'}
+          <div class="result-card" style="animation-delay: ${index * 0.08}s">
+            <img class="result-card-img" src="${dest.imageUrl}" alt="${escapedName}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600'" />
+            <div class="result-card-body">
+              <span class="result-tag">${dest.typeLabel || 'Destination'}</span>
+              <h3>${escapedName}</h3>
+              <p>${escapedDesc}</p>
+              <div class="result-card-footer">
+                <div class="result-stars" title="${rating}/5 (${reviews.reviews.toLocaleString()} reviews)">
+                  ${stars}
+                  <span style="font-size:0.7rem;color:var(--muted);margin-left:3px">${rating}</span>
                 </div>
-                <div class="booking-card-rating">
-                  ${stars} <span>${reviews.rating}</span>
+                <div class="result-weather" title="Current weather">
+                  <span class="weather-icon">${weather.icon}</span>
+                  <span>${weather.temp}°C</span>
                 </div>
               </div>
-              <div class="booking-card-actions">
+              ${dest.timezone ? `
+                <div class="result-time">
+                  🕐 Local time: <span class="clock" data-timezone="${escapeHtml(dest.timezone)}">${getLocalTime(dest.timezone)}</span>
+                </div>
+              ` : ''}
+              ${mapHtml}
+              <div class="result-actions">
+                <button class="result-btn result-btn-favorite ${isFav ? 'saved' : ''}"
+                        onclick="toggleFavorite('${escapedName.replace(/'/g, "\\'")}', this)"
+                        title="${isFav ? 'Remove from favorites' : 'Add to favorites'}">
+                  ${isFav ? '♥ Saved' : '♡ Save'}
+                </button>
+                <button class="result-btn result-btn-share"
+                        onclick="shareDestination('${escapedName.replace(/'/g, "\\'")}', '${escapedDesc.replace(/'/g, "\\'")}')"
+                        title="Share this destination">
+                  ↗ Share
+                </button>
                 ${dest.hasItinerary ? `
-                  <button class="booking-btn booking-btn-secondary" onclick="openItinerary('${escapeHtml(dest.name).replace(/'/g, "\\'")}', event)">
+                  <button class="result-btn result-btn-itinerary"
+                          onclick="openItinerary('${escapedName.replace(/'/g, "\\'")}', event)"
+                          title="View itinerary">
                     📋 Itinerary
                   </button>
                 ` : ''}
-                <button class="booking-btn booking-btn-primary" onclick="openBookingModal('${escapeHtml(dest.name).replace(/'/g, "\\'")}', '${escapeHtml(dest.imageUrl).replace(/'/g, "\\'")}', '${escapeHtml(dest.typeLabel).replace(/'/g, "\\'")}', event)">
+                <button class="result-btn result-btn-book"
+                        onclick="openBookingModal('${escapedName.replace(/'/g, "\\'")}', '${escapeHtml(dest.imageUrl).replace(/'/g, "\\'")}', '${escapeHtml(dest.typeLabel || 'Destination').replace(/'/g, "\\'")}', event)">
                   Book Now
                 </button>
               </div>
@@ -794,41 +845,153 @@
           </div>
         `;
       }).join('');
+
+      // Update clocks
+      if (window.clockInterval) clearInterval(window.clockInterval);
+      window.clockInterval = setInterval(updateClocks, 1000);
     }
+
+    // Booking search with autocomplete
+    let bookingAutocompleteIndex = -1;
+    let bookingAutocompleteDebounceTimer = null;
 
     function initBookingSearch() {
       const input = document.getElementById('bookingSearchInput');
-      if (!input) return;
+      const dropdown = document.getElementById('bookingAutocomplete');
+      if (!input || !dropdown) return;
       
       // Wait for data to be loaded first
       if (!dataLoaded) {
-        console.log('Data not loaded yet, waiting...');
         const checkDataLoaded = setInterval(() => {
           if (dataLoaded) {
             clearInterval(checkDataLoaded);
-            setupSearchInput(input);
+            setupBookingAutocomplete(input, dropdown);
           }
         }, 100);
-        // Timeout after 5 seconds
         setTimeout(() => clearInterval(checkDataLoaded), 5000);
       } else {
-        setupSearchInput(input);
+        setupBookingAutocomplete(input, dropdown);
       }
     }
 
-    function setupSearchInput(input) {
-      // Handle Enter key for immediate search
-      input.addEventListener('keyup', (e) => {
-        if (e.key === 'Enter') {
-          console.log('Enter pressed, searching...');
-          renderBookings(input.value.trim());
+    function setupBookingAutocomplete(input, dropdown) {
+      // Debounced input handler
+      const debouncedSearch = debounce((val) => {
+        const query = val.trim().toLowerCase();
+        if (query.length < 1) { 
+          hideBookingAutocomplete(); 
+          renderBookings('');
+          return; 
+        }
+        showBookingAutocompleteSuggestions(query);
+      }, 150);
+
+      input.addEventListener('input', (e) => {
+        bookingAutocompleteDebounceTimer = debouncedSearch(e.target.value);
+      });
+
+      input.addEventListener('keydown', (e) => {
+        const items = dropdown.querySelectorAll('.autocomplete-item:not([hidden])');
+
+        switch (e.key) {
+          case 'ArrowDown':
+            e.preventDefault();
+            bookingAutocompleteIndex = Math.min(bookingAutocompleteIndex + 1, items.length - 1);
+            updateBookingAutocompleteSelection(items);
+            break;
+          case 'ArrowUp':
+            e.preventDefault();
+            bookingAutocompleteIndex = Math.max(bookingAutocompleteIndex - 1, -1);
+            updateBookingAutocompleteSelection(items);
+            break;
+          case 'Enter':
+            e.preventDefault();
+            if (bookingAutocompleteIndex >= 0 && items[bookingAutocompleteIndex]) {
+              items[bookingAutocompleteIndex].click();
+            } else {
+              handleBookingSearch();
+            }
+            break;
+          case 'Escape':
+            hideBookingAutocomplete();
+            break;
         }
       });
-      // Handle input for live filtering
-      input.addEventListener('input', debounce((e) => {
-        console.log('Input changed:', e.target.value);
-        renderBookings(e.target.value.trim());
-      }, 300));
+
+      // Close dropdown when clicking outside
+      document.addEventListener('click', (e) => {
+        if (!e.target.closest('.autocomplete-wrap')) {
+          hideBookingAutocomplete();
+        }
+      });
+    }
+
+    function showBookingAutocompleteSuggestions(query) {
+      const dropdown = document.getElementById('bookingAutocomplete');
+      const input = document.getElementById('bookingSearchInput');
+      if (!dropdown || !input) return;
+
+      // Find matching destinations
+      const matches = allBookings.filter(b => 
+        b.name.toLowerCase().includes(query) ||
+        (b.description && b.description.toLowerCase().includes(query)) ||
+        (b.country && b.country.toLowerCase().includes(query))
+      ).slice(0, 8);
+
+      if (matches.length === 0) {
+        hideBookingAutocomplete();
+        return;
+      }
+
+      dropdown.innerHTML = matches.map((m, i) => `
+        <div class="autocomplete-item" id="booking-autocomplete-item-${i}" onclick="selectBookingDestination('${escapeHtml(m.name).replace(/'/g, "\\'")}')" role="option" aria-selected="false">
+          <img class="autocomplete-img" src="${m.imageUrl}" alt="${escapeHtml(m.name)}" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=100'" />
+          <div class="autocomplete-text">
+            <div class="autocomplete-name">${escapeHtml(m.name)}</div>
+            <div class="autocomplete-type">${escapeHtml(m.typeLabel || 'Destination')}</div>
+          </div>
+        </div>
+      `).join('');
+
+      dropdown.classList.add('show');
+      input.setAttribute('aria-expanded', 'true');
+      bookingAutocompleteIndex = -1;
+    }
+
+    function hideBookingAutocomplete() {
+      const dropdown = document.getElementById('bookingAutocomplete');
+      const input = document.getElementById('bookingSearchInput');
+      if (dropdown) dropdown.classList.remove('show');
+      if (input) input.setAttribute('aria-expanded', 'false');
+      bookingAutocompleteIndex = -1;
+    }
+
+    function updateBookingAutocompleteSelection(items) {
+      items.forEach((item, i) => {
+        if (i === bookingAutocompleteIndex) {
+          item.classList.add('selected');
+          item.setAttribute('aria-selected', 'true');
+        } else {
+          item.classList.remove('selected');
+          item.setAttribute('aria-selected', 'false');
+        }
+      });
+    }
+
+    function selectBookingDestination(destName) {
+      hideBookingAutocomplete();
+      const input = document.getElementById('bookingSearchInput');
+      if (input) input.value = destName;
+      // Filter to show only this destination
+      renderBookings(destName);
+    }
+
+    function handleBookingSearch() {
+      const input = document.getElementById('bookingSearchInput');
+      if (input) {
+        renderBookings(input.value.trim());
+      }
+      hideBookingAutocomplete();
     }
 
     function openItinerary(destName, event) {
