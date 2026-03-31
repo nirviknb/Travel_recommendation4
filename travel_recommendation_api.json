@@ -302,7 +302,7 @@
       "cities": [
         {
           "name": "Jaipur, India",
-          "imageUrl": "https://images.unsplash.com/photo-1477587458883-47145ed35d3b?w=800",
+          "imageUrl": "https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?w=800",
           "description": "The Pink City of Rajasthan, known for its royal palaces, vibrant bazaars, and stunning architecture.",
           "timezone": "Asia/Kolkata",
           "highlights": ["Hawa Mahal", "Amber Fort", "City Palace", "Jantar Mantar"],
@@ -397,7 +397,7 @@
     {
       "id": 3,
       "name": "Borobudur, Indonesia",
-      "imageUrl": "https://images.unsplash.com/photo-1628607094640-6f54b5d35b3f?w=800",
+      "imageUrl": "https://images.unsplash.com/photo-1557544450-e1200c2c2bb7?w=800",
       "description": "The world's largest Buddhist temple, an ancient volcanic-stone masterpiece shrouded in mystery.",
       "timezone": "Asia/Jakarta",
       "highlights": ["Sunrise Tours", "Stone Carvings", "Mendut Temple", "Kelimutu Volcano"],
@@ -454,7 +454,7 @@
     {
       "id": 2,
       "name": "Copacabana Beach, Brazil",
-      "imageUrl": "https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?w=800",
+      "imageUrl": "https://images.unsplash.com/photo-1643400813604-b3877e0c4db9?w=800",
       "description": "A famous beach in Rio de Janeiro, Brazil, with a vibrant atmosphere and scenic coastal views.",
       "timezone": "America/Sao_Paulo",
       "highlights": ["Copacabana Palace", "Sugarloaf View", "Beach Volleyball", "New Year's Eve Fireworks"],
