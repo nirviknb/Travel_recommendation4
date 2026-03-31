@@ -903,6 +903,11 @@
             <button class="detail-btn detail-btn-secondary" onclick="shareDetailDestination('${escapeHtml(dest.name).replace(/'/g, "\\'")}', '${escapeHtml(dest.description).replace(/'/g, "\\'")}')">
               ↗ Share
             </button>
+            ${destCoords[dest.name] ? `
+            <a href="https://www.google.com/maps/search/?api=1&query=${destCoords[dest.name][0]},${destCoords[dest.name][1]}" target="_blank" rel="noopener noreferrer" class="detail-btn detail-btn-secondary" style="text-decoration:none">
+              🗺️ View on Map
+            </a>
+            ` : ''}
             <button class="detail-btn detail-btn-primary" onclick="bookDetailDestination('${escapeHtml(dest.name).replace(/'/g, "\\'")}', '${escapeHtml(dest.imageUrl).replace(/'/g, "\\'")}', '${escapeHtml(catLabel).replace(/'/g, "\\'")}')">
               Book Now
             </button>

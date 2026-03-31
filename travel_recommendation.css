@@ -1356,6 +1356,77 @@ body {
   border-color: var(--gold-hover);
 }
 
+/* =========== RESULT MAP SECTION =========== */
+.result-map-section {
+  margin-top: 0.8rem;
+  border-top: 1px solid rgba(26, 22, 18, 0.07);
+  padding-top: 0.8rem;
+}
+
+.result-map-preview {
+  width: 100%;
+  height: 100px;
+  border-radius: 6px;
+  overflow: hidden;
+  cursor: pointer;
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.15) 0%, rgba(201, 168, 76, 0.05) 100%);
+  border: 1px solid rgba(201, 168, 76, 0.2);
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-map-preview:hover {
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.25) 0%, rgba(201, 168, 76, 0.1) 100%);
+  border-color: var(--gold);
+}
+
+.result-map-placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.map-icon {
+  font-size: 1.8rem;
+}
+
+.map-label {
+  font-size: 0.75rem;
+  color: var(--warm);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+}
+
+.result-map-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding: 0.45rem 0.75rem;
+  background: transparent;
+  border: 1px solid rgba(26, 22, 18, 0.15);
+  border-radius: 5px;
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.78rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.result-map-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201, 168, 76, 0.06);
+}
+
+.map-link-icon {
+  font-size: 0.9rem;
+}
+
 /* =========== SKELETON LOADING =========== */
 .skeleton-card {
   background: var(--card-bg);

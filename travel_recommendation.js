@@ -356,6 +356,9 @@ function displayResults(items, category) {
     const isFav = getFavorites().includes(item.name);
     const starsHtml = renderStars(rating);
     const escapedName = escapeHtml(item.name);
+    
+    const coords = destCoords[item.name];
+    const mapHtml = coords ? getMapPreviewHTML(item.name, coords) : '';
 
     const card = document.createElement('div');
     card.className = 'result-card';
@@ -386,6 +389,7 @@ function displayResults(items, category) {
             🕐 Local time: <span class="clock" data-timezone="${escapeHtml(item.timezone)}">${getLocalTime(item.timezone)}</span>
           </div>
         ` : ''}
+        ${mapHtml}
         <div class="result-actions">
           <button class="result-btn result-btn-favorite ${isFav ? 'saved' : ''}"
                   onclick="toggleFavorite('${escapedName.replace(/'/g, "\\'")}', this)"
@@ -408,6 +412,31 @@ function displayResults(items, category) {
   });
 
   clockInterval = setInterval(updateClocks, 1000);
+}
+
+function getMapPreviewHTML(name, coords) {
+  const [lat, lng] = coords;
+  const mapImageUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=300x120&maptype=roadmap&markers=${lat},${lng}&key=`;
+  const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  
+  return `
+    <div class="result-map-section">
+      <div class="result-map-preview" onclick="openGoogleMaps('${googleMapsUrl}')" title="View location on Google Maps">
+        <div class="result-map-placeholder">
+          <span class="map-icon">📍</span>
+          <span class="map-label">View on Map</span>
+        </div>
+      </div>
+      <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="result-map-link">
+        <span class="map-link-icon">🗺️</span>
+        <span>Open in Google Maps</span>
+      </a>
+    </div>
+  `;
+}
+
+function openGoogleMaps(url) {
+  window.open(url, '_blank', 'noopener,noreferrer');
 }
 
 // ---- FAVORITES ----
@@ -1014,9 +1043,9 @@ function initLazyMap() {
         mapLoadStarted = true;
         loadMapScript().then(() => {
           initMap();
-        }).catch(() => {
-          const loader = document.getElementById('mapLoading');
-          if (loader) loader.innerHTML = '<span>Unable to load map</span>';
+        }).catch((err) => {
+          console.error('Map loading failed:', err);
+          showMapError('Unable to load map. Please check your internet connection and try again.');
         });
         observer.disconnect();
       }
@@ -1029,9 +1058,29 @@ function initLazyMap() {
   observer.observe(mapSection);
 }
 
+function showMapError(message) {
+  const loader = document.getElementById('mapLoading');
+  if (loader) {
+    loader.innerHTML = `<span style="color:#d32f2f">${message}</span><button onclick="retryMapLoad()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:var(--gold);border:none;border-radius:4px;cursor:pointer;font-size:0.85rem">Retry</button>`;
+  }
+}
+
+function retryMapLoad() {
+  const loader = document.getElementById('mapLoading');
+  if (loader) {
+    loader.innerHTML = '<div class="map-loading-spinner"></div><span>Loading map…</span>';
+  }
+  mapLoadStarted = false;
+  mapInitialized = false;
+  if (window.L) {
+    initLazyMap();
+  } else {
+    loadMapScript().then(() => initMap()).catch(() => showMapError('Failed to load map library'));
+  }
+}
+
 function loadMapScript() {
   return new Promise((resolve, reject) => {
-    // Check if Leaflet is already loaded
     if (window.L) {
       resolve();
       return;
@@ -1039,7 +1088,6 @@ function loadMapScript() {
 
     const script = document.createElement('script');
     script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
-    script.integrity = 'sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV/XN2x/8=';
     script.crossOrigin = '';
     script.onload = () => resolve();
     script.onerror = () => reject(new Error('Failed to load Leaflet'));
@@ -1056,24 +1104,26 @@ function initMap() {
   }).setView([20, 0], 2);
 
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+    maxZoom: 19
   }).addTo(mapInstance);
 
-  // Hide loading when tiles load
+  mapInstance.on('tileerror', (e) => {
+    console.warn('Tile load error:', e);
+  });
+
   mapInstance.whenReady(() => {
     const loader = document.getElementById('mapLoading');
     if (loader) loader.classList.add('hidden');
   });
 
-  // Populate markers after data loads
   dataLoadedPromise.then(data => {
     if (!mapInstance) return;
     addMapMarkers(data);
     const loader = document.getElementById('mapLoading');
     if (loader) loader.classList.add('hidden');
   }).catch(() => {
-    const loader = document.getElementById('mapLoading');
-    if (loader) loader.innerHTML = '<span>Unable to load map</span>';
+    showMapError('Unable to load destination data');
   });
 }
 
