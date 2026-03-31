@@ -120,7 +120,7 @@
         },
         {
           "name": "Kathmandu, Nepal",
-          "imageUrl": "https://images.unsplash.com/photo-1592285896110-8d88b5b3a5d8?w=800",
+          "imageUrl": "https://images.unsplash.com/photo-1605640840605-14ac1855827b?w=800",
           "description": "The historic capital city surrounded by ancient temples, bustling markets, and rich Newari culture.",
           "timezone": "Asia/Kathmandu",
           "highlights": ["Durbar Square", "Swayambhunath", "Pashupatinath", "Thamel"],
@@ -234,7 +234,7 @@
       "cities": [
         {
           "name": "Bangkok, Thailand",
-          "imageUrl": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800",
+          "imageUrl": "https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=800",
           "description": "A chaotic yet captivating city of golden temples, bustling markets, and incredible street food.",
           "timezone": "Asia/Bangkok",
           "highlights": ["Grand Palace", "Wat Arun", "Khao San Road", "Chatuchak Market"],
