@@ -68,7 +68,7 @@
         },
         {
           "name": "São Paulo, Brazil",
-          "imageUrl": "https://images.unsplash.com/photo-1578327014793-5d26e8a15dd8?w=800",
+          "imageUrl": "https://images.unsplash.com/photo-1598058364073-371a2c527c44?w=800",
           "description": "South America's largest city, a cultural powerhouse with world-class museums, gastronomy, and vibrant nightlife.",
           "timezone": "America/Sao_Paulo",
           "highlights": ["MASP", "Ibirapuera Park", "Mercado Municipal", "Rua Augusta"],
@@ -120,7 +120,7 @@
         },
         {
           "name": "Kathmandu, Nepal",
-          "imageUrl": "https://images.unsplash.com/photo-1575560121251-6f5dcf9b89d9?w=800",
+          "imageUrl": "https://images.unsplash.com/photo-1592285896110-8d88b5b3a5d8?w=800",
           "description": "The historic capital city surrounded by ancient temples, bustling markets, and rich Newari culture.",
           "timezone": "Asia/Kathmandu",
           "highlights": ["Durbar Square", "Swayambhunath", "Pashupatinath", "Thamel"],
@@ -244,7 +244,7 @@
         },
         {
           "name": "Chiang Mai, Thailand",
-          "imageUrl": "https://images.unsplash.com/photo-1512553483222-07c3c7e55b4b?w=800",
+          "imageUrl": "https://images.unsplash.com/photo-1528181304800-259b08848526?w=800",
           "description": "A mountainous city in northern Thailand, known for its ancient temples and vibrant night markets.",
           "timezone": "Asia/Bangkok",
           "highlights": ["Doi Suthep", "Old City Temples", "Night Bazaar", "Elephant Nature Park"],
@@ -383,11 +383,11 @@
       "currency": "USD",
       "language": "Khmer"
     },
-    {
-      "id": 2,
-      "name": "Taj Mahal, India",
-      "imageUrl": "https://images.unsplash.com/photo-1564507592333-c60657ece523?w=1200",
-      "description": "An iconic symbol of love and a masterpiece of Mughal architecture, seen here in its full, symmetrical glory.",
+      {
+        "id": 1,
+        "name": "Taj Mahal, India",
+        "imageUrl": "https://images.unsplash.com/photo-1564507592333-c60657eea523?w=800",
+        "description": "An iconic symbol of love and a masterpiece of Mughal architecture, seen here in its full, symmetrical glory.",
       "timezone": "Asia/Kolkata",
       "highlights": ["White Marble Architecture", "Mausoleum", "Charbagh Gardens", "Sunrise View"],
       "bestTime": "Oct-Mar",
@@ -397,7 +397,7 @@
     {
       "id": 3,
       "name": "Borobudur, Indonesia",
-      "imageUrl": "https://images.unsplash.com/photo-1604922824961-87cefb9e6b63?w=800",
+      "imageUrl": "https://images.unsplash.com/photo-1628607094640-6f54b5d35b3f?w=800",
       "description": "The world's largest Buddhist temple, an ancient volcanic-stone masterpiece shrouded in mystery.",
       "timezone": "Asia/Jakarta",
       "highlights": ["Sunrise Tours", "Stone Carvings", "Mendut Temple", "Kelimutu Volcano"],
@@ -509,7 +509,7 @@
     {
       "id": 7,
       "name": "Tulum, Mexico",
-      "imageUrl": "https://images.unsplash.com/photo-1552074291-ad4ed3c5d60f?w=800",
+      "imageUrl": "https://images.unsplash.com/photo-1518638151313-882d313b6a3d?w=800",
       "description": "A bohemian beach town on the Yucatán Peninsula, famous for its Mayan ruins overlooking the Caribbean.",
       "timezone": "America/Cancun",
       "highlights": ["Tulum Ruins", "Cenote Swimming", "Sian Ka'an", "Beach Clubs"],
