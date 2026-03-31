@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wanderlust — Discover Your Next Adventure</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" /></noscript>
+  <link rel="stylesheet" href="travel_recommendation.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+</head>
+<body>
+
+  <!-- Skip Navigation -->
+  <a href="#results" class="skip-link">Skip to search results</a>
+
+  <!-- ===== NAVBAR ===== -->
+  <nav class="navbar" id="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">✦</span>
+      <span class="brand-name">Wanderlust</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="travel_recommendation.html" class="nav-link active">Home</a></li>
+      <li><a href="about.html" class="nav-link">About Us</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+      <li><a href="favorites.html" class="nav-link">♥ Favorites</a></li>
+      <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+    </ul>
+    <div class="nav-search autocomplete-wrap">
+      <input type="text" id="searchInput" class="search-input" placeholder="Search beaches, temples, countries…" autocomplete="off" aria-label="Search destinations" aria-autocomplete="list" aria-controls="autocompleteDropdown" />
+      <div class="autocomplete-dropdown" id="autocompleteDropdown" role="listbox" aria-label="Destination suggestions"></div>
+      <button class="btn-search" onclick="handleSearch()">Search</button>
+      <button class="btn-reset" onclick="handleReset()">Clear</button>
+    </div>
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="home">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">The World Awaits</p>
+      <h1 class="hero-headline">
+        Explore Beyond<br/>the <em>Horizon</em>
+      </h1>
+      <p class="hero-subtext">
+        Curated travel recommendations that guide you to the world's most extraordinary beaches, temples, and cultural destinations — crafted for the curious soul.
+      </p>
+      <div class="hero-actions">
+        <button onclick="document.getElementById('searchInput').focus()" class="btn-book">Book Now</button>
+        <a href="about.html" class="btn-ghost">Our Story</a>
+      </div>
+      <div class="hero-social">
+        <a href="https://www.instagram.com/nirvik_ho_lw/" target="_blank" class="social-link" title="Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.facebook.com/p/Nirvik-Buddhacharya-100092418951267/?_rdr" target="_blank" class="social-link" title="Facebook">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+        </a>
+        <a href="https://www.youtube.com/channel/UCT_qKVqE7SOnsmtUJp_LfuA/videos" target="_blank" class="social-link" title="YouTube">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22.54 6.42A2.78 2.78 0 0020.6 4.46C18.88 4 12 4 12 4s-6.88 0-8.6.46A2.78 2.78 0 001.46 6.42 29 29 0 001 12a29 29 0 00.46 5.58A2.78 2.78 0 003.4 19.54C5.12 20 12 20 12 20s6.88 0 8.6-.46a2.78 2.78 0 001.94-1.96A29 29 0 0023 12a29 29 0 00-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="currentColor" stroke="none"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="hero-scroll">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </section>
+
+  <!-- ===== RESULTS SECTION ===== -->
+  <section class="results-section" id="results" style="display:none">
+    <div class="results-header" id="resultsHeader">
+      <h1 id="resultsTitle">Search result</h1>
+      <p id="resultsCount" aria-live="polite" aria-atomic="true"></p>
+    </div>
+    <div class="filter-bar" id="filterBar" style="display:none" role="group" aria-label="Filter results">
+      <span class="filter-label" id="filterLabel">Filter:</span>
+      <div id="filterChips" role="radiogroup" aria-labelledby="filterLabel">
+        <button class="filter-chip active" data-filter="all" onclick="applyFilter('all')" role="radio" aria-checked="true">All</button>
+        <button class="filter-chip" data-filter="Beach" onclick="applyFilter('Beach')" role="radio" aria-checked="false">Beaches</button>
+        <button class="filter-chip" data-filter="Temple" onclick="applyFilter('Temple')" role="radio" aria-checked="false">Temples</button>
+        <button class="filter-chip" data-filter="Country" onclick="applyFilter('Country')" role="radio" aria-checked="false">Countries</button>
+      </div>
+      <div class="filter-divider"></div>
+      <span class="filter-label" id="ratingLabel">Min Rating:</span>
+      <div class="filter-stars" id="filterStars" role="group" aria-labelledby="ratingLabel">
+        <button class="filter-star" data-rating="1" onclick="applyRating(1)" aria-label="1+ Stars" title="1+ Stars">★</button>
+        <button class="filter-star" data-rating="2" onclick="applyRating(2)" aria-label="2+ Stars" title="2+ Stars">★</button>
+        <button class="filter-star" data-rating="3" onclick="applyRating(3)" aria-label="3+ Stars" title="3+ Stars">★</button>
+        <button class="filter-star" data-rating="4" onclick="applyRating(4)" aria-label="4+ Stars" title="4+ Stars">★</button>
+      </div>
+    </div>
+    <div class="results-grid" id="resultsGrid"></div>
+  </section>
+
+  <!-- ===== FEATURED SECTION ===== -->
+  <section class="featured-section" id="featured">
+    <div class="featured-intro featured-intro-with-link">
+      <div>
+        <p class="section-label">Why Travel With Us</p>
+        <h2 class="section-title">Destinations That<br/>Leave You Breathless</h2>
+        <p class="section-desc">From pristine Pacific shores to ancient stone temples, we handpick every destination for its ability to transform the traveler.</p>
+      </div>
+      <a href="destinations.html" class="view-all-link">View All Destinations →</a>
+    </div>
+    <div class="feature-cards">
+      <div class="feature-card" onclick="quickSearch('beaches')" role="button" tabindex="0" aria-label="Search beaches">
+        <div class="feature-card-img" style="background-image:url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500')"></div>
+        <div class="feature-card-body">
+          <span class="feature-tag">Beaches</span>
+          <h3>Coastal Paradise</h3>
+          <p>Sun-kissed shores and crystal-clear waters around the globe.</p>
+        </div>
+      </div>
+      <div class="feature-card" onclick="quickSearch('temples')" role="button" tabindex="0" aria-label="Search temples">
+        <div class="feature-card-img" style="background-image:url('https://images.unsplash.com/photo-1578469645742-46cae010e5d4?w=500')"></div>
+        <div class="feature-card-body">
+          <span class="feature-tag">Landmarks</span>
+          <h3>Sacred Wonders</h3>
+          <p>Ancient monuments and spiritual sanctuaries steeped in history.</p>
+        </div>
+      </div>
+      <div class="feature-card" onclick="quickSearch('countries')" role="button" tabindex="0" aria-label="Search countries">
+        <div class="feature-card-img" style="background-image:url('https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?w=500')"></div>
+        <div class="feature-card-body">
+          <span class="feature-tag">Cities</span>
+          <h3>Cultural Journeys</h3>
+          <p>Dive into the cities, cuisines, and traditions of the world.</p>
+        </div>
+      </div>
+      <div class="feature-card" onclick="quickSearch('Italy')" role="button" tabindex="0" aria-label="Search Italy">
+        <div class="feature-card-img" style="background-image:url('https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=500')"></div>
+        <div class="feature-card-body">
+          <span class="feature-tag">Trending</span>
+          <h3>Italy Adventures</h3>
+          <p>From Venice canals to Rome's ancient ruins — la dolce vita awaits.</p>
+        </div>
+      </div>
+      <div class="feature-card" onclick="quickSearch('Japan')" role="button" tabindex="0" aria-label="Search Japan">
+        <div class="feature-card-img" style="background-image:url('https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=500')"></div>
+        <div class="feature-card-body">
+          <span class="feature-tag">Popular</span>
+          <h3>Japan Discovery</h3>
+          <p>Experience cherry blossoms, temples, and cutting-edge technology.</p>
+        </div>
+      </div>
+      <div class="feature-card" onclick="quickSearch('Greece')" role="button" tabindex="0" aria-label="Search Greece">
+        <div class="feature-card-img" style="background-image:url('https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=500')"></div>
+        <div class="feature-card-body">
+          <span class="feature-tag">Featured</span>
+          <h3>Greek Islands</h3>
+          <p>Whitewashed villages, azure waters, and legendary sunsets.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== MAP SECTION ===== -->
+  <section class="map-section" id="explore">
+    <div class="map-header">
+      <p class="section-label">Explore the World</p>
+      <h2 class="section-title">Our Destinations<br/>At a Glance</h2>
+      <p class="section-desc">Click any pin to discover a destination and view live weather conditions.</p>
+    </div>
+    <div id="destinationsMap" role="application" aria-label="Interactive world map showing destination locations">
+      <div class="map-loading" id="mapLoading" aria-live="polite">
+        <div class="map-loading-spinner"></div>
+        <span>Loading map…</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== NEWSLETTER ===== -->
+  <section class="newsletter-section" id="newsletter">
+    <div class="newsletter-inner">
+      <span class="newsletter-icon">✦</span>
+      <h2 class="newsletter-title">Stay in the Loop</h2>
+      <p class="newsletter-sub">Get curated travel guides, exclusive deals, and destination inspiration delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Your email address" required />
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p class="newsletter-success" id="newsletterSuccess">✦ Welcome aboard! Check your inbox for a special travel guide.</p>
+    </div>
+  </section>
+
+  <!-- ===== BOOKING MODAL ===== -->
+  <div class="modal-overlay" id="bookingModal" onclick="closeModalOnOverlay(event)" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-panel" onclick="event.stopPropagation()" role="document">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- ===== TOAST CONTAINER ===== -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Wanderlust</span>
+      </div>
+      <p class="footer-copy">© 2025 Wanderlust Travel. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="travel_recommendation.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="travel_recommendation.js"></script>
+</body>
+</html>

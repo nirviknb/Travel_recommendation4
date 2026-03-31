@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us — Wanderlust</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="travel_recommendation.css"/>
+  <style>
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAVBAR (no search bar) -->
+  <nav class="navbar navbar--simple" id="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">✦</span>
+      <span class="brand-name">Wanderlust</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="travel_recommendation.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About Us</a></li>
+      <li><a href="contact.html" class="nav-link active">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1534536281715-e28d76689b4d?w=1400')">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <p class="hero-eyebrow">Get In Touch</p>
+      <h1 class="page-title">Contact <em>Us</em></h1>
+    </div>
+  </section>
+
+  <!-- CONTACT SECTION -->
+  <section class="contact-section">
+    <div class="contact-container">
+      <div class="contact-info">
+        <p class="section-label">We'd Love to Hear From You</p>
+        <h2 class="section-title">Plan Your<br/>Perfect Journey</h2>
+        <p>Whether you have questions about a destination, need help planning an itinerary, or just want to share your travel stories — our team is ready to help.</p>
+        <div class="contact-details">
+          <div class="contact-item">
+            <span class="contact-icon">✉</span>
+            <div>
+              <strong>Email</strong>
+              <p>hello@wanderlust.travel</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">☎</span>
+            <div>
+              <strong>Phone</strong>
+              <p>+977 98-0000-0000</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <span class="contact-icon">⌖</span>
+            <div>
+              <strong>Location</strong>
+              <p>Pokhara, Gandaki Pradesh, Nepal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-form-wrap">
+        <form class="contact-form" id="contactForm" onsubmit="handleContactSubmit(event)" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="firstName">First Name <span class="required">*</span></label>
+              <input type="text" id="firstName" name="firstName" placeholder="Your first name" required minlength="2" autocomplete="given-name" aria-describedby="firstName-error" />
+              <span class="field-error" id="firstName-error" role="alert" aria-live="polite"></span>
+            </div>
+            <div class="form-group">
+              <label for="lastName">Last Name <span class="required">*</span></label>
+              <input type="text" id="lastName" name="lastName" placeholder="Your last name" required minlength="2" autocomplete="family-name" aria-describedby="lastName-error" />
+              <span class="field-error" id="lastName-error" role="alert" aria-live="polite"></span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address <span class="required">*</span></label>
+            <input type="email" id="email" name="email" placeholder="you@example.com" required autocomplete="email" aria-describedby="email-error" />
+            <span class="field-error" id="email-error" role="alert" aria-live="polite"></span>
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" placeholder="How can we help?" autocomplete="off" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message <span class="required">*</span></label>
+            <textarea id="message" name="message" rows="5" placeholder="Tell us about your dream destination…" required minlength="10" aria-describedby="message-error message-hint"></textarea>
+            <span class="field-hint" id="message-hint">Minimum 10 characters</span>
+            <span class="field-error" id="message-error" role="alert" aria-live="polite"></span>
+          </div>
+          <button type="submit" class="btn-book" id="submitBtn">Send Message</button>
+          <div id="formSuccess" class="form-success" style="display:none" role="status" aria-live="polite">
+            ✓ Thank you! Your message has been sent. We'll be in touch soon.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <span class="newsletter-icon">✦</span>
+      <h2 class="newsletter-title">Stay in the Loop</h2>
+      <p class="newsletter-sub">Get curated travel guides, exclusive deals, and destination inspiration delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Your email address" required />
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p class="newsletter-success" id="newsletterSuccess">✦ Welcome aboard! Check your inbox for a special travel guide.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Wanderlust</span>
+      </div>
+      <p class="footer-copy">© 2025 Wanderlust Travel. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="travel_recommendation.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="destinations.html">Destinations</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Form validation configuration
+    const validationRules = {
+      firstName: {
+        required: true,
+        minLength: 2,
+        messages: {
+          required: 'Please enter your first name',
+          minLength: 'First name must be at least 2 characters'
+        }
+      },
+      lastName: {
+        required: true,
+        minLength: 2,
+        messages: {
+          required: 'Please enter your last name',
+          minLength: 'Last name must be at least 2 characters'
+        }
+      },
+      email: {
+        required: true,
+        pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+        messages: {
+          required: 'Please enter your email address',
+          pattern: 'Please enter a valid email address'
+        }
+      },
+      message: {
+        required: true,
+        minLength: 10,
+        messages: {
+          required: 'Please enter your message',
+          minLength: 'Message must be at least 10 characters'
+        }
+      }
+    };
+
+    // Initialize form validation
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('contactForm');
+      if (!form) return;
+
+      // Real-time validation on blur
+      Object.keys(validationRules).forEach(fieldName => {
+        const input = form.querySelector(`[name="${fieldName}"]`);
+        if (input) {
+          input.addEventListener('blur', () => validateField(input));
+          input.addEventListener('input', () => {
+            // Remove error state while typing
+            if (input.classList.contains('error')) {
+              clearFieldError(input);
+            }
+          });
+        }
+      });
+
+      // Form submission
+      form.addEventListener('submit', handleContactSubmit);
+
+      // Dynamic footer year
+      const footerCopy = document.querySelector('.footer-copy');
+      if (footerCopy) footerCopy.textContent = `© ${new Date().getFullYear()} Wanderlust Travel. All rights reserved.`;
+    });
+
+    function validateField(input) {
+      const name = input.name;
+      const rules = validationRules[name];
+      if (!rules) return true;
+
+      const value = input.value.trim();
+      let isValid = true;
+      let errorMessage = '';
+
+      // Required check
+      if (rules.required && !value) {
+        isValid = false;
+        errorMessage = rules.messages.required;
+      }
+      // Min length check
+      else if (rules.minLength && value.length < rules.minLength) {
+        isValid = false;
+        errorMessage = rules.messages.minLength;
+      }
+      // Pattern check
+      else if (rules.pattern && !rules.pattern.test(value)) {
+        isValid = false;
+        errorMessage = rules.messages.pattern;
+      }
+
+      if (!isValid) {
+        showFieldError(input, errorMessage);
+        return false;
+      } else {
+        clearFieldError(input);
+        input.classList.add('valid');
+        return true;
+      }
+    }
+
+    function showFieldError(input, message) {
+      input.classList.add('error');
+      input.classList.remove('valid');
+      const errorEl = document.getElementById(`${input.name}-error`);
+      if (errorEl) {
+        errorEl.textContent = message;
+        errorEl.classList.add('show');
+      }
+    }
+
+    function clearFieldError(input) {
+      input.classList.remove('error');
+      const errorEl = document.getElementById(`${input.name}-error`);
+      if (errorEl) {
+        errorEl.textContent = '';
+        errorEl.classList.remove('show');
+      }
+    }
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+      const form = e.target;
+      const submitBtn = document.getElementById('submitBtn');
+
+      // Validate all fields
+      let isFormValid = true;
+      Object.keys(validationRules).forEach(fieldName => {
+        const input = form.querySelector(`[name="${fieldName}"]`);
+        if (input && !validateField(input)) {
+          isFormValid = false;
+        }
+      });
+
+      if (!isFormValid) {
+        // Focus first error field
+        const firstError = form.querySelector('.error');
+        if (firstError) firstError.focus();
+        return;
+      }
+
+      // Show loading state
+      if (submitBtn) {
+        submitBtn.classList.add('submitting');
+        submitBtn.textContent = 'Sending…';
+        submitBtn.disabled = true;
+      }
+
+      // Simulate form submission
+      setTimeout(() => {
+        document.getElementById('formSuccess').style.display = 'block';
+        form.reset();
+
+        // Clear all valid states
+        form.querySelectorAll('.valid').forEach(el => el.classList.remove('valid'));
+
+        // Reset button
+        if (submitBtn) {
+          submitBtn.classList.remove('submitting');
+          submitBtn.textContent = 'Send Message';
+          submitBtn.disabled = false;
+        }
+
+        // Hide success after delay
+        setTimeout(() => {
+          document.getElementById('formSuccess').style.display = 'none';
+        }, 5000);
+
+        // Announce to screen readers
+        announceToScreenReader('Your message has been sent successfully!');
+      }, 1000);
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('newsletterEmail');
+      if (!input) return;
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) return;
+      const subscribers = JSON.parse(localStorage.getItem('wanderlust_subscribers') || '[]');
+      if (!subscribers.includes(email)) {
+        subscribers.push(email);
+        localStorage.setItem('wanderlust_subscribers', JSON.stringify(subscribers));
+      }
+      const success = document.getElementById('newsletterSuccess');
+      if (success) success.classList.add('show');
+      input.value = '';
+      setTimeout(() => { if (success) success.classList.remove('show'); }, 6000);
+    }
+
+    function announceToScreenReader(message) {
+      let announcer = document.getElementById('srAnnouncer');
+      if (!announcer) {
+        announcer = document.createElement('div');
+        announcer.id = 'srAnnouncer';
+        announcer.setAttribute('aria-live', 'polite');
+        announcer.setAttribute('aria-atomic', 'true');
+        announcer.className = 'sr-only';
+        announcer.style.cssText = 'position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0';
+        document.body.appendChild(announcer);
+      }
+      announcer.textContent = '';
+      setTimeout(() => { announcer.textContent = message; }, 100);
+    }
+  </script>
+
+</body>
+</html>

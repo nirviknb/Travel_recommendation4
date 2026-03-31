@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About Us — Wanderlust</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <link rel="stylesheet" href="travel_recommendation.css"/>
+</head>
+<body>
+
+  <!-- NAVBAR (no search bar) -->
+  <nav class="navbar navbar--simple" id="navbar">
+    <div class="nav-brand">
+      <span class="brand-icon">✦</span>
+      <span class="brand-name">Wanderlust</span>
+    </div>
+    <ul class="nav-links">
+      <li><a href="travel_recommendation.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link active">About Us</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- PAGE HERO -->
+  <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1400')">
+    <div class="page-hero-overlay"></div>
+    <div class="page-hero-content">
+      <p class="hero-eyebrow">Our Story</p>
+      <h1 class="page-title">About <em>Wanderlust</em></h1>
+    </div>
+  </section>
+
+  <!-- COMPANY INFO -->
+  <section class="about-section">
+    <div class="about-container">
+      <div class="about-text">
+        <p class="section-label">Who We Are</p>
+        <h2 class="section-title">Born From a Love<br/>of Exploration</h2>
+        <p>Wanderlust was founded in 2018 by a group of passionate travelers who believed that every person deserves a transformative journey. We are more than a travel recommendation platform — we are a community of explorers dedicated to uncovering the world's most extraordinary destinations.</p>
+        <p>From pristine beaches in French Polynesia to ancient temples in Cambodia, our curated recommendations are researched and refined by real travelers who have walked these paths. We believe travel is not just about seeing new places — it is about understanding new cultures, connecting with people, and discovering something new about yourself.</p>
+        <p>Our mission: make the world's wonders accessible to every curious soul, one destination at a time.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-item">
+          <span class="stat-number">150+</span>
+          <span class="stat-label">Destinations</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">50K+</span>
+          <span class="stat-label">Happy Travelers</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">7</span>
+          <span class="stat-label">Years of Experience</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-number">30+</span>
+          <span class="stat-label">Countries Covered</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM SECTION -->
+  <section class="team-section">
+    <div class="team-header">
+      <p class="section-label">The People Behind the Journeys</p>
+      <h2 class="section-title">Meet Our Team</h2>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400')"></div>
+        <div class="team-info">
+          <h3>Nirvik Buddhacharya</h3>
+          <span class="team-role">Founder & CEO</span>
+          <p>A seasoned explorer with footprints in over 40 countries, Nirvik founded Wanderlust to share his passion for transformative travel.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400')"></div>
+        <div class="team-info">
+          <h3>Arjun Sharma</h3>
+          <span class="team-role">Head of Destinations</span>
+          <p>Arjun curates our destination portfolio, personally vetting every recommendation to ensure authentic, unforgettable experiences.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400')"></div>
+        <div class="team-info">
+          <h3>Priya Thapa</h3>
+          <span class="team-role">Travel Experience Designer</span>
+          <p>Priya transforms raw destinations into beautifully crafted itineraries, blending culture, adventure, and local cuisine.</p>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-img" style="background-image:url('https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400')"></div>
+        <div class="team-info">
+          <h3>Kiran Rai</h3>
+          <span class="team-role">Frontend Specialist</span>
+          <p>Kiran is responsible for the aesthetic and performance of the Wanderlust interface, ensuring a seamless user experience across all devices.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <span class="newsletter-icon">✦</span>
+      <h2 class="newsletter-title">Stay in the Loop</h2>
+      <p class="newsletter-sub">Get curated travel guides, exclusive deals, and destination inspiration delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Your email address" required />
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p class="newsletter-success" id="newsletterSuccess">✦ Welcome aboard! Check your inbox for a special travel guide.</p>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Wanderlust</span>
+      </div>
+      <p class="footer-copy">© 2025 Wanderlust Travel. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="travel_recommendation.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="destinations.html">Destinations</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('newsletterEmail');
+      if (!input) return;
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) return;
+      const subscribers = JSON.parse(localStorage.getItem('wanderlust_subscribers') || '[]');
+      if (!subscribers.includes(email)) {
+        subscribers.push(email);
+        localStorage.setItem('wanderlust_subscribers', JSON.stringify(subscribers));
+      }
+      const success = document.getElementById('newsletterSuccess');
+      if (success) success.classList.add('show');
+      input.value = '';
+      setTimeout(() => { if (success) success.classList.remove('show'); }, 6000);
+    }
+    document.addEventListener('DOMContentLoaded', () => {
+      const footerCopy = document.querySelector('.footer-copy');
+      if (footerCopy) footerCopy.textContent = `© ${new Date().getFullYear()} Wanderlust Travel. All rights reserved.`;
+    });
+  </script>
+</body>
+</html>

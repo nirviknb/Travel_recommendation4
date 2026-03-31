@@ -1,0 +1,532 @@
+{
+  "countries": [
+    {
+      "id": 1,
+      "name": "Australia",
+      "cities": [
+        {
+          "name": "Sydney, Australia",
+          "imageUrl": "https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800",
+          "description": "A vibrant city known for its iconic landmarks like the Sydney Opera House and Sydney Harbour Bridge.",
+          "timezone": "Australia/Sydney",
+          "highlights": ["Sydney Opera House", "Harbour Bridge", "Bondi Beach", "Taronga Zoo"],
+          "bestTime": "Sep-Nov, Mar-May",
+          "currency": "AUD",
+          "language": "English"
+        },
+        {
+          "name": "Melbourne, Australia",
+          "imageUrl": "https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800",
+          "description": "A cultural hub famous for its art, food, and diverse neighborhoods.",
+          "timezone": "Australia/Melbourne",
+          "highlights": ["Street Art Laneways", "Queen Victoria Market", "Yarra River", "Great Ocean Road"],
+          "bestTime": "Dec-Feb",
+          "currency": "AUD",
+          "language": "English"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Japan",
+      "cities": [
+        {
+          "name": "Tokyo, Japan",
+          "imageUrl": "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800",
+          "description": "A bustling metropolis blending tradition and modernity, famous for its cherry blossoms and rich culture.",
+          "timezone": "Asia/Tokyo",
+          "highlights": ["Senso-ji Temple", "Shibuya Crossing", "Meiji Shrine", "Tokyo Tower"],
+          "bestTime": "Mar-May, Oct-Nov",
+          "currency": "JPY",
+          "language": "Japanese"
+        },
+        {
+          "name": "Kyoto, Japan",
+          "imageUrl": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800",
+          "description": "The ancient capital of Japan, home to thousands of temples, traditional geisha districts, and serene gardens.",
+          "timezone": "Asia/Tokyo",
+          "highlights": ["Fushimi Inari Shrine", "Arashiyama Bamboo Grove", "Kinkaku-ji", "Gion District"],
+          "bestTime": "Mar-May, Oct-Nov",
+          "currency": "JPY",
+          "language": "Japanese"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Brazil",
+      "cities": [
+        {
+          "name": "Rio de Janeiro, Brazil",
+          "imageUrl": "https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=800",
+          "description": "A lively city known for its stunning beaches, vibrant carnival celebrations, and iconic landmarks like Christ the Redeemer.",
+          "timezone": "America/Sao_Paulo",
+          "highlights": ["Christ the Redeemer", "Copacabana Beach", "Sugarloaf Mountain", "Ipanema"],
+          "bestTime": "Dec-Mar",
+          "currency": "BRL",
+          "language": "Portuguese"
+        },
+        {
+          "name": "São Paulo, Brazil",
+          "imageUrl": "https://images.unsplash.com/photo-1578327014793-5d26e8a15dd8?w=800",
+          "description": "South America's largest city, a cultural powerhouse with world-class museums, gastronomy, and vibrant nightlife.",
+          "timezone": "America/Sao_Paulo",
+          "highlights": ["MASP", "Ibirapuera Park", "Mercado Municipal", "Rua Augusta"],
+          "bestTime": "Apr-Oct",
+          "currency": "BRL",
+          "language": "Portuguese"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "France",
+      "cities": [
+        {
+          "name": "Paris, France",
+          "imageUrl": "https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800",
+          "description": "The city of light, famous for the Eiffel Tower, the Louvre, and its world-class cuisine.",
+          "timezone": "Europe/Paris",
+          "highlights": ["Eiffel Tower", "Louvre Museum", "Notre-Dame", "Champs-Élysées"],
+          "bestTime": "Apr-Jun, Sep-Oct",
+          "currency": "EUR",
+          "language": "French"
+        },
+        {
+          "name": "Nice, France",
+          "imageUrl": "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?w=800",
+          "description": "A glamorous seaside city on the French Riviera, known for its Mediterranean beaches and Belle Époque architecture.",
+          "timezone": "Europe/Paris",
+          "highlights": ["Promenade des Anglais", "Old Town", "Castle Hill", "Marc Chagall Museum"],
+          "bestTime": "May-Oct",
+          "currency": "EUR",
+          "language": "French"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Nepal",
+      "cities": [
+        {
+          "name": "Pokhara, Nepal",
+          "imageUrl": "https://images.unsplash.com/photo-1544735716-392fe2489ffa?w=800",
+          "description": "A tranquil city on Phewa Lake, known as the gateway to the Annapurna Circuit in the Himalayas.",
+          "timezone": "Asia/Kathmandu",
+          "highlights": ["Fewa Lake", "Sarangkot Sunrise", "World Peace Pagoda", "Davis Falls"],
+          "bestTime": "Oct-Dec, Feb-Apr",
+          "currency": "NPR",
+          "language": "Nepali"
+        },
+        {
+          "name": "Kathmandu, Nepal",
+          "imageUrl": "https://images.unsplash.com/photo-1558788353-f76d92427f16?w=800",
+          "description": "The historic capital city surrounded by ancient temples, bustling markets, and rich Newari culture.",
+          "timezone": "Asia/Kathmandu",
+          "highlights": ["Durbar Square", "Swayambhunath", "Pashupatinath", "Thamel"],
+          "bestTime": "Oct-Nov, Mar-Apr",
+          "currency": "NPR",
+          "language": "Nepali"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "name": "USA",
+      "cities": [
+        {
+          "name": "New York, USA",
+          "imageUrl": "https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800",
+          "description": "The Big Apple, known for Times Square, Central Park, and its iconic skyline.",
+          "timezone": "America/New_York",
+          "highlights": ["Central Park", "Statue of Liberty", "Empire State Building", "Times Square"],
+          "bestTime": "Apr-Jun, Sep-Nov",
+          "currency": "USD",
+          "language": "English"
+        },
+        {
+          "name": "San Francisco, USA",
+          "imageUrl": "https://images.unsplash.com/photo-1501594907352-04cda38ebc29?w=800",
+          "description": "A hilly city on the tip of a peninsula, famous for its Victorian architecture, cable cars, and Golden Gate Bridge.",
+          "timezone": "America/Los_Angeles",
+          "highlights": ["Golden Gate Bridge", "Alcatraz", "Fisherman's Wharf", "Chinatown"],
+          "bestTime": "Sep-Nov",
+          "currency": "USD",
+          "language": "English"
+        },
+        {
+          "name": "Miami, USA",
+          "imageUrl": "https://images.unsplash.com/photo-1506966953602-c20cc11f75e3?w=800",
+          "description": "A vibrant coastal city known for its beaches, Art Deco architecture, and pulsating nightlife.",
+          "timezone": "America/New_York",
+          "highlights": ["South Beach", "Art Deco Historic District", "Little Havana", "Everglades"],
+          "bestTime": "Dec-Apr",
+          "currency": "USD",
+          "language": "English"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "name": "Italy",
+      "cities": [
+        {
+          "name": "Rome, Italy",
+          "imageUrl": "https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800",
+          "description": "The Eternal City, home to ancient ruins like the Colosseum and Vatican City.",
+          "timezone": "Europe/Rome",
+          "highlights": ["Colosseum", "Vatican City", "Trevi Fountain", "Roman Forum"],
+          "bestTime": "Apr-Jun, Sep-Oct",
+          "currency": "EUR",
+          "language": "Italian"
+        },
+        {
+          "name": "Venice, Italy",
+          "imageUrl": "https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=800",
+          "description": "A unique city built on water, famous for its canals, historic architecture, and romantic atmosphere.",
+          "timezone": "Europe/Rome",
+          "highlights": ["St Mark's Square", "Rialto Bridge", "Grand Canal", "Doge's Palace"],
+          "bestTime": "Apr-Jun, Sep-Oct",
+          "currency": "EUR",
+          "language": "Italian"
+        },
+        {
+          "name": "Florence, Italy",
+          "imageUrl": "https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?w=800",
+          "description": "The cradle of the Renaissance, home to masterpieces of art and architecture.",
+          "timezone": "Europe/Rome",
+          "highlights": ["Duomo", "Uffizi Gallery", "Ponte Vecchio", "Piazzale Michelangelo"],
+          "bestTime": "Apr-Jun, Sep-Oct",
+          "currency": "EUR",
+          "language": "Italian"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "name": "Spain",
+      "cities": [
+        {
+          "name": "Barcelona, Spain",
+          "imageUrl": "https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800",
+          "description": "A vibrant Mediterranean city famous for Gaudí's modernist architecture and lively beach culture.",
+          "timezone": "Europe/Madrid",
+          "highlights": ["Sagrada Familia", "Park Güell", "La Rambla", "Gothic Quarter"],
+          "bestTime": "May-Jun, Sep-Oct",
+          "currency": "EUR",
+          "language": "Spanish"
+        },
+        {
+          "name": "Madrid, Spain",
+          "imageUrl": "https://images.unsplash.com/photo-1539037116277-4db20889f2d4?w=800",
+          "description": "Spain's capital city, known for its world-class museums, royal palace, and vibrant nightlife.",
+          "timezone": "Europe/Madrid",
+          "highlights": ["Royal Palace", "Prado Museum", "Puerta del Sol", "Retiro Park"],
+          "bestTime": "Apr-Jun, Sep-Nov",
+          "currency": "EUR",
+          "language": "Spanish"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "name": "Thailand",
+      "cities": [
+        {
+          "name": "Bangkok, Thailand",
+          "imageUrl": "https://images.unsplash.com/photo-1508009603885-50cf7c579365?w=800",
+          "description": "A chaotic yet captivating city of golden temples, bustling markets, and incredible street food.",
+          "timezone": "Asia/Bangkok",
+          "highlights": ["Grand Palace", "Wat Arun", "Khao San Road", "Chatuchak Market"],
+          "bestTime": "Nov-Feb",
+          "currency": "THB",
+          "language": "Thai"
+        },
+        {
+          "name": "Chiang Mai, Thailand",
+          "imageUrl": "https://images.unsplash.com/photo-1512553483222-07c3c7e55b4b?w=800",
+          "description": "A mountainous city in northern Thailand, known for its ancient temples and vibrant night markets.",
+          "timezone": "Asia/Bangkok",
+          "highlights": ["Doi Suthep", "Old City Temples", "Night Bazaar", "Elephant Nature Park"],
+          "bestTime": "Nov-Mar",
+          "currency": "THB",
+          "language": "Thai"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "name": "Indonesia",
+      "cities": [
+        {
+          "name": "Bali, Indonesia",
+          "imageUrl": "https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800",
+          "description": "A tropical paradise known for its forested volcanic mountains, iconic rice paddies, and vibrant arts scene.",
+          "timezone": "Asia/Makassar",
+          "highlights": ["Ubud Rice Terraces", "Tanah Lot", "Uluwatu Temple", "Seminyak Beach"],
+          "bestTime": "Apr-Oct",
+          "currency": "IDR",
+          "language": "Indonesian"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Greece",
+      "cities": [
+        {
+          "name": "Santorini, Greece",
+          "imageUrl": "https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800",
+          "description": "A stunning volcanic island famous for its whitewashed buildings, blue domes, and spectacular sunsets.",
+          "timezone": "Europe/Athens",
+          "highlights": ["Oia Sunset", "Fira Town", "Red Beach", "Ancient Akrotiri"],
+          "bestTime": "Apr-Oct",
+          "currency": "EUR",
+          "language": "Greek"
+        },
+        {
+          "name": "Athens, Greece",
+          "imageUrl": "https://images.unsplash.com/photo-1555993539-1732b0258235?w=800",
+          "description": "One of the world's oldest cities, birthplace of democracy and home to the iconic Acropolis.",
+          "timezone": "Europe/Athens",
+          "highlights": ["Acropolis", "Parthenon", "Plaka District", "Mount Lycabettus"],
+          "bestTime": "Apr-Jun, Sep-Oct",
+          "currency": "EUR",
+          "language": "Greek"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "India",
+      "cities": [
+        {
+          "name": "Jaipur, India",
+          "imageUrl": "https://images.unsplash.com/photo-1477587458883-47145ed35d3b?w=800",
+          "description": "The Pink City of Rajasthan, known for its royal palaces, vibrant bazaars, and stunning architecture.",
+          "timezone": "Asia/Kolkata",
+          "highlights": ["Hawa Mahal", "Amber Fort", "City Palace", "Jantar Mantar"],
+          "bestTime": "Oct-Mar",
+          "currency": "INR",
+          "language": "Hindi"
+        },
+        {
+          "name": "Goa, India",
+          "imageUrl": "https://images.unsplash.com/photo-1512343879784-a960bf40e7f2?w=800",
+          "description": "India's coastal paradise with pristine beaches, Portuguese heritage, and lively party scene.",
+          "timezone": "Asia/Kolkata",
+          "highlights": ["Baga Beach", "Basilica of Bom Jesus", "Anjuna Market", "Fort Aguada"],
+          "bestTime": "Nov-Mar",
+          "currency": "INR",
+          "language": "Konkani"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "name": "Morocco",
+      "cities": [
+        {
+          "name": "Marrakech, Morocco",
+          "imageUrl": "https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=800",
+          "description": "A vibrant city in western Morocco famous for its medieval medina, colorful souks, and stunning riads.",
+          "timezone": "Africa/Casablanca",
+          "highlights": ["Jemaa el-Fnaa", "Bahia Palace", "Majorelle Garden", "Saadian Tombs"],
+          "bestTime": "Mar-May, Sep-Nov",
+          "currency": "MAD",
+          "language": "Arabic"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "name": "New Zealand",
+      "cities": [
+        {
+          "name": "Queenstown, New Zealand",
+          "imageUrl": "https://images.unsplash.com/photo-1507699622108-4be3abd695ad?w=800",
+          "description": "The adventure capital of the world, set against dramatic mountain ranges and crystal-clear lakes.",
+          "timezone": "Pacific/Auckland",
+          "highlights": ["Milford Sound", "Skyline Gondola", "Bungee Jumping", "Fjordland National Park"],
+          "bestTime": "Dec-Mar",
+          "currency": "NZD",
+          "language": "English"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "name": "South Africa",
+      "cities": [
+        {
+          "name": "Cape Town, South Africa",
+          "imageUrl": "https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800",
+          "description": "A stunning coastal city backed by Table Mountain, known for its beaches, vineyards, and rich history.",
+          "timezone": "Africa/Johannesburg",
+          "highlights": ["Table Mountain", "Robben Island", "Cape of Good Hope", "V&A Waterfront"],
+          "bestTime": "Nov-Mar",
+          "currency": "ZAR",
+          "language": "English"
+        }
+      ]
+    }
+  ],
+  "temples": [
+    {
+      "id": 1,
+      "name": "Angkor Wat, Cambodia",
+      "imageUrl": "https://images.unsplash.com/photo-1578469645742-46cae010e5d4?w=800",
+      "description": "A UNESCO World Heritage site and the largest religious monument in the world, showing the grandeur of the Khmer Empire.",
+      "timezone": "Asia/Phnom_Penh",
+      "highlights": ["Sunrise View", "Ta Prohm", "Bayon Temple", "Banteay Srei"],
+      "bestTime": "Nov-Mar",
+      "currency": "USD",
+      "language": "Khmer"
+    },
+    {
+      "id": 2,
+      "name": "Taj Mahal, India",
+      "imageUrl": "https://images.unsplash.com/photo-1564507592333-c60657ece523?w=1200",
+      "description": "An iconic symbol of love and a masterpiece of Mughal architecture, seen here in its full, symmetrical glory.",
+      "timezone": "Asia/Kolkata",
+      "highlights": ["White Marble Architecture", "Mausoleum", "Charbagh Gardens", "Sunrise View"],
+      "bestTime": "Oct-Mar",
+      "currency": "INR",
+      "language": "Hindi"
+    },
+    {
+      "id": 3,
+      "name": "Borobudur, Indonesia",
+      "imageUrl": "https://images.unsplash.com/photo-1604922824961-87cefb9e6b63?w=800",
+      "description": "The world's largest Buddhist temple, an ancient volcanic-stone masterpiece shrouded in mystery.",
+      "timezone": "Asia/Jakarta",
+      "highlights": ["Sunrise Tours", "Stone Carvings", "Mendut Temple", "Kelimutu Volcano"],
+      "bestTime": "Apr-Oct",
+      "currency": "IDR",
+      "language": "Indonesian"
+    },
+    {
+      "id": 4,
+      "name": "Petra, Jordan",
+      "imageUrl": "https://images.unsplash.com/photo-1579606032821-4e6161c81bd3?w=800",
+      "description": "An ancient rose-red city carved into rock, one of the New Seven Wonders of the World.",
+      "timezone": "Asia/Amman",
+      "highlights": ["The Treasury", "Siq Canyon", "Monastery", "Royal Tombs"],
+      "bestTime": "Mar-May, Sep-Nov",
+      "currency": "JOD",
+      "language": "Arabic"
+    },
+    {
+      "id": 5,
+      "name": "Machu Picchu, Peru",
+      "imageUrl": "https://images.unsplash.com/photo-1587595431973-160d0d94add1?w=800",
+      "description": "An Incan citadel set high in the Andes Mountains, a breathtaking archaeological wonder.",
+      "timezone": "America/Lima",
+      "highlights": ["Sun Gate", "Inca Trail", "Temple of the Sun", "Huayna Picchu"],
+      "bestTime": "May-Sep",
+      "currency": "PEN",
+      "language": "Spanish"
+    },
+    {
+      "id": 6,
+      "name": "Great Wall of China",
+      "imageUrl": "https://images.unsplash.com/photo-1508804185872-d7badad00f7d?w=800",
+      "description": "An ancient fortification stretching over 13,000 miles, one of the greatest wonders of the world.",
+      "timezone": "Asia/Shanghai",
+      "highlights": ["Badaling Section", "Mutianyu Section", "Simatai Section", "Jinshanling"],
+      "bestTime": "Apr-Jun, Sep-Oct",
+      "currency": "CNY",
+      "language": "Mandarin"
+    }
+  ],
+  "beaches": [
+    {
+      "id": 1,
+      "name": "Bora Bora, French Polynesia",
+      "imageUrl": "https://images.unsplash.com/photo-1589979481223-deb893043163?w=800",
+      "description": "An island known for its stunning turquoise waters and luxurious overwater bungalows in French Polynesia.",
+      "timezone": "Pacific/Tahiti",
+      "highlights": ["Overwater Bungalows", "Crystal Lagoon", "Mount Otemanu", "Shark & Ray Feeding"],
+      "bestTime": "May-Oct",
+      "currency": "XPF",
+      "language": "French"
+    },
+    {
+      "id": 2,
+      "name": "Copacabana Beach, Brazil",
+      "imageUrl": "https://images.unsplash.com/photo-1516306580123-e6e52b1b7b5f?w=800",
+      "description": "A famous beach in Rio de Janeiro, Brazil, with a vibrant atmosphere and scenic coastal views.",
+      "timezone": "America/Sao_Paulo",
+      "highlights": ["Copacabana Palace", "Sugarloaf View", "Beach Volleyball", "New Year's Eve Fireworks"],
+      "bestTime": "Dec-Mar",
+      "currency": "BRL",
+      "language": "Portuguese"
+    },
+    {
+      "id": 3,
+      "name": "Maya Bay, Thailand",
+      "imageUrl": "https://images.unsplash.com/photo-1552799446-159ba9523315?w=800",
+      "description": "The iconic beach made famous by The Movie, surrounded by towering limestone cliffs and emerald waters.",
+      "timezone": "Asia/Bangkok",
+      "highlights": ["Leonardo DiCaprio's Beach", "Crystal Waters", "Snorkeling", "Kayaking"],
+      "bestTime": "Nov-Apr",
+      "currency": "THB",
+      "language": "Thai"
+    },
+    {
+      "id": 4,
+      "name": "Bondi Beach, Australia",
+      "imageUrl": "https://images.unsplash.com/photo-1523482580672-f109ba8cb9be?w=800",
+      "description": "Sydney's most famous beach, a vibrant coastal suburb with great surfing, cafes, and coastal walks.",
+      "timezone": "Australia/Sydney",
+      "highlights": ["Bondi Icebergs Pool", "Coastal Walk", "Surfing", "Sunday Markets"],
+      "bestTime": "Nov-Mar",
+      "currency": "AUD",
+      "language": "English"
+    },
+    {
+      "id": 5,
+      "name": "Ngapali Beach, Myanmar",
+      "imageUrl": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800",
+      "description": "Myanmar's most beautiful beach, featuring pristine white sands and crystal-clear waters.",
+      "timezone": "Asia/Yangon",
+      "highlights": ["Pristine Sands", "Fishing Villages", "Snorkeling", "Sunset Views"],
+      "bestTime": "Nov-Mar",
+      "currency": "MMK",
+      "language": "Burmese"
+    },
+    {
+      "id": 6,
+      "name": "Navagio Beach, Greece",
+      "imageUrl": "https://images.unsplash.com/photo-1533104816931-20fa691ff6ca?w=800",
+      "description": "A secluded cove on Zakynthos island with dramatic cliffs and a shipwreck on the shore.",
+      "timezone": "Europe/Athens",
+      "highlights": ["Shipwreck Beach", "Viewpoint", "Cliff Diving", "Blue Caves"],
+      "bestTime": "Jun-Sep",
+      "currency": "EUR",
+      "language": "Greek"
+    },
+    {
+      "id": 7,
+      "name": "Tulum, Mexico",
+      "imageUrl": "https://images.unsplash.com/photo-1552074291-ad4ed3c5d60f?w=800",
+      "description": "A bohemian beach town on the Yucatán Peninsula, famous for its Mayan ruins overlooking the Caribbean.",
+      "timezone": "America/Cancun",
+      "highlights": ["Tulum Ruins", "Cenote Swimming", "Sian Ka'an", "Beach Clubs"],
+      "bestTime": "Dec-Apr",
+      "currency": "MXN",
+      "language": "Spanish"
+    },
+    {
+      "id": 8,
+      "name": "Raja Ampat, Indonesia",
+      "imageUrl": "https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=800",
+      "description": "A remote archipelago in Indonesia with the world's highest marine biodiversity.",
+      "timezone": "Asia/Jayapura",
+      "highlights": ["Diving Paradise", "Wayag Islands", "Papuan Culture", "Kelp Forests"],
+      "bestTime": "Oct-Dec, Mar-May",
+      "currency": "IDR",
+      "language": "Indonesian"
+    }
+  ]
+}

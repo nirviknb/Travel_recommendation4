@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Favorites — Wanderlust</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" /></noscript>
+  <link rel="stylesheet" href="travel_recommendation.css"/>
+  <style>
+    .favorites-section {
+      padding: 7rem 3rem 5rem;
+      background: var(--cream);
+      min-height: 100vh;
+    }
+    .favorites-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+    .favorites-count {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .favorites-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .favorites-empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.4;
+    }
+    .favorites-empty h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+    .favorites-empty p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .favorites-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .fav-remove-btn {
+      background: rgba(211, 47, 47, 0.08);
+      border: 1px solid rgba(211, 47, 47, 0.2);
+      color: var(--error);
+      padding: 0.4rem 0.8rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-family: 'DM Sans', sans-serif;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+    .fav-remove-btn:hover {
+      background: rgba(211, 47, 47, 0.15);
+      border-color: var(--error);
+    }
+    @media (max-width: 900px) {
+      .favorites-section { padding: 5rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip Navigation -->
+  <a href="#results" class="skip-link">Skip to content</a>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar--simple" id="navbar">
+    <div class="nav-brand">
+      <a href="travel_recommendation.html" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Wanderlust</span>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="travel_recommendation.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About Us</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+      <li><a href="favorites.html" class="nav-link active">♥ Favorites</a></li>
+    </ul>
+  </nav>
+
+  <!-- FAVORITES SECTION -->
+  <section class="favorites-section" id="favorites">
+    <div class="favorites-header">
+      <p class="section-label">Your Collection</p>
+      <h1 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">Saved Destinations</h1>
+      <p class="favorites-count" id="favoritesCount"></p>
+    </div>
+    <div class="favorites-grid" id="favoritesGrid"></div>
+    <div class="favorites-empty" id="favoritesEmpty" style="display:none">
+      <div class="favorites-empty-icon">♡</div>
+      <h3>No Saved Destinations</h3>
+      <p>Start exploring and save your dream destinations by clicking the heart icon on any destination card.</p>
+      <a href="travel_recommendation.html" class="btn-book" style="display:inline-block;text-decoration:none">Explore Now</a>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <span class="newsletter-icon">✦</span>
+      <h2 class="newsletter-title">Stay in the Loop</h2>
+      <p class="newsletter-sub">Get curated travel guides, exclusive deals, and destination inspiration delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Your email address" required />
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p class="newsletter-success" id="newsletterSuccess">✦ Welcome aboard! Check your inbox for a special travel guide.</p>
+    </div>
+  </section>
+
+  <!-- TOAST CONTAINER -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Wanderlust</span>
+      </div>
+      <p class="footer-copy">© 2025 Wanderlust Travel. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="travel_recommendation.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="favorites.html">Favorites</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" hidden>
+    <div class="modal-panel" onclick="event.stopPropagation()" role="document">
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="travel_recommendation.js"></script>
+  <script>
+    // Load favorites on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      loadFavorites();
+    });
+
+    function loadFavorites() {
+      const favorites = getFavorites();
+      const grid = document.getElementById('favoritesGrid');
+      const emptyState = document.getElementById('favoritesEmpty');
+      const countEl = document.getElementById('favoritesCount');
+
+      if (countEl) {
+        countEl.textContent = favorites.length === 0 
+          ? 'Start saving destinations you love' 
+          : `${favorites.length} destination${favorites.length !== 1 ? 's' : ''} saved`;
+      }
+
+      if (favorites.length === 0) {
+        if (grid) grid.style.display = 'none';
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+      }
+
+      if (grid) grid.style.display = 'grid';
+      if (emptyState) emptyState.style.display = 'none';
+
+      // Fetch all data to match favorites
+      fetch('travel_recommendation_api.json')
+        .then(res => res.json())
+        .then(data => {
+          const allDestinations = [];
+          
+          data.countries.forEach(country => {
+            country.cities.forEach(city => {
+              allDestinations.push({
+                ...city,
+                type: country.name,
+                nameKey: city.name
+              });
+            });
+          });
+          
+          data.temples.forEach(temple => {
+            allDestinations.push({
+              ...temple,
+              type: 'Temple',
+              nameKey: temple.name
+            });
+          });
+          
+          data.beaches.forEach(beach => {
+            allDestinations.push({
+              ...beach,
+              type: 'Beach',
+              nameKey: beach.name
+            });
+          });
+
+          // Filter to only favorites
+          const favDestinations = allDestinations.filter(d => favorites.includes(d.nameKey));
+          
+          renderFavoriteCards(favDestinations);
+        })
+        .catch(err => {
+          console.error('Error loading favorites:', err);
+          showToast('Unable to load favorites. Please refresh the page.');
+        });
+    }
+
+    function renderFavoriteCards(destinations) {
+      const grid = document.getElementById('favoritesGrid');
+      if (!grid) return;
+
+      const reviewsData = {
+        'Sydney, Australia': { rating: 4.7, reviews: 3241 },
+        'Melbourne, Australia': { rating: 4.5, reviews: 2876 },
+        'Tokyo, Japan': { rating: 4.9, reviews: 5623 },
+        'Rio de Janeiro, Brazil': { rating: 4.6, reviews: 4102 },
+        'Paris, France': { rating: 4.8, reviews: 8934 },
+        'Pokhara, Nepal': { rating: 4.4, reviews: 1532 },
+        'New York, USA': { rating: 4.7, reviews: 7211 },
+        'Angkor Wat, Cambodia': { rating: 4.9, reviews: 4512 },
+        'Taj Mahal, India': { rating: 4.9, reviews: 6879 },
+        'Bora Bora, French Polynesia': { rating: 4.8, reviews: 2103 },
+        'Copacabana Beach, Brazil': { rating: 4.3, reviews: 3890 }
+      };
+
+      grid.innerHTML = destinations.map((dest, i) => {
+        const reviews = reviewsData[dest.nameKey] || { rating: 4.5, reviews: 100 };
+        const rating = Math.round(reviews.rating * 10) / 10;
+        const stars = renderStars(rating);
+        const weather = getMockWeather(dest.timezone);
+
+        return `
+          <div class="result-card" style="animation-delay:${i * 0.08}s">
+            <img class="result-card-img" src="${dest.imageUrl}" alt="${escapeHtml(dest.nameKey)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600'" />
+            <div class="result-card-body">
+              <span class="result-tag">${escapeHtml(dest.type)}</span>
+              <h3>${escapeHtml(dest.nameKey)}</h3>
+              <p>${escapeHtml(dest.description)}</p>
+              <div class="result-card-footer">
+                <div class="result-stars" title="${rating}/5">
+                  ${stars}
+                  <span style="font-size:0.7rem;color:var(--muted);margin-left:3px">${rating}</span>
+                </div>
+                <div class="result-weather" title="Current weather">
+                  <span class="weather-icon">${weather.icon}</span>
+                  <span>${weather.temp}°C</span>
+                </div>
+              </div>
+              ${dest.timezone ? `
+                <div class="result-time">
+                  🕐 Local time: <span class="clock" data-timezone="${escapeHtml(dest.timezone)}">${getLocalTime(dest.timezone)}</span>
+                </div>
+              ` : ''}
+              <div class="result-actions">
+                <button class="fav-remove-btn" onclick="removeFavorite('${escapeHtml(dest.nameKey).replace(/'/g, "\\'")}', this)">
+                  ✕ Remove
+                </button>
+                <button class="result-btn result-btn-book" onclick="openBookingModal('${escapeHtml(dest.nameKey).replace(/'/g, "\\'")}', '${escapeHtml(dest.imageUrl).replace(/'/g, "\\'")}', '${escapeHtml(dest.type).replace(/'/g, "\\'")}')">
+                  Book Now
+                </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Start clock updates
+      if (typeof updateClocks === 'function') {
+        if (window.clockInterval) clearInterval(window.clockInterval);
+        window.clockInterval = setInterval(updateClocks, 1000);
+      }
+
+      // Update count
+      const countEl = document.getElementById('favoritesCount');
+      if (countEl) {
+        countEl.textContent = `${destinations.length} destination${destinations.length !== 1 ? 's' : ''} saved`;
+      }
+    }
+
+    function removeFavorite(name, btn) {
+      let favorites = getFavorites();
+      const idx = favorites.indexOf(name);
+      if (idx > -1) {
+        favorites.splice(idx, 1);
+        saveFavorites(favorites);
+        showToast(`Removed "${name}" from favorites`);
+        
+        // Animate card out
+        const card = btn.closest('.result-card');
+        if (card) {
+          card.style.transition = 'opacity 0.3s, transform 0.3s';
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.9)';
+          setTimeout(() => {
+            loadFavorites();
+          }, 300);
+        } else {
+          loadFavorites();
+        }
+      }
+    }
+
+    // Newsletter handler
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const input = document.getElementById('newsletterEmail');
+      if (!input) return;
+      const email = input.value.trim();
+      if (!email || !email.includes('@')) {
+        showToast('Please enter a valid email address');
+        return;
+      }
+      const subscribers = JSON.parse(localStorage.getItem('wanderlust_subscribers') || '[]');
+      if (!subscribers.includes(email)) {
+        subscribers.push(email);
+        localStorage.setItem('wanderlust_subscribers', JSON.stringify(subscribers));
+      }
+      const success = document.getElementById('newsletterSuccess');
+      if (success) success.classList.add('show');
+      input.value = '';
+      showToast('Welcome aboard! Check your inbox for a travel guide.');
+      setTimeout(() => { if (success) success.classList.remove('show'); }, 6000);
+    }
+
+    // Dynamic footer year
+    document.addEventListener('DOMContentLoaded', () => {
+      const footerCopy = document.querySelector('.footer-copy');
+      if (footerCopy) footerCopy.textContent = `© ${new Date().getFullYear()} Wanderlust Travel. All rights reserved.`;
+    });
+  </script>
+</body>
+</html>

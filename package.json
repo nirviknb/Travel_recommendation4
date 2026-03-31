@@ -1,0 +1,12 @@
+{
+  "name": "wanderlust-travel",
+  "version": "1.0.0",
+  "description": "Wanderlust Travel Recommendation Website",
+  "scripts": {
+    "serve": "npx serve -l 3000",
+    "start": "npm run serve"
+  },
+  "keywords": ["travel", "recommendation", "destination"],
+  "author": "Nirvik Buddhacharya",
+  "license": "MIT"
+}
