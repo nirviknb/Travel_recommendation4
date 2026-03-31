@@ -586,11 +586,44 @@
     }
   </style>
   <script>
+    // Reviews data (shared with main app)
+    const reviewsData = {
+      'Sydney, Australia': { rating: 4.7, reviews: 3241 },
+      'Melbourne, Australia': { rating: 4.5, reviews: 2876 },
+      'Tokyo, Japan': { rating: 4.9, reviews: 5623 },
+      'Kyoto, Japan': { rating: 4.8, reviews: 4321 },
+      'Rio de Janeiro, Brazil': { rating: 4.6, reviews: 4102 },
+      'São Paulo, Brazil': { rating: 4.4, reviews: 2156 },
+      'Paris, France': { rating: 4.8, reviews: 8934 },
+      'Nice, France': { rating: 4.5, reviews: 1876 },
+      'Pokhara, Nepal': { rating: 4.4, reviews: 1532 },
+      'Kathmandu, Nepal': { rating: 4.3, reviews: 1234 },
+      'New York, USA': { rating: 4.7, reviews: 7211 },
+      'San Francisco, USA': { rating: 4.6, reviews: 4532 },
+      'Miami, USA': { rating: 4.5, reviews: 3210 },
+      'Rome, Italy': { rating: 4.8, reviews: 6543 },
+      'Venice, Italy': { rating: 4.7, reviews: 5432 },
+      'Florence, Italy': { rating: 4.9, reviews: 4321 },
+      'Barcelona, Spain': { rating: 4.6, reviews: 5678 },
+      'Madrid, Spain': { rating: 4.4, reviews: 3456 },
+      'Bangkok, Thailand': { rating: 4.5, reviews: 7890 },
+      'Chiang Mai, Thailand': { rating: 4.6, reviews: 3456 },
+      'Bali, Indonesia': { rating: 4.8, reviews: 8765 },
+      'Santorini, Greece': { rating: 4.7, reviews: 6543 },
+      'Athens, Greece': { rating: 4.6, reviews: 4321 },
+      'Jaipur, India': { rating: 4.5, reviews: 3210 },
+      'Goa, India': { rating: 4.4, reviews: 2100 },
+      'Marrakech, Morocco': { rating: 4.5, reviews: 2890 },
+      'Queenstown, New Zealand': { rating: 4.8, reviews: 3456 },
+      'Cape Town, South Africa': { rating: 4.7, reviews: 4567 }
+    };
+
     let allBookings = [];
     let itineraryData = [];
     let currentItineraryDestination = null;
     let currentDay = 1;
     let pendingDestination = null;
+    let dataLoaded = false;
 
     document.addEventListener('DOMContentLoaded', () => {
       // Check for destination parameter in URL
@@ -600,12 +633,24 @@
         pendingDestination = decodeURIComponent(destParam);
       }
 
+      console.log('Loading booking data...');
+      
       Promise.all([
-        fetch('travel_recommendation_api.json').then(r => r.json()),
-        fetch('itineraries.json').then(r => r.json())
+        fetch('travel_recommendation_api.json').then(r => {
+          if (!r.ok) throw new Error('Failed to load API');
+          return r.json();
+        }),
+        fetch('itineraries.json').then(r => {
+          if (!r.ok) throw new Error('Failed to load itineraries');
+          return r.json();
+        })
       ]).then(([apiData, itineraryJson]) => {
+        console.log('Data loaded successfully');
         allBookings = flattenBookings(apiData);
         itineraryData = itineraryJson.itineraries || [];
+        dataLoaded = true;
+        console.log(`Loaded ${allBookings.length} destinations`);
+        
         renderBookings();
         initBookingSearch();
         initNewsletter();
@@ -683,7 +728,7 @@
       if (!grid) return;
 
       // Handle case when data is not yet loaded
-      if (allBookings.length === 0) {
+      if (!dataLoaded || allBookings.length === 0) {
         grid.innerHTML = `
           <div class="bookings-empty">
             <h3>Loading destinations...</h3>
@@ -693,27 +738,30 @@
         return;
       }
 
+      console.log('Rendering with filter:', filter);
       let filtered = allBookings;
       if (filter) {
+        const searchTerm = filter.toLowerCase();
         filtered = filtered.filter(b => 
-          b.name.toLowerCase().includes(filter.toLowerCase()) ||
-          b.description.toLowerCase().includes(filter.toLowerCase()) ||
-          b.country.toLowerCase().includes(filter.toLowerCase())
+          b.name.toLowerCase().includes(searchTerm) ||
+          (b.description && b.description.toLowerCase().includes(searchTerm)) ||
+          (b.country && b.country.toLowerCase().includes(searchTerm))
         );
       }
+      console.log('Found matching destinations:', filtered.length);
 
       if (filtered.length === 0) {
         grid.innerHTML = `
           <div class="bookings-empty">
             <h3>No destinations found</h3>
-            <p>Try adjusting your search</p>
+            <p>Try adjusting your search terms</p>
           </div>
         `;
         return;
       }
 
       grid.innerHTML = filtered.map(dest => {
-        const reviews = reviewsData[dest.name] || { rating: 4.5, reviews: 100 };
+        const reviews = reviewsData[dest.name] || { rating: 4.5, reviews: Math.floor(Math.random() * 500 + 100) };
         const stars = '★'.repeat(Math.floor(reviews.rating));
         
         return `
@@ -750,18 +798,37 @@
 
     function initBookingSearch() {
       const input = document.getElementById('bookingSearchInput');
-      if (input) {
-        // Handle Enter key for immediate search
-        input.addEventListener('keyup', (e) => {
-          if (e.key === 'Enter') {
-            renderBookings(input.value.trim());
+      if (!input) return;
+      
+      // Wait for data to be loaded first
+      if (!dataLoaded) {
+        console.log('Data not loaded yet, waiting...');
+        const checkDataLoaded = setInterval(() => {
+          if (dataLoaded) {
+            clearInterval(checkDataLoaded);
+            setupSearchInput(input);
           }
-        });
-        // Handle input for live filtering
-        input.addEventListener('input', debounce((e) => {
-          renderBookings(e.target.value.trim());
-        }, 300));
+        }, 100);
+        // Timeout after 5 seconds
+        setTimeout(() => clearInterval(checkDataLoaded), 5000);
+      } else {
+        setupSearchInput(input);
       }
+    }
+
+    function setupSearchInput(input) {
+      // Handle Enter key for immediate search
+      input.addEventListener('keyup', (e) => {
+        if (e.key === 'Enter') {
+          console.log('Enter pressed, searching...');
+          renderBookings(input.value.trim());
+        }
+      });
+      // Handle input for live filtering
+      input.addEventListener('input', debounce((e) => {
+        console.log('Input changed:', e.target.value);
+        renderBookings(e.target.value.trim());
+      }, 300));
     }
 
     function openItinerary(destName, event) {
@@ -865,37 +932,67 @@
       
       const modal = document.getElementById('bookingModal');
       const content = document.getElementById('bookingModalContent');
+      const safeName = escapeHtml(destName);
+      const safeImg = escapeHtml(imageUrl);
 
       content.innerHTML = `
-        <h2 class="booking-modal-title">Book Your Trip to ${destName}</h2>
-        <form onsubmit="handleBookingSubmit(event, '${escapeHtml(destName).replace(/'/g, "\\'")}')">
-          <div class="booking-form-group">
-            <label for="bookingName">Full Name</label>
-            <input type="text" id="bookingName" required placeholder="John Doe" />
+        <div class="modal-header">
+          <div>
+            <h2 class="modal-title" id="modalTitle">Book Your Journey</h2>
+            <p class="modal-dest">${safeName}</p>
           </div>
-          <div class="booking-form-group">
-            <label for="bookingEmail">Email Address</label>
-            <input type="email" id="bookingEmail" required placeholder="john@example.com" />
-          </div>
-          <div class="booking-form-group">
-            <label for="bookingDate">Preferred Date</label>
-            <input type="date" id="bookingDate" required />
-          </div>
-          <div class="booking-form-group">
-            <label for="bookingGuests">Number of Guests</label>
-            <select id="bookingGuests" required>
-              <option value="">Select guests</option>
-              <option value="1">1 Guest</option>
-              <option value="2">2 Guests</option>
-              <option value="3">3 Guests</option>
-              <option value="4">4 Guests</option>
-              <option value="5+">5+ Guests</option>
-            </select>
-          </div>
-          <button type="submit" class="booking-btn booking-btn-primary" style="width:100%;margin-top:1rem">
-            Confirm Booking
-          </button>
-        </form>
+          <button class="modal-close" onclick="closeBookingModal()" aria-label="Close modal">✕</button>
+        </div>
+        <div class="modal-body">
+          <img class="modal-thumb" src="${safeImg}" alt="${safeName}" onerror="this.style.display='none'" />
+          <form id="bookingForm" onsubmit="handleBookingSubmit(event, '${safeName.replace(/'/g, "\\'")}')">
+            <div class="modal-grid">
+              <div class="modal-field">
+                <label class="modal-label" for="bookingName">Full Name</label>
+                <input type="text" class="modal-input" id="bookingName" placeholder="John Doe" required />
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="bookingEmail">Email</label>
+                <input type="email" class="modal-input" id="bookingEmail" placeholder="john@example.com" required />
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="bookingCheckin">Check-in Date</label>
+                <input type="date" class="modal-input" id="bookingCheckin" required />
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="bookingCheckout">Check-out Date</label>
+                <input type="date" class="modal-input" id="bookingCheckout" required />
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="bookingTravelers">Travelers</label>
+                <select class="modal-select" id="bookingTravelers" required>
+                  <option value="">Select</option>
+                  <option>1 Traveler</option>
+                  <option>2 Travelers</option>
+                  <option>3-4 Travelers</option>
+                  <option>5-8 Travelers</option>
+                  <option>9+ Travelers</option>
+                </select>
+              </div>
+              <div class="modal-field">
+                <label class="modal-label" for="bookingType">Trip Type</label>
+                <select class="modal-select" id="bookingType" required>
+                  <option value="">Select</option>
+                  <option>Leisure / Relaxation</option>
+                  <option>Adventure / Active</option>
+                  <option>Cultural / Historical</option>
+                  <option>Romantic Getaway</option>
+                  <option>Family Vacation</option>
+                </select>
+              </div>
+              <div class="modal-field full">
+                <label class="modal-label" for="bookingNotes">Special Requests</label>
+                <textarea class="modal-textarea" id="bookingNotes" placeholder="Any special requests or requirements..."></textarea>
+              </div>
+            </div>
+            <button type="submit" class="modal-submit">Confirm Booking</button>
+          </form>
+        </div>
       `;
 
       modal.removeAttribute('hidden');
@@ -911,11 +1008,24 @@
       event.preventDefault();
       const name = document.getElementById('bookingName').value;
       const email = document.getElementById('bookingEmail').value;
-      const date = document.getElementById('bookingDate').value;
-      const guests = document.getElementById('bookingGuests').value;
+      const checkin = document.getElementById('bookingCheckin').value;
+      const checkout = document.getElementById('bookingCheckout').value;
+      const travelers = document.getElementById('bookingTravelers').value;
+      const tripType = document.getElementById('bookingType').value;
+      const notes = document.getElementById('bookingNotes').value;
 
       const bookings = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
-      bookings.push({ destination: destName, name, email, date, guests, date: new Date().toISOString() });
+      bookings.push({ 
+        destination: destName, 
+        name, 
+        email, 
+        checkin,
+        checkout,
+        travelers,
+        tripType,
+        notes,
+        createdAt: new Date().toISOString() 
+      });
       localStorage.setItem('wanderlust_bookings', JSON.stringify(bookings));
 
       showToast(`Booking confirmed for ${destName}! We'll contact you at ${email}`);
