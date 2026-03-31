@@ -1,0 +1,1145 @@
+{
+  "itineraries": [
+    {
+      "destination": "Sydney, Australia",
+      "days": 3,
+      "description": "Australia's harbor city combining iconic landmarks, beautiful beaches, and vibrant culture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Harbor & Iconic Sights",
+          "activities": [
+            {"time": "8:00 AM", "place": "Circular Quay", "description": "Start at the waterfront, walk along the harbor"},
+            {"time": "9:00 AM", "place": "Sydney Opera House", "description": "Guided tour of the iconic sail-shaped building (1.5 hours)"},
+            {"time": "11:00 AM", "place": "Royal Botanic Garden", "description": "Walk through the tranquil gardens via Mrs Macquarie's Chair"},
+            {"time": "12:30 PM", "place": "The Rocks", "description": "Lunch at historic pub or café"},
+            {"time": "2:00 PM", "place": "Sydney Harbour Bridge", "description": "Pylon Lookout or BridgeClimb (2-3 hours)"},
+            {"time": "5:00 PM", "place": "Sydney Opera House Bar", "description": "Sunset drinks with harbor views"},
+            {"time": "7:30 PM", "place": "Circular Quay Area", "description": "Dinner at harborside restaurant"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Beaches & Coastal Culture",
+          "activities": [
+            {"time": "7:00 AM", "place": "Train to Bondi Junction", "description": "Early start for beach day"},
+            {"time": "8:00 AM", "place": "Bondi to Coogee Walk", "description": "Scenic coastal path (30-40 min)"},
+            {"time": "10:00 AM", "place": "Coogee Beach", "description": "Swim and relax"},
+            {"time": "12:30 PM", "place": "Bondi Beach", "description": "Lunch at beach cafe"},
+            {"time": "2:00 PM", "place": "Bondi Icebergs", "description": "Visit the famous ocean pool"},
+            {"time": "4:00 PM", "place": "Bondi Shops", "description": "Browse boutiques and markets"},
+            {"time": "7:00 PM", "place": "Surry Hills", "description": "Dinner in trendy neighborhood"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Culture & Exploration",
+          "activities": [
+            {"time": "8:30 AM", "place": "Ferry to Taronga Zoo", "description": "Scenic ferry ride (20 min)"},
+            {"time": "9:00 AM", "place": "Taronga Zoo", "description": "Australian wildlife with harbor views (3 hours)"},
+            {"time": "12:30 PM", "place": "Milsons Point", "description": "Lunch near Luna Park"},
+            {"time": "2:00 PM", "place": "Luna Park", "description": "Amusement park exploration"},
+            {"time": "4:00 PM", "place": "Queen Victoria Building", "description": "Historic shopping arcade"},
+            {"time": "6:00 PM", "place": "The Rocks", "description": "Drinks at historic pub"},
+            {"time": "8:00 PM", "place": "Harbor Walk", "description": "Final evening stroll under lit Opera House"}
+          ]
+        }
+      ],
+      "highlights": ["Sydney Opera House", "Harbour Bridge", "Bondi Beach", "Taronga Zoo", "The Rocks", "Royal Botanic Garden"],
+      "bestTime": "Sep-Nov, Mar-May",
+      "tips": "Get an Opal Card for all public transport. Book Opera House tours in advance. Start early to avoid crowds."
+    },
+    {
+      "destination": "Melbourne, Australia",
+      "days": 3,
+      "description": "Australia's cultural capital known for its art, coffee culture, and diverse neighborhoods",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "CBD & Laneways",
+          "activities": [
+            {"time": "8:00 AM", "place": "Flinders Street Station", "description": "Meet under the clocks"},
+            {"time": "9:00 AM", "place": "Federation Square", "description": "Explore ACMI and outdoor screens"},
+            {"time": "10:00 AM", "place": "Melbourne Laneways", "description": "Hosier Lane street art, Degraves Street, Hardware Lane"},
+            {"time": "12:00 PM", "place": "Queen Victoria Market", "description": "Historic market - try famous donuts (Tue/Thu-Sun)"},
+            {"time": "2:00 PM", "place": "MCG", "description": "Tour Australia's largest sports stadium"},
+            {"time": "4:00 PM", "place": "National Gallery of Victoria", "description": "Free entry to permanent collections"},
+            {"time": "6:00 PM", "place": "Shrine of Remembrance", "description": "Climb for panoramic city views"},
+            {"time": "8:00 PM", "place": "Chinatown", "description": "Dinner on Bourke Street"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Collingwood & Fitzroy",
+          "activities": [
+            {"time": "8:00 AM", "place": "Street Art Tour", "description": "Explore Collingwood & Fitzroy urban art"},
+            {"time": "10:00 AM", "place": "Brunch in Collingwood", "description": "Trendy cafes in the hip suburb"},
+            {"time": "11:30 AM", "place": "Abbotsford Convent", "description": "Australia's largest multi-arts precinct"},
+            {"time": "1:00 PM", "place": "Collingwood Children's Farm", "description": "Urban farm with Aussie animals"},
+            {"time": "3:00 PM", "place": "Fitzroy - Brunswick Street", "description": "Boutique shopping and galleries"},
+            {"time": "5:00 PM", "place": "Naked for Satan", "description": "Rooftop tapas with city views (book ahead)"},
+            {"time": "8:00 PM", "place": "Melbourne Nightlife", "description": "Explore themed and hidden bars"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "St Kilda & Seaside",
+          "activities": [
+            {"time": "8:00 AM", "place": "St Kilda Pier", "description": "Historic jetty, coffee, watch locals"},
+            {"time": "9:00 AM", "place": "Luna Park", "description": "Oldest continuously running theme park"},
+            {"time": "11:00 AM", "place": "Chapel Street", "description": "Main hub with shops and cafes"},
+            {"time": "12:30 PM", "place": "St Kilda Beach", "description": "Beachfront lunch with drinks"},
+            {"time": "2:00 PM", "place": "Train to Brighton Beach", "description": "Visit colorful beach boxes"},
+            {"time": "4:00 PM", "place": "Beach Walk", "description": "Walk along the scenic coastline"},
+            {"time": "7:00 PM", "place": "Return to City", "description": "Final dinner in Melbourne"}
+          ]
+        }
+      ],
+      "highlights": ["Queen Victoria Market", "Street Art Laneways", "MCG", "St Kilda Beach", "Federation Square", "Yarra River"],
+      "bestTime": "Dec-Feb",
+      "tips": "Melbourne is the coffee capital - try laneway cafes. Use Myki card for transport. Free Tram Zone covers CBD."
+    },
+    {
+      "destination": "Tokyo, Japan",
+      "days": 5,
+      "description": "A bustling metropolis blending tradition and modernity, famous for cherry blossoms and rich culture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Traditional Tokyo",
+          "activities": [
+            {"time": "8:00 AM", "place": "Senso-ji Temple", "description": "Tokyo's oldest Buddhist temple - arrive early"},
+            {"time": "10:00 AM", "place": "Nakamise Shopping Street", "description": "Traditional snacks and souvenirs"},
+            {"time": "12:00 PM", "place": "Asakusa", "description": "Lunch at local restaurant"},
+            {"time": "2:00 PM", "place": "Ueno Park", "description": "Relax and visit Tokyo National Museum"},
+            {"time": "4:00 PM", "place": "Ameya-yokocho", "description": "Traditional market street"},
+            {"time": "7:00 PM", "place": "Asakusa", "description": "Dinner with evening illumination"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Old Tokyo Hidden Gems",
+          "activities": [
+            {"time": "8:00 AM", "place": "Yanaka District", "description": "Walk through pre-war Tokyo"},
+            {"time": "10:00 AM", "place": "Yanaka Ginza", "description": "Charming local shopping street"},
+            {"time": "12:00 PM", "place": "Nezu Shrine", "description": "Beautiful torii tunnel"},
+            {"time": "2:00 PM", "place": "Kagurazaka", "description": "Former geisha district with French influence"},
+            {"time": "6:00 PM", "place": "Kagurazaka", "description": "Dinner - mix of French and Japanese"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Modern Tokyo Highlights",
+          "activities": [
+            {"time": "7:00 AM", "place": "Tsukiji Outer Market", "description": "Fresh sushi breakfast (arrive by 8 AM)"},
+            {"time": "10:00 AM", "place": "Ginza", "description": "Upscale shopping and architecture"},
+            {"time": "12:00 PM", "place": "Ginza", "description": "Lunch at department store"},
+            {"time": "2:00 PM", "place": "Shibuya", "description": "Famous scramble crossing"},
+            {"time": "4:00 PM", "place": "Harajuku", "description": "Takeshita Street and kawaii culture"},
+            {"time": "5:00 PM", "place": "Meiji Shrine", "description": "Silent forest sanctuary"},
+            {"time": "8:00 PM", "place": "Shibuya", "description": "Dinner and nightlife"}
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Day Trip",
+          "activities": [
+            {"time": "8:00 AM", "place": "Day Trip Options", "description": "Choose: Kamakura (beaches/temples), Nikko (shrines), or Kawagoe ( Edo-period)"},
+            {"time": "All Day", "place": "Day Trip Destination", "description": "Explore chosen destination"},
+            {"time": "Evening", "place": "Return to Tokyo", "description": "Evening in Tokyo"}
+          ]
+        },
+        {
+          "day": 5,
+          "title": "Final Explorations",
+          "activities": [
+            {"time": "8:00 AM", "place": "Shinjuku Gyoen", "description": "Beautiful garden (opens 9:30 AM)"},
+            {"time": "10:00 AM", "place": "Metropolitan Government Building", "description": "Free panoramic views"},
+            {"time": "12:00 PM", "place": "Shinjuku", "description": "Souvenir shopping at depachika"},
+            {"time": "2:00 PM", "place": "Final Sightseeing", "description": "Revisit favorite spots"},
+            {"time": "Evening", "place": "Airport", "description": "Prepare for departure"}
+          ]
+        }
+      ],
+      "highlights": ["Senso-ji Temple", "Shibuya Crossing", "Meiji Shrine", "Tokyo Tower", "Tsukiji Market", "Harajuku"],
+      "bestTime": "Mar-May, Oct-Nov",
+      "tips": "Get a Suica or Pasmo IC card. Download station map app. Book popular restaurants in advance."
+    },
+    {
+      "destination": "Kyoto, Japan",
+      "days": 3,
+      "description": "Ancient capital with thousands of temples, traditional geisha districts, and serene gardens",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Central Kyoto",
+          "activities": [
+            {"time": "8:45 AM", "place": "Nijo Castle", "description": "UNESCO site with 'squeaky floors' (arrive early)"},
+            {"time": "11:00 AM", "place": "Menbakaichida Fire Ramen", "description": "Unique flame-lit ramen experience"},
+            {"time": "1:00 PM", "place": "Kyoto Imperial Palace", "description": "Former Emperor's residence"},
+            {"time": "4:00 PM", "place": "Nishiki Market", "description": "Kyoto's pantry - 130+ food stalls"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Eastern Temples",
+          "activities": [
+            {"time": "8:00 AM", "place": "Kiyomizu-dera Temple", "description": "Famous wooden terrace with panoramic views"},
+            {"time": "10:00 AM", "place": "Fushimi Inari Shrine", "description": "Thousands of torii gates - full hike 2-3 hours"},
+            {"time": "12:00 PM", "place": "Kyoto Station Area", "description": "Lunch"},
+            {"time": "2:00 PM", "place": "Toji Temple", "description": "5-story wooden pagoda"},
+            {"time": "4:00 PM", "place": "Ginkaku-ji", "description": "Beautiful moss gardens"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Arashiyama & Western Kyoto",
+          "activities": [
+            {"time": "7:30 AM", "place": "JR to Saga-Arashiyama", "description": "Early start"},
+            {"time": "8:00 AM", "place": "Togetsukyō Bridge", "description": "Iconic bridge over Katsura River"},
+            {"time": "9:00 AM", "place": "Arashiyama Bamboo Grove", "description": "Go early to avoid crowds"},
+            {"time": "11:00 AM", "place": "Tenryu-ji Temple", "description": "Stunning pond gardens"},
+            {"time": "12:30 PM", "place": "Ryoanji Temple", "description": "Famous rock garden"},
+            {"time": "3:00 PM", "place": "Kinkaku-ji", "description": "Iconic gold-leaf Zen temple"}
+          ]
+        }
+      ],
+      "highlights": ["Fushimi Inari Shrine", "Arashiyama Bamboo Grove", "Kinkaku-ji", "Gion District", "Kiyomizu-dera"],
+      "bestTime": "Mar-May, Oct-Nov",
+      "tips": "Arrive at popular sites at opening time. Use IC card for all transport. Dress modestly for temples."
+    },
+    {
+      "destination": "Rio de Janeiro, Brazil",
+      "days": 3,
+      "description": "Lively city known for stunning beaches, vibrant carnival, and iconic Christ the Redeemer",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Iconic Landmarks",
+          "activities": [
+            {"time": "8:00 AM", "place": "Christ the Redeemer", "description": "Iconic statue atop Corcovado Mountain (book ahead)"},
+            {"time": "12:00 PM", "place": "Lunch", "description": "Brazilian cuisine in Copacabana"},
+            {"time": "2:00 PM", "place": "Sugarloaf Mountain", "description": "Cable car to panoramic views"},
+            {"time": "5:00 PM", "place": "Copacabana Beach", "description": "Sunset walk along the promenade"},
+            {"time": "8:00 PM", "place": "Copacabana", "description": "Dinner at beachfront restaurant"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Culture & Neighborhoods",
+          "activities": [
+            {"time": "8:00 AM", "place": "Santa Teresa", "description": "Bohemian hillside neighborhood"},
+            {"time": "10:00 AM", "place": "Parque das Ruínas", "description": "Ruins Park with city views"},
+            {"time": "12:00 PM", "place": "Yellow Tram", "description": "Iconic ride through the hills"},
+            {"time": "2:00 PM", "place": "Lapa", "description": "Escadaria Selarón mosaic staircase"},
+            {"time": "4:00 PM", "place": "Centro", "description": "Museu do Amanhã (Museum of Tomorrow)"},
+            {"time": "8:00 PM", "place": "Lapa", "description": "Samba music and nightlife"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Beaches & Nature",
+          "activities": [
+            {"time": "8:00 AM", "place": "Ipanema Beach", "description": "Relax at famous beach"},
+            {"time": "12:00 PM", "place": "Leblon", "description": "Upscale beach lunch"},
+            {"time": "2:00 PM", "place": "Tijuca National Park", "description": "Largest urban rainforest - hiking"},
+            {"time": "5:00 PM", "place": "Return to Ipanema", "description": "Final sunset viewing"},
+            {"time": "8:00 PM", "place": "Farewell Dinner", "description": "Traditional Brazilian dinner"}
+          ]
+        }
+      ],
+      "highlights": ["Christ the Redeemer", "Copacabana Beach", "Sugarloaf Mountain", "Ipanema", "Santa Teresa"],
+      "bestTime": "Dec-Mar",
+      "tips": "Book Christ the Redeemer tickets in advance. Use Uber for convenience. Be aware of surroundings at night."
+    },
+    {
+      "destination": "Paris, France",
+      "days": 4,
+      "description": "The City of Light, famous for the Eiffel Tower, Louvre, and world-class cuisine",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Historic Paris & Louvre",
+          "activities": [
+            {"time": "9:00 AM", "place": "Sainte-Chapelle", "description": "Book 9 AM tickets - stunning stained glass"},
+            {"time": "11:00 AM", "place": "Arc de Triomphe", "description": "Climb to rooftop for panoramic views"},
+            {"time": "1:00 PM", "place": "Champs-Élysées", "description": "Lunch at Ladurée for macarons"},
+            {"time": "3:00 PM", "place": "Tuileries Gardens", "description": "Stroll through the gardens"},
+            {"time": "6:30 PM", "place": "Louvre Museum", "description": "Evening entry - see Mona Lisa"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Museums & Eiffel Tower",
+          "activities": [
+            {"time": "10:00 AM", "place": "Musée d'Orsay", "description": "Impressionist collection (arrive early)"},
+            {"time": "12:30 PM", "place": "Train to Versailles", "description": "RER Line C (30-35 min)"},
+            {"time": "2:00 PM", "place": "Palace of Versailles", "description": "State Apartments, Hall of Mirrors"},
+            {"time": "5:00 PM", "place": "Return to Paris", "description": "Walk to Trocadéro for sunset"},
+            {"time": "7:00 PM", "place": "Eiffel Tower", "description": "Sunset visit (book ahead)"},
+            {"time": "9:00 PM", "place": "Seine River Cruise", "description": "Illuminated landmarks from the water"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Shopping & Montmartre",
+          "activities": [
+            {"time": "9:00 AM", "place": "Place Vendôme", "description": "Luxury jewelry boutiques"},
+            {"time": "10:00 AM", "place": "Opéra Garnier", "description": "Stunning Belle Époque architecture"},
+            {"time": "12:00 PM", "place": "Galeries Lafayette", "description": "Historic department store"},
+            {"time": "2:00 PM", "place": "Covered Passages", "description": "Historic shopping arcades"},
+            {"time": "4:00 PM", "place": "Montmartre", "description": "Walk to Sacré-Cœur for views"},
+            {"time": "8:00 PM", "place": "Moulin Rouge", "description": "Famous cabaret show (book weeks ahead)"}
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Le Marais & Latin Quarter",
+          "activities": [
+            {"time": "9:00 AM", "place": "Le Marais", "description": "Historic architecture, Place des Vosges"},
+            {"time": "11:00 AM", "place": "Centre Pompidou", "description": "Modern art museum"},
+            {"time": "1:00 PM", "place": "Le Marais", "description": "Lunch - try falafel on Rue des Rosiers"},
+            {"time": "3:00 PM", "place": "Latin Quarter", "description": "Shakespeare and Company, Sorbonne"},
+            {"time": "5:00 PM", "place": "Luxembourg Gardens", "description": "Relax by the fountain"},
+            {"time": "8:00 PM", "place": "Saint-Germain-des-Prés", "description": "Farewell dinner at classic café"}
+          ]
+        }
+      ],
+      "highlights": ["Eiffel Tower", "Louvre Museum", "Notre-Dame", "Champs-Élysées", "Montmartre", "Versailles"],
+      "bestTime": "Apr-Jun, Sep-Oct",
+      "tips": "Book Eiffel Tower and Louvre tickets 2-3 weeks ahead. Use Paris Museum Pass for multiple sites."
+    },
+    {
+      "destination": "New York, USA",
+      "days": 4,
+      "description": "The Big Apple, known for Times Square, Central Park, and iconic skyline",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Upper Manhattan & Midtown",
+          "activities": [
+            {"time": "9:00 AM", "place": "Metropolitan Museum of Art", "description": "World-class museum (2+ hours)"},
+            {"time": "12:00 PM", "place": "Central Park", "description": "Gapstow Bridge, Bethesda Terrace"},
+            {"time": "2:00 PM", "place": "Fifth Avenue", "description": "Iconic stores and St. Patrick's Cathedral"},
+            {"time": "4:00 PM", "place": "Rockefeller Center", "description": "Top of the Rock for views"},
+            {"time": "7:00 PM", "place": "Broadway", "description": "See a show"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Union Square & Empire State",
+          "activities": [
+            {"time": "9:00 AM", "place": "Union Square", "description": "Strand Bookstore, farmers market"},
+            {"time": "11:00 AM", "place": "Flatiron Building", "description": "Photo op at triangle building"},
+            {"time": "12:00 PM", "place": "Madison Square Park", "description": "Shake Shack original location"},
+            {"time": "2:00 PM", "place": "Empire State Building", "description": "Art Deco masterpiece (book ahead)"},
+            {"time": "4:00 PM", "place": "High Line", "description": "Elevated park walk"},
+            {"time": "6:00 PM", "place": "Chelsea Market", "description": "Food halls and shopping"},
+            {"time": "8:00 PM", "place": "Times Square", "description": "NYC night vibes"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Statue of Liberty & Financial District",
+          "activities": [
+            {"time": "8:00 AM", "place": "Ferry to Statue of Liberty", "description": "Earliest ferry for best experience"},
+            {"time": "11:00 AM", "place": "Ellis Island", "description": "Immigration museum"},
+            {"time": "2:00 PM", "place": "Financial District", "description": "Charging Bull, Wall Street"},
+            {"time": "4:00 PM", "place": "One World Observatory", "description": "Sunset views at One WTC"},
+            {"time": "7:00 PM", "place": "Brooklyn Bridge", "description": "Walk across at night"}
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Brooklyn Exploration",
+          "activities": [
+            {"time": "9:00 AM", "place": "Walk/Bike Brooklyn Bridge", "description": "Cross to Brooklyn"},
+            {"time": "11:00 AM", "place": "Brooklyn Heights", "description": "Historic neighborhood"},
+            {"time": "1:00 PM", "place": "DUMBO", "description": "Iconic Brooklyn Bridge views"},
+            {"time": "3:00 PM", "place": "Brooklyn Botanic Garden", "description": "Serene gardens"},
+            {"time": "6:00 PM", "place": "Final Sunset", "description": "Rooftop bar with Manhattan views"}
+          ]
+        }
+      ],
+      "highlights": ["Central Park", "Statue of Liberty", "Empire State Building", "Times Square", "Brooklyn Bridge", "Metropolitan Museum"],
+      "bestTime": "Apr-Jun, Sep-Nov",
+      "tips": "Book Broadway tickets via TodayTix. Get MetroCard for subway. Pre-book skip-the-line attractions."
+    },
+    {
+      "destination": "Rome, Italy",
+      "days": 4,
+      "description": "The Eternal City, home to ancient ruins like the Colosseum and Vatican City",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Ancient Rome",
+          "activities": [
+            {"time": "8:30 AM", "place": "Colosseum", "description": "Book first time slot (2 hours)"},
+            {"time": "11:00 AM", "place": "Roman Forum", "description": "Ancient downtown (2 hours)"},
+            {"time": "2:00 PM", "place": "Palatine Hill", "description": "Imperial palaces"},
+            {"time": "4:00 PM", "place": "Circus Maximus", "description": "Ancient racetrack"},
+            {"time": "6:00 PM", "place": "Giardino degli Aranci", "description": "Sunset views"},
+            {"time": "8:00 PM", "place": "Trastevere", "description": "Dinner in charming neighborhood"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Baroque & Art",
+          "activities": [
+            {"time": "7:00 AM", "place": "Trevi Fountain", "description": "Sunrise visit to avoid crowds"},
+            {"time": "9:00 AM", "place": "The Pantheon", "description": "Best-preserved ancient Roman building"},
+            {"time": "11:00 AM", "place": "All'Antico Vinaio", "description": "Famous sandwich near Pantheon"},
+            {"time": "12:00 PM", "place": "Piazza Navona", "description": "Bernini's Fountain of Four Rivers"},
+            {"time": "3:00 PM", "place": "Borghese Gallery", "description": "Book required (2 hours)"},
+            {"time": "6:00 PM", "place": "Pincio", "description": "Sunset walk"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Neighborhoods",
+          "activities": [
+            {"time": "9:00 AM", "place": "Campo de' Fiori", "description": "Morning market"},
+            {"time": "11:00 AM", "place": "Castel Sant'Angelo", "description": "Historic fortress (2 hours)"},
+            {"time": "2:00 PM", "place": "Trastevere", "description": "Explore cobblestone streets"},
+            {"time": "4:00 PM", "place": "Santa Maria in Trastevere", "description": "Beautiful church"},
+            {"time": "6:00 PM", "place": "Janiculum Hill", "description": "Panoramic views"},
+            {"time": "8:00 PM", "place": "Trastevere", "description": "Dinner and nightlife"}
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Vatican",
+          "activities": [
+            {"time": "8:30 AM", "place": "Vatican Museums", "description": "Book 3-4 hours in advance"},
+            {"time": "12:00 PM", "place": "St. Peter's Basilica", "description": "Michelangelo's dome"},
+            {"time": "2:00 PM", "place": "Vatican Gardens", "description": "Book ahead"},
+            {"time": "4:00 PM", "place": "Shopping", "description": "Souvenirs in Vatican area"}
+          ]
+        }
+      ],
+      "highlights": ["Colosseum", "Vatican City", "Trevi Fountain", "Roman Forum", "Pantheon", "Trastevere"],
+      "bestTime": "Apr-Jun, Sep-Oct",
+      "tips": "Book Colosseum and Vatican tickets 2-3 months ahead. Dress modestly (cover shoulders/knees) for churches."
+    },
+    {
+      "destination": "Venice, Italy",
+      "days": 3,
+      "description": "Unique city built on water, famous for canals, historic architecture, and romantic atmosphere",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Venice Highlights",
+          "activities": [
+            {"time": "8:00 AM", "place": "Rialto Bridge & Market", "description": "Morning market, iconic views"},
+            {"time": "9:00 AM", "place": "Gondola Ride", "description": "Early = fewer crowds"},
+            {"time": "10:00 AM", "place": "St. Mark's Square", "description": "Piazza San Marco, Campanile"},
+            {"time": "11:00 AM", "place": "St. Mark's Basilica", "description": "Golden mosaics (timed entry)"},
+            {"time": "1:00 PM", "place": "Doge's Palace", "description": "Gothic architecture, Bridge of Sighs"},
+            {"time": "3:00 PM", "place": "Libreria Acqua Alta", "description": "Unique bookstore"},
+            {"time": "6:00 PM", "place": "Fondamenta delle Zattere", "description": "Sunset views"},
+            {"time": "8:00 PM", "place": "Dorsoduro", "description": "Dinner at waterfront restaurant"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Lagoon Islands",
+          "activities": [
+            {"time": "9:30 AM", "place": "Vaporetto to Murano", "description": "Glass-making island"},
+            {"time": "11:00 AM", "place": "Burano", "description": "Colorful houses, lace-making"},
+            {"time": "1:00 PM", "place": "Burano", "description": "Lunch on the island"},
+            {"time": "3:00 PM", "place": "Torcello", "description": "Oldest settlement"},
+            {"time": "5:00 PM", "place": "Return to Venice", "description": "Explore Castello"},
+            {"time": "8:00 PM", "place": "Castello", "description": "Dinner in quiet neighborhood"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Museums & Hidden Gems",
+          "activities": [
+            {"time": "8:30 AM", "place": "Gallerie dell'Accademia", "description": "Venetian art masterpieces"},
+            {"time": "10:30 AM", "place": "Peggy Guggenheim Collection", "description": "Modern art"},
+            {"time": "12:00 PM", "place": "Campo Santa Margherita", "description": "Local market square"},
+            {"time": "1:00 PM", "place": "Cannaregio", "description": "Lunch at local trattoria"},
+            {"time": "3:00 PM", "place": "Jewish Ghetto", "description": "Oldest in Europe"},
+            {"time": "5:00 PM", "place": "Rialto Bridge", "description": "Sunset views"},
+            {"time": "8:00 PM", "place": "Final Dinner", "description": "Farewell at canal-side restaurant"}
+          ]
+        }
+      ],
+      "highlights": ["St Mark's Square", "Rialto Bridge", "Grand Canal", "Doge's Palace", "Murano Glass", "Burano"],
+      "bestTime": "Apr-Jun, Sep-Oct",
+      "tips": "Buy ACTV vaporetto pass (24h €25, 72h €35). Book museum tickets in advance. Check acqua alta forecasts in winter."
+    },
+    {
+      "destination": "Florence, Italy",
+      "days": 3,
+      "description": "Cradle of the Renaissance, home to masterpieces of art and architecture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Culture & Views",
+          "activities": [
+            {"time": "8:30 AM", "place": "Piazza Santa Croce", "description": "Basilica di Santa Croce"},
+            {"time": "9:00 AM", "place": "Coffee", "description": "Ditta Artigianale - best coffee"},
+            {"time": "10:00 AM", "place": "Mercato di Sant'Ambrogio", "description": "Local market"},
+            {"time": "12:30 PM", "place": "Cibreo Trattoria", "description": "Famous lunch (book ahead)"},
+            {"time": "3:00 PM", "place": "Bargello Museum", "description": "Donatello, Michelangelo"},
+            {"time": "6:00 PM", "place": "Piazzale Michelangelo", "description": "Best sunset views"},
+            {"time": "8:30 PM", "place": "Dinner", "description": "Traditional Tuscan dinner"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Duomo & Uffizi",
+          "activities": [
+            {"time": "7:30 AM", "place": "Brunelleschi's Dome", "description": "Climb 463 steps (book ahead)"},
+            {"time": "10:00 AM", "place": "Museo dell'Opera del Duomo", "description": "Duomo treasures"},
+            {"time": "11:30 AM", "place": "Basilica di Santa Maria Novella", "description": "Oldest pharmacy"},
+            {"time": "1:30 PM", "place": "Trattoria Sostanza", "description": "Famous butter chicken"},
+            {"time": "4:00 PM", "place": "Piazza della Signoria", "description": "Open-air sculptures"},
+            {"time": "5:00 PM", "place": "Uffizi Gallery", "description": "Botticelli, Leonardo (book ahead)"},
+            {"time": "8:00 PM", "place": "Ponte Vecchio", "description": "Dinner with sunset"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Oltrarno Artisans",
+          "activities": [
+            {"time": "9:00 AM", "place": "Palazzo Pitti", "description": "Largest Renaissance palace"},
+            {"time": "11:00 AM", "place": "Boboli Gardens", "description": "Beautiful gardens"},
+            {"time": "1:00 PM", "place": "Via Romana", "description": "Shop leather and artisan goods"},
+            {"time": "3:00 PM", "place": "Basilica di Santo Spirito", "description": "Michelangelo's crucifix"},
+            {"time": "5:00 PM", "place": "Santo Spirito", "description": "Aperitivo at local bar"},
+            {"time": "8:00 PM", "place": "Final Dinner", "description": "Farewell in Oltrarno"}
+          ]
+        }
+      ],
+      "highlights": ["Duomo", "Uffizi Gallery", "Ponte Vecchio", "Piazzale Michelangelo", "Mercato Centrale", "Oltrarno"],
+      "bestTime": "Apr-Jun, Sep-Oct",
+      "tips": "Book Uffizi and Galleria dell'Accademia 2-3 months ahead. Walk everywhere - Florence is compact."
+    },
+    {
+      "destination": "Barcelona, Spain",
+      "days": 3,
+      "description": "Vibrant Mediterranean city famous for Gaudí's modernist architecture and lively beach culture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Gaudí & Eixample",
+          "activities": [
+            {"time": "9:00 AM", "place": "Sagrada Família", "description": "Book 2-3 weeks ahead - Gaudí's masterpiece"},
+            {"time": "12:00 PM", "place": "Casa Batlló", "description": "Dragon-like facade on Passeig de Gràcia"},
+            {"time": "2:00 PM", "place": "Casa Milà (La Pedrera)", "description": "Surreal rooftop chimneys"},
+            {"time": "4:00 PM", "place": "La Rambla", "description": "Famous pedestrian street"},
+            {"time": "6:00 PM", "place": "Gothic Quarter", "description": "Medieval alleys"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Gothic Quarter & Born",
+          "activities": [
+            {"time": "9:00 AM", "place": "Barcelona Cathedral", "description": "Gothic masterpiece (free before 12:30 PM)"},
+            {"time": "11:00 AM", "place": "Mercat de la Boqueria", "description": "Iconic covered market"},
+            {"time": "1:00 PM", "place": "El Born", "description": "Basílica de Santa Maria del Mar"},
+            {"time": "3:00 PM", "place": "Parc de la Ciutadella", "description": "Beautiful park with fountain"},
+            {"time": "6:00 PM", "place": "Barceloneta Beach", "description": "Seafood dinner"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Park Güell & Montjuïc",
+          "activities": [
+            {"time": "8:00 AM", "place": "Park Güell", "description": "Mosaic salamander - book early entry"},
+            {"time": "11:00 AM", "place": "Gràcia", "description": "Walk downhill to village-like streets"},
+            {"time": "1:00 PM", "place": "Montjuïc", "description": "Cable car to castle"},
+            {"time": "4:00 PM", "place": "Fundació Joan Miró", "description": "Modern art museum"},
+            {"time": "6:00 PM", "place": "Font Màgica", "description": "Magic Fountain light show"}
+          ]
+        }
+      ],
+      "highlights": ["Sagrada Família", "Park Güell", "La Rambla", "Gothic Quarter", "Casa Batlló", "La Boqueria"],
+      "bestTime": "May-Jun, Sep-Oct",
+      "tips": "Book Sagrada Família and Park Güell 2-3 weeks ahead. Pickpocketing is common on La Rambla."
+    },
+    {
+      "destination": "Bali, Indonesia",
+      "days": 4,
+      "description": "Tropical paradise with forested volcanic mountains, iconic rice paddies, and vibrant arts scene",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Southern Bali",
+          "activities": [
+            {"time": "9:00 AM", "place": "Uluwatu Temple", "description": "Cliffside temple with Kecak dance at sunset"},
+            {"time": "7:00 PM", "place": "Jimbaran Bay", "description": "Beachfront seafood dinner"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Ubud Cultural",
+          "activities": [
+            {"time": "8:00 AM", "place": "Tegalalang Rice Terraces", "description": "UNESCO-recognized terraced paddies"},
+            {"time": "10:00 AM", "place": "Coffee Plantation", "description": "Taste Kopi Luwak"},
+            {"time": "12:00 PM", "place": "Sacred Monkey Forest", "description": "700+ macaques in natural reserve"},
+            {"time": "3:00 PM", "place": "Ubud Palace", "description": "Traditional Balinese architecture"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Nusa Penida",
+          "activities": [
+            {"time": "7:00 AM", "place": "Fast Boat to Nusa Penida", "description": "40-minute ride from Sanur"},
+            {"time": "9:00 AM", "place": "Kelingking Beach", "description": "T-Rex shaped cliff views"},
+            {"time": "11:00 AM", "place": "Manta Bay", "description": "Snorkeling with manta rays"},
+            {"time": "2:00 PM", "place": "Broken Beach", "description": "Natural stone arch"},
+            {"time": "5:00 PM", "place": "Return to Bali", "description": "Sunset at Sanur Beach"}
+          ]
+        },
+        {
+          "day": 4,
+          "title": "Tanah Lot & Seminyak",
+          "activities": [
+            {"time": "8:00 AM", "place": "Pura Ulun Danu Beratan", "description": "Temple floating on lake"},
+            {"time": "11:00 AM", "place": "Tanah Lot Temple", "description": "Iconic sea temple"},
+            {"time": "3:00 PM", "place": "Seminyak Beach", "description": "Sunset and beach clubs"},
+            {"time": "6:00 PM", "place": "Eat Street", "description": "Dinner on Jalan Kayu Aya"}
+          ]
+        }
+      ],
+      "highlights": ["Ubud Rice Terraces", "Tanah Lot", "Uluwatu Temple", "Seminyak Beach", "Nusa Penida", "Monkey Forest"],
+      "bestTime": "Apr-Oct",
+      "tips": "Rent a scooter for flexibility (IDR 70,000-95,000/day). Use biodegradable sunscreen at cenotes."
+    },
+    {
+      "destination": "Santorini, Greece",
+      "days": 2,
+      "description": "Stunning volcanic island famous for whitewashed buildings, blue domes, and spectacular sunsets",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Towns & Wine",
+          "activities": [
+            {"time": "9:00 AM", "place": "Fira", "description": "Explore capital town"},
+            {"time": "11:00 AM", "place": "Imerovigli", "description": "Highest village with caldera views"},
+            {"time": "1:00 PM", "place": "Salt and Pepper", "description": "Best lamb chops in Fira"},
+            {"time": "3:00 PM", "place": "Santo Wines", "description": "Wine tasting with caldera views"},
+            {"time": "6:00 PM", "place": "Akrotiri Lighthouse", "description": "Best sunset spot"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Hike & Sunset Cruise",
+          "activities": [
+            {"time": "8:00 AM", "place": "Hike Fira to Oia", "description": "10km, 3-5 hours with photo stops"},
+            {"time": "1:00 PM", "place": "Ammoudi Bay", "description": "Fresh seafood lunch"},
+            {"time": "3:00 PM", "place": "Catamaran Cruise", "description": "Volcanic hot springs, dinner"},
+            {"time": "7:00 PM", "place": "Oia", "description": "Famous blue domes at sunset"}
+          ]
+        }
+      ],
+      "highlights": ["Oia Sunset", "Fira Town", "Red Beach", "Santo Wines", "Caldera Views", "Akrotiri"],
+      "bestTime": "Apr-Oct",
+      "tips": "Book sunset cruise in advance. Rent car or ATV for flexibility. Start hike early with water."
+    },
+    {
+      "destination": "Bangkok, Thailand",
+      "days": 3,
+      "description": "Chaotic yet captivating city of golden temples, bustling markets, and incredible street food",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Ancient Temples & Chinatown",
+          "activities": [
+            {"time": "8:30 AM", "place": "Grand Palace", "description": "8:30 AM - 3:30 PM, 500 Baht"},
+            {"time": "10:00 AM", "place": "Wat Pho", "description": "Reclining Buddha (46m long)"},
+            {"time": "1:00 PM", "place": "Wat Arun", "description": "Temple of Dawn - climb 82m tower"},
+            {"time": "5:00 PM", "place": "Chinatown", "description": "Yaowarat Road street food"},
+            {"time": "8:00 PM", "place": "Khao San Road", "description": "Legendary backpacker street"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Markets & Views",
+          "activities": [
+            {"time": "9:00 AM", "place": "Chatuchak Weekend Market", "description": "15,000+ stalls (Fri: 6pm-midnight; Sat/Sun: 9am-6pm)"},
+            {"time": "1:00 PM", "place": "Lunch", "description": "Pad thai at market food stalls"},
+            {"time": "3:00 PM", "place": "MOCA", "description": "Museum of Contemporary Art"},
+            {"time": "5:00 PM", "place": "King Power Mahanakhon", "description": "Thailand's highest observation deck"},
+            {"time": "8:00 PM", "place": "Asiatique Riverfront", "description": "Night bazaar with 1,500 boutiques"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Floating Market & Relaxation",
+          "activities": [
+            {"time": "7:00 AM", "place": "Damnoen Saduak", "description": "Day trip - 1.5 hours"},
+            {"time": "10:00 AM", "place": "Longtail Boat", "description": "Tour through canals"},
+            {"time": "1:00 PM", "place": "Mango Sticky Rice", "description": "Try at floating market"},
+            {"time": "3:00 PM", "place": "Thai Massage", "description": "Myth Massage or The Oriental Spa"},
+            {"time": "6:00 PM", "place": "Firefly Tour", "description": "Evening river tour (best May-December)"}
+          ]
+        }
+      ],
+      "highlights": ["Grand Palace", "Wat Arun", "Khao San Road", "Chatuchak Market", "Chinatown", "Wat Pho"],
+      "bestTime": "Nov-Feb",
+      "tips": "Use BTS Skytrain and MRT subway for fast transport. Grab (Thailand's Uber) for fair prices."
+    },
+    {
+      "destination": "Jaipur, India",
+      "days": 3,
+      "description": "The Pink City of Rajasthan, known for royal palaces, vibrant bazaars, and stunning architecture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Golden Triangle",
+          "activities": [
+            {"time": "8:00 AM", "place": "City Palace", "description": "Opens 9:30 AM - four gates representing seasons"},
+            {"time": "10:00 AM", "place": "Jantar Mantar", "description": "UNESCO with 19 astronomical instruments"},
+            {"time": "12:00 PM", "place": "Hawa Mahal", "description": "Palace of Winds with 953 windows"},
+            {"time": "3:00 PM", "place": "Albert Hall Museum", "description": "INR 200"},
+            {"time": "6:00 PM", "place": "Nahargarh Fort", "description": "Sunset over Pink City"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Amber Fort",
+          "activities": [
+            {"time": "8:00 AM", "place": "Amber Fort", "description": "8 AM opening - massive 16th century fort"},
+            {"time": "11:00 AM", "place": "Panna Meena Ka Kund", "description": "Beautiful stepwell"},
+            {"time": "1:00 PM", "place": "Jahal Mahal", "description": "Palace on water"},
+            {"time": "4:00 PM", "place": "Gaitore Cenotaphs", "description": "Golden hour photos"},
+            {"time": "7:00 PM", "place": "Bar Palladio", "description": "Upscale cocktails"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Markets & Culture",
+          "activities": [
+            {"time": "8:00 AM", "place": "Patrika Gate", "description": "Colorful gates - free"},
+            {"time": "10:00 AM", "place": "Bazaars", "description": "Johari Bazaar for textiles and gems"},
+            {"time": "12:00 PM", "place": "Masala Chowk", "description": "Open-air street food market"},
+            {"time": "3:00 PM", "place": "Galtaji Temple", "description": "Monkey Temple"},
+            {"time": "6:00 PM", "place": "Final Shopping", "description": "Pashmina and souvenirs"}
+          ]
+        }
+      ],
+      "highlights": ["Hawa Mahal", "Amber Fort", "City Palace", "Jantar Mantar", "Nahargarh Fort", "Bazaars"],
+      "bestTime": "Oct-Mar",
+      "tips": "Use Uber/Ola for reliable taxis. Buy composite ticket (INR 1000) for most sites. Avoid elephant rides at Amber Fort."
+    },
+    {
+      "destination": "Marrakech, Morocco",
+      "days": 3,
+      "description": "Vibrant city famous for medieval medina, colorful souks, and stunning riads",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Historic Medina",
+          "activities": [
+            {"time": "9:00 AM", "place": "Koutoubia Mosque", "description": "Start at famous minaret"},
+            {"time": "10:00 AM", "place": "Bab Agnaou", "description": "Historic gate"},
+            {"time": "11:00 AM", "place": "Bahia Palace", "description": "19th century Moroccan masterpiece"},
+            {"time": "2:00 PM", "place": "Saadian Tombs", "description": "Hidden 16th century royal tombs"},
+            {"time": "5:00 PM", "place": "Jemaa el-Fnaa", "description": "Sunset from Le Grand Balcon"},
+            {"time": "8:00 PM", "place": "Street Food Tour", "description": "Traditional Moroccan dinner"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Souks & Hammam",
+          "activities": [
+            {"time": "9:00 AM", "place": "Medina Souks", "description": "Haggling essential - start at 1/3 asking price"},
+            {"time": "12:00 PM", "place": "Rooftop Lunch", "description": "L'Mida or DarDar"},
+            {"time": "2:00 PM", "place": "El Badi Palace", "description": "Ruins of former palace"},
+            {"time": "4:00 PM", "place": "La Mamounia", "description": "Drinks at legendary hotel"},
+            {"time": "6:00 PM", "place": "Traditional Hammam", "description": "Authentic spa experience"},
+            {"time": "8:00 PM", "place": "M Bacha", "description": "Dinner with belly dancer"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Gardens Day",
+          "activities": [
+            {"time": "9:00 AM", "place": "Le Jardin Majorelle", "description": "Yves Saint Laurent's blue garden"},
+            {"time": "11:00 AM", "place": "YSL Museum", "description": "Fashion and art"},
+            {"time": "1:00 PM", "place": "Cuisine De Terroir", "description": "Moroccan fusion lunch"},
+            {"time": "3:00 PM", "place": "Le Jardin Secret", "description": "Historic Islamic garden"},
+            {"time": "5:00 PM", "place": "Ben Youssef Madrasa", "description": "Beautiful Quranic school"},
+            {"time": "7:00 PM", "place": "Naranj", "description": "Lebanese dinner"}
+          ]
+        }
+      ],
+      "highlights": ["Jemaa el-Fnaa", "Bahia Palace", "Majorelle Garden", "Saadian Tombs", "Medina Souks", "Bahia Palace"],
+      "bestTime": "Mar-May, Sep-Nov",
+      "tips": "Walking tours recommended for Medina. Hire a guide for souks. Download offline Google Maps."
+    },
+    {
+      "destination": "Cape Town, South Africa",
+      "days": 3,
+      "description": "Stunning coastal city backed by Table Mountain, known for beaches, vineyards, and rich history",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Mountain & Beach",
+          "activities": [
+            {"time": "8:00 AM", "place": "Table Mountain", "description": "Cable car - book 2-3 weeks ahead"},
+            {"time": "12:00 PM", "place": "Kloof Street House", "description": "Victorian mansion restaurant"},
+            {"time": "2:00 PM", "place": "Clifton Beach", "description": "4th Beach best for swimming"},
+            {"time": "5:00 PM", "place": "Kloof Corner", "description": "Sunset hike"},
+            {"time": "8:00 PM", "place": "Club Kloof", "description": "Dinner"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Culture & Food",
+          "activities": [
+            {"time": "9:00 AM", "place": "Bo Kaap", "description": "Walking tour of colorful houses"},
+            {"time": "11:00 AM", "place": "De Waterkant", "description": "Coffee at Ground Art Caffe"},
+            {"time": "1:00 PM", "place": "Food Tour", "description": "Cape Town Essentials Food Tour"},
+            {"time": "5:00 PM", "place": "V&A Waterfront", "description": "Champagne sunset cruise"},
+            {"time": "8:00 PM", "place": "Time Out Market", "description": "Dinner with variety"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Day Trip",
+          "activities": [
+            {"time": "8:00 AM", "place": "Option A: Franschhoek", "description": "Wine Tram - wine tasting"},
+            {"time": "8:00 AM", "place": "Option B: Cape Point", "description": "Boulders Beach penguins + Cape of Good Hope"},
+            {"time": "1:00 PM", "place": "Lunch", "description": "At chosen destination"},
+            {"time": "5:00 PM", "place": "Return", "description": "Back to city"},
+            {"time": "8:00 PM", "place": "Cousins Trattoria", "description": "Famous cheese wheel pasta"}
+          ]
+        }
+      ],
+      "highlights": ["Table Mountain", "Robben Island", "Cape of Good Hope", "V&A Waterfront", "Bo Kaap", "Wine Estates"],
+      "bestTime": "Nov-Mar",
+      "tips": "Uber is super cheap. Book Table Mountain 2-3 weeks ahead. Day 3 tours include transport."
+    },
+    {
+      "destination": "Nice, France",
+      "days": 2,
+      "description": "Glamorous French Riviera city with Mediterranean beaches, Belle Époque architecture, and vibrant Old Town",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "City Center & Old Town",
+          "activities": [
+            {"time": "9:00 AM", "place": "Promenade des Anglais", "description": "Walk along the iconic waterfront promenade"},
+            {"time": "11:00 AM", "place": "Vieux Nice", "description": "Explore narrow colorful streets of Old Town"},
+            {"time": "12:00 PM", "place": "Cours Saleya", "description": "Try socca and local specialties at the market"},
+            {"time": "2:00 PM", "place": "Place Massena", "description": "Neo-classical square with fountains"},
+            {"time": "4:00 PM", "place": "Castle Hill", "description": "Climb for panoramic sunset views"},
+            {"time": "7:00 PM", "place": "Old Town Dinner", "description": "Traditional Niçoise cuisine"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Coastal Exploration",
+          "activities": [
+            {"time": "9:00 AM", "place": "Port Lympia", "description": "Explore the picturesque harbor"},
+            {"time": "11:00 AM", "place": "Mont Boron", "description": "Hike or bike for stunning views"},
+            {"time": "1:00 PM", "place": "Villefranche-sur-Mer", "description": "Charming fishing village (30-min walk)"},
+            {"time": "4:00 PM", "place": "Beach Clubs", "description": "Relax at a private beach"},
+            {"time": "7:00 PM", "place": "Promenade Dinner", "description": "Sunset dinner on the waterfront"}
+          ]
+        }
+      ],
+      "highlights": ["Promenade des Anglais", "Vieux Nice", "Castle Hill", "Port Lympia", "Villefranche-sur-Mer"],
+      "bestTime": "May-Oct",
+      "tips": "All beaches are pebbly - bring water shoes. Use efficient tram system to get around."
+    },
+    {
+      "destination": "San Francisco, USA",
+      "days": 3,
+      "description": "Hilly city famous for Victorian architecture, cable cars, Golden Gate Bridge, and vibrant culture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Golden Gate & Sausalito",
+          "activities": [
+            {"time": "8:00 AM", "place": "Golden Gate Bridge", "description": "Visit Vista Point for iconic photos"},
+            {"time": "10:00 AM", "place": "Bike to Sausalito", "description": "Scenic ride across the bridge"},
+            {"time": "12:00 PM", "place": "Sausalito", "description": "Lunch with waterfront views"},
+            {"time": "3:00 PM", "place": "Ferry Return", "description": "Return by ferry with bay views"},
+            {"time": "6:00 PM", "place": "Fisherman's Wharf", "description": "Explore the area"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Alcatraz & Waterfront",
+          "activities": [
+            {"time": "9:00 AM", "place": "Alcatraz", "description": "Ferry to the famous prison (book ahead)"},
+            {"time": "12:00 PM", "place": "Pier 39", "description": "Sea lions and lunch"},
+            {"time": "2:00 PM", "place": "Lombard Street", "description": "Crooked street photos"},
+            {"time": "4:00 PM", "place": "Coit Tower", "description": "Panoramic city views"},
+            {"time": "7:00 PM", "place": "Chinatown", "description": "Dinner in oldest Chinatown in US"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Culture & Neighborhoods",
+          "activities": [
+            {"time": "9:00 AM", "place": "Ferry Building", "description": "Farmers market and artisan shops"},
+            {"time": "11:00 AM", "place": "Embarcadero", "description": "Waterfront walk"},
+            {"time": "1:00 PM", "place": "North Beach", "description": "Little Italy - lunch at Caffe Trieste"},
+            {"time": "3:00 PM", "place": "Cable Car Ride", "description": "Historic ride up Hyde Street"},
+            {"time": "6:00 PM", "place": "Union Square", "description": "Shopping and dinner"}
+          ]
+        }
+      ],
+      "highlights": ["Golden Gate Bridge", "Alcatraz", "Fisherman's Wharf", "Cable Cars", "Chinatown", "Sausalito"],
+      "bestTime": "Sep-Nov",
+      "tips": "No car needed - use BART, buses, and cable cars. Summer fog is common. Book Alcatraz weeks ahead."
+    },
+    {
+      "destination": "Miami, USA",
+      "days": 3,
+      "description": "Vibrant coastal city with beautiful beaches, Art Deco architecture, and Latin American culture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "South Beach",
+          "activities": [
+            {"time": "9:00 AM", "place": "Ocean Drive", "description": "Explore Art Deco Historic District"},
+            {"time": "11:00 AM", "place": "South Beach", "description": "Swim and sunbathe"},
+            {"time": "1:00 PM", "place": "Lunch at Beach Shack", "description": "Try Cuban sandwich"},
+            {"time": "3:00 PM", "place": "Lincoln Road", "description": "Shopping and people-watching"},
+            {"time": "7:00 PM", "place": "South Beach Nightlife", "description": "Dinner and clubs"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Everglades & Culture",
+          "activities": [
+            {"time": "8:00 AM", "place": "Everglades National Park", "description": "Airboat tour (early for wildlife)"},
+            {"time": "12:00 PM", "place": "Return to City", "description": "Lunch near hotel"},
+            {"time": "3:00 PM", "place": "Wynwood Walls", "description": "Street art heaven"},
+            {"time": "6:00 PM", "place": "Little Havana", "description": "Calle Ocho - Cuban culture and dinner"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Key Biscayne & Downtown",
+          "activities": [
+            {"time": "9:00 AM", "place": "Key Biscayne", "description": "Crandon Park Beach"},
+            {"time": "12:00 PM", "place": "Bayside Marketplace", "description": "Waterfront shopping and lunch"},
+            {"time": "2:00 PM", "place": "Downtown", "description": "Explore Brickell and FTX Arena"},
+            {"time": "5:00 PM", "place": "Sunset Cruise", "description": "Bayside sunset sail"},
+            {"time": "8:00 PM", "place": "Farewell Dinner", "description": "Seafood at Key Biscayne"}
+          ]
+        }
+      ],
+      "highlights": ["South Beach", "Art Deco District", "Everglades", "Wynwood Walls", "Little Havana", "Key Biscayne"],
+      "bestTime": "Dec-Apr",
+      "tips": "Rent a car to access Everglades and Key Biscayne. Use free trolley in downtown. Best weather Nov-Dec."
+    },
+    {
+      "destination": "Madrid, Spain",
+      "days": 3,
+      "description": "Spain's capital known for world-class museums, royal palaces, and vibrant tapas culture",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Historic Center",
+          "activities": [
+            {"time": "9:00 AM", "place": "Puerta del Sol", "description": "Spain's symbolic center"},
+            {"time": "10:00 AM", "place": "Plaza Mayor", "description": "Historic square and shops"},
+            {"time": "12:00 PM", "place": "Mercado de San Miguel", "description": "Gourmet tapas market"},
+            {"time": "2:00 PM", "place": "Royal Palace", "description": "Largest royal palace in Western Europe"},
+            {"time": "5:00 PM", "place": "Almudena Cathedral", "description": "Free entry, dome views"},
+            {"time": "8:00 PM", "place": "La Latina", "description": "Tapas crawl"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Art & Parks",
+          "activities": [
+            {"time": "9:00 AM", "place": "Prado Museum", "description": "Velázquez, Goya (arrive at opening)"},
+            {"time": "1:00 PM", "place": "Retiro Park", "description": "Rowboats and Crystal Palace"},
+            {"time": "4:00 PM", "place": "Thyssen-Bornemisza", "description": "European art collection"},
+            {"time": "7:00 PM", "place": "Gran Vía", "description": "Shopping and dinner"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Neighborhoods",
+          "activities": [
+            {"time": "9:00 AM", "place": "El Rastro Market", "description": "Sunday flea market (arrive early)"},
+            {"time": "12:00 PM", "place": "Malasaña", "description": "Hipster cafes and vintage shops"},
+            {"time": "2:00 PM", "place": "Chueca", "description": "Colorful LGBTQ+ neighborhood"},
+            {"time": "4:00 PM", "place": "Matadero Madrid", "description": "Avant-garde art center"},
+            {"time": "8:00 PM", "place": "Calle Cava Baja", "description": "Tapas dinner"}
+          ]
+        }
+      ],
+      "highlights": ["Royal Palace", "Prado Museum", "Retiro Park", "Plaza Mayor", "Gran Vía", "El Rastro"],
+      "bestTime": "Apr-Jun, Sep-Nov",
+      "tips": "Eat on Spanish schedule - lunch 2-4 PM, dinner 9-11 PM. Free museum hours: Prado last 2 hours weekdays."
+    },
+    {
+      "destination": "Chiang Mai, Thailand",
+      "days": 3,
+      "description": "Mountain city in northern Thailand known for ancient temples, vibrant night markets, and elephant sanctuaries",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Old City Temples",
+          "activities": [
+            {"time": "8:00 AM", "place": "Wat Chedi Luang", "description": "14th-century temple in Old City"},
+            {"time": "9:00 AM", "place": "Wat Phra Singh", "description": "Most revered temple in Chiang Mai"},
+            {"time": "11:00 AM", "place": "Wat Chiang Man", "description": "Oldest temple in the city"},
+            {"time": "12:00 PM", "place": "Khao Soi Lunch", "description": "Try famous Khao Soi noodle curry"},
+            {"time": "3:00 PM", "place": "Night Bazaar", "description": "Shopping and dinner"},
+            {"time": "7:00 PM", "place": "Sunday Walking Street", "description": "If Sunday - huge night market"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Doi Suthep & Culture",
+          "activities": [
+            {"time": "8:00 AM", "place": "Doi Suthep", "description": "Hike Monk's Trail or drive to mountain temple"},
+            {"time": "10:00 AM", "place": "Wat Phra That Doi Suthep", "description": "Golden pagoda with views"},
+            {"time": "12:00 PM", "place": "Cooking Class", "description": "Market tour and Thai cooking (book ahead)"},
+            {"time": "4:00 PM", "place": "Nimman Road", "description": "Trendy cafes and boutique shops"},
+            {"time": "7:00 PM", "place": "Dinner", "description": "Thai massage and dinner"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Elephants & Nature",
+          "activities": [
+            {"time": "8:00 AM", "place": "Elephant Nature Park", "description": "Ethical elephant sanctuary (book weeks ahead)"},
+            {"time": "1:00 PM", "place": "Return to City", "description": "Lunch"},
+            {"time": "3:00 PM", "place": "Sticky Waterfalls", "description": "Bua Tong - climb up the waterfall"},
+            {"time": "6:00 PM", "place": "Final Evening", "description": "Sunset at Old City wall"}
+          ]
+        }
+      ],
+      "highlights": ["Wat Phra That Doi Suthep", "Old City Temples", "Night Bazaar", "Elephant Nature Park", "Khao Soi", "Sunday Walking Street"],
+      "bestTime": "Nov-Feb",
+      "tips": "Avoid Feb-April (burning season, poor air quality). Book elephant sanctuary in advance. Use songthaews (red trucks)."
+    },
+    {
+      "destination": "Athens, Greece",
+      "days": 2,
+      "description": "Ancient city with Acropolis, Parthenon, and rich Greek history combined with modern vibrancy",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Ancient Sites",
+          "activities": [
+            {"time": "8:00 AM", "place": "Acropolis", "description": "Arrive at opening to avoid crowds"},
+            {"time": "10:00 AM", "place": "Parthenon", "description": "Iconic temple atop the hill"},
+            {"time": "11:00 AM", "place": "Ancient Agora", "description": "Temple of Hephaestus"},
+            {"time": "1:00 PM", "place": "Plaka", "description": "Lunch in oldest neighborhood"},
+            {"time": "3:00 PM", "place": "Acropolis Museum", "description": "Modern museum below the hill"},
+            {"time": "6:00 PM", "place": "Sunset", "description": "A for Athens rooftop views"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Culture & Views",
+          "activities": [
+            {"time": "9:00 AM", "place": "National Archaeological Museum", "description": "11,000+ exhibits (3+ hours)"},
+            {"time": "1:00 PM", "place": "Monastiraki", "description": "Flea market and lunch"},
+            {"time": "3:00 PM", "place": "Mount Lycabettus", "description": "Cable car or hike for 360° views"},
+            {"time": "6:00 PM", "place": "Psyrri", "description": "Funky bars and dinner"},
+            {"time": "8:00 PM", "place": "Syntagma Square", "description": "Changing of the guard"}
+          ]
+        }
+      ],
+      "highlights": ["Acropolis", "Parthenon", "Plaka", "Acropolis Museum", "Mount Lycabettus", "Ancient Agora"],
+      "bestTime": "Apr-Jun, Sep-Oct",
+      "tips": "Book Acropolis tickets online in advance. Most sites require timed entry. Avoid July-August heat."
+    },
+    {
+      "destination": "Goa, India",
+      "days": 3,
+      "description": "India's coastal paradise with pristine beaches, Portuguese heritage, and lively party scene",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "North Goa Beaches",
+          "activities": [
+            {"time": "9:00 AM", "place": "Baga Beach", "description": "Sunrise walk and beach breakfast"},
+            {"time": "11:00 AM", "place": "Water Sports", "description": "Parasailing, jet ski at Baga"},
+            {"time": "1:00 PM", "place": "Britto's", "description": "Famous beach shack lunch"},
+            {"time": "3:00 PM", "place": "Anjuna Market", "description": "Wednesday flea market (if Wednesday)"},
+            {"time": "7:00 PM", "place": "Club Tito's", "description": "North Goa's famous club"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "South Goa & Culture",
+          "activities": [
+            {"time": "9:00 AM", "place": "Basilica of Bom Jesus", "description": "UNESCO church from 1594"},
+            {"time": "11:00 AM", "place": "Fontainhas", "description": "Latin Quarter with Portuguese houses"},
+            {"time": "1:00 PM", "place": "Coconut Grove", "description": "Traditional Goan lunch"},
+            {"time": "3:00 PM", "place": "Fort Aguada", "description": "17th-century Portuguese fort"},
+            {"time": "6:00 PM", "place": "Colva Beach", "description": "Sunset and relaxation"},
+            {"time": "8:00 PM", "place": "Dinner", "description": "Seafood at shack"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Spice Plantations & Relax",
+          "activities": [
+            {"time": "9:00 AM", "place": "Spice Plantation Tour", "description": "Learn about Goan spices and lunch"},
+            {"time": "1:00 PM", "place": "Return", "description": "Lunch at plantation"},
+            {"time": "3:00 PM", "place": "Dudhsagar Falls", "description": "Day trip to famous waterfall (monsoon season)"},
+            {"time": "6:00 PM", "place": "Beach", "description": "Final swim"},
+            {"time": "8:00 PM", "place": "Farewell Dinner", "description": "Candlelight beach dinner"}
+          ]
+        }
+      ],
+      "highlights": ["Baga Beach", "Basilica of Bom Jesus", "Fort Aguada", "Anjuna Market", "Spice Plantations", "Colva Beach"],
+      "bestTime": "Nov-Mar",
+      "tips": "Rent a scooter (INR 300-500/day). Wednesday is Anjuna Market day. North Goa is party-focused, South Goa is relaxed."
+    },
+    {
+      "destination": "Queenstown, New Zealand",
+      "days": 3,
+      "description": "Adventure capital of the world set against dramatic mountains, crystal lakes, and thrilling activities",
+      "daysDetail": [
+        {
+          "day": 1,
+          "title": "Lake & City",
+          "activities": [
+            {"time": "9:00 AM", "place": "Lake Wakatipu", "description": "Morning walk along the lake"},
+            {"time": "10:00 AM", "place": "Skyline Gondola", "description": "Bob's Peak for panoramic views"},
+            {"time": "12:00 PM", "place": "Lunch", "description": "At the gondola village"},
+            {"time": "2:00 PM", "place": "TSS Earnslaw", "description": "Historic steamship cruise"},
+            {"time": "5:00 PM", "place": "Sunset", "description": "Lakefront stroll"},
+            {"time": "8:00 PM", "place": "Fergburger", "description": "Famous burger dinner"}
+          ]
+        },
+        {
+          "day": 2,
+          "title": "Adventure Day",
+          "activities": [
+            {"time": "8:00 AM", "place": "Kawarau Bridge", "description": "Bungee jumping at the original site"},
+            {"time": "11:00 AM", "place": "Shotover Jet", "description": "Thrilling jet boat ride"},
+            {"time": "1:00 PM", "place": "Arrowtown", "description": "Historic gold mining town"},
+            {"time": "4:00 PM", "place": "Onsen Day Spa", "description": "Hot pools and massage"},
+            {"time": "7:00 PM", "place": "Pedro's House of Lamb", "description": "Famous lamb shoulder dinner"}
+          ]
+        },
+        {
+          "day": 3,
+          "title": "Milford Sound",
+          "activities": [
+            {"time": "7:00 AM", "place": "Milford Sound", "description": "4-hour drive or scenic flight"},
+            {"time": "10:00 AM", "place": "Cruise", "description": "Fjordland cruise with waterfalls"},
+            {"time": "1:00 PM", "place": "Lunch", "description": "On the boat"},
+            {"time": "3:00 PM", "place": "Return", "description": "Drive back (or fly)"},
+            {"time": "7:00 PM", "place": "Farewell", "description": "Final dinner in town"}
+          ]
+        }
+      ],
+      "highlights": ["Milford Sound", "Skyline Gondola", "Kawarau Bungee", "Arrowtown", "Lake Wakatipu", "TSS Earnslaw"],
+      "bestTime": "Dec-Feb (summer)",
+      "tips": "Rent a car for Milford Sound and Arrowtown. Book adventure activities in advance. Weather changes quickly."
+    }
+  ]
+}

@@ -258,6 +258,7 @@
       <li><a href="contact.html" class="nav-link">Contact Us</a></li>
       <li><a href="favorites.html" class="nav-link">♥ Favorites</a></li>
       <li><a href="destinations.html" class="nav-link active">Destinations</a></li>
+      <li><a href="bookings.html" class="nav-link">Book Now</a></li>
     </ul>
   </nav>
 
@@ -324,6 +325,14 @@
       <div class="detail-content" id="detailContent">
         <!-- Populated by JS -->
       </div>
+    </div>
+  </div>
+
+  <!-- ITINERARY MODAL -->
+  <div class="detail-overlay" id="itineraryModal" hidden onclick="closeItineraryModal(event)">
+    <div class="detail-panel" style="max-width:800px" onclick="event.stopPropagation()">
+      <button class="detail-close" onclick="closeItineraryModal()" aria-label="Close">✕</button>
+      <div id="itineraryModalContent"></div>
     </div>
   </div>
 
@@ -643,6 +652,12 @@
       .detail-infographics { grid-template-columns: repeat(2, 1fr); }
       .detail-actions { flex-direction: column; }
     }
+    .itinerary-day-section {
+      display: none;
+    }
+    .itinerary-day-section.active {
+      display: block;
+    }
   </style>
   <script>
     // Destinations page data
@@ -903,6 +918,9 @@
             <button class="detail-btn detail-btn-secondary" onclick="shareDetailDestination('${escapeHtml(dest.name).replace(/'/g, "\\'")}', '${escapeHtml(dest.description).replace(/'/g, "\\'")}')">
               ↗ Share
             </button>
+            <button class="detail-btn detail-btn-secondary" id="detailItineraryBtn" onclick="viewDetailItinerary('${escapeHtml(dest.name).replace(/'/g, "\\'")}', event)">
+              📋 Itinerary
+            </button>
             ${destCoords[dest.name] ? `
             <a href="https://www.google.com/maps/search/?api=1&query=${destCoords[dest.name][0]},${destCoords[dest.name][1]}" target="_blank" rel="noopener noreferrer" class="detail-btn detail-btn-secondary" style="text-decoration:none">
               🗺️ View on Map
@@ -1026,7 +1044,132 @@
       if (!overlay.hasAttribute('hidden') && e.key === 'Escape') {
         closeDetailOverlay();
       }
+      const itineraryModal = document.getElementById('itineraryModal');
+      if (!itineraryModal.hasAttribute('hidden') && e.key === 'Escape') {
+        closeItineraryModal();
+      }
     });
+
+    // View Itinerary from Detail Overlay
+    let detailItineraryData = [];
+    
+    async function viewDetailItinerary(destName, event) {
+      if (event) event.stopPropagation();
+      
+      if (detailItineraryData.length === 0) {
+        try {
+          const response = await fetch('itineraries.json');
+          const data = await response.json();
+          detailItineraryData = data.itineraries || [];
+        } catch (e) {
+          console.error('Failed to load itinerary data:', e);
+        }
+      }
+      
+      const it = detailItineraryData.find(i => i.destination === destName);
+      if (!it) {
+        showToast('Itinerary not available for this destination');
+        return;
+      }
+      
+      closeDetailOverlay();
+      
+      // Show itinerary modal inline
+      showItineraryModal(it);
+    }
+
+    function showItineraryModal(it) {
+      const modal = document.getElementById('itineraryModal');
+      const content = document.getElementById('itineraryModalContent');
+      
+      content.innerHTML = `
+        <div class="detail-hero">
+          <img src="${it.imageUrl || getDestinationImage(it.destination)}" alt="${escapeHtml(it.destination)}" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800'" />
+          <div class="detail-hero-overlay"></div>
+          <div class="detail-hero-content">
+            <span class="detail-type">${it.days} Day Itinerary</span>
+            <h2 class="detail-title">${escapeHtml(it.destination)}</h2>
+          </div>
+        </div>
+        <div class="detail-body">
+          <div class="detail-header">
+            <div style="display:inline-flex;align-items:center;gap:0.5rem;padding:0.4rem 0.8rem;background:rgba(201,168,76,0.1);border-radius:50px;font-size:0.8rem;color:var(--warm);margin-bottom:0.75rem">
+              <span>📅</span> ${it.days} Days
+            </div>
+            <p class="detail-description">${escapeHtml(it.description)}</p>
+          </div>
+          <div style="display:flex;gap:0.5rem;margin-bottom:1.5rem;overflow-x:auto;padding-bottom:0.5rem" id="itineraryDaysNav">
+            ${it.daysDetail.map((d, i) => `
+              <button class="filter-tab ${i + 1 === 1 ? 'active' : ''}" onclick="switchDetailItineraryDay(${i + 1}, ${it.days})" style="white-space:nowrap">
+                Day ${d.day}
+              </button>
+            `).join('')}
+          </div>
+          ${it.daysDetail.map((d, i) => `
+            <div class="itinerary-day-section ${i + 1 === 1 ? 'active' : ''}" data-day="${i + 1}">
+              <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--ink);margin-bottom:1rem">${escapeHtml(d.title)}</h3>
+              <ul style="list-style:none">
+                ${d.activities.map(a => `
+                  <li style="display:flex;gap:1rem;padding:0.75rem 0;border-bottom:1px solid rgba(26,22,18,0.06)">
+                    <div style="flex-shrink:0;width:70px;font-size:0.75rem;font-weight:600;color:var(--gold)">${escapeHtml(a.time)}</div>
+                    <div style="flex:1">
+                      <div style="font-weight:600;font-size:0.9rem;color:var(--ink);margin-bottom:0.2rem">${escapeHtml(a.place)}</div>
+                      <div style="font-size:0.8rem;color:var(--muted)">${escapeHtml(a.description)}</div>
+                    </div>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          `).join('')}
+          ${it.tips ? `
+            <div style="margin-top:1.5rem;padding:1rem;background:var(--sand);border-radius:8px">
+              <h4 style="font-family:'Cormorant Garamond',serif;font-size:1rem;color:var(--ink);margin-bottom:0.5rem">💡 Travel Tips</h4>
+              <p style="font-size:0.8rem;color:var(--muted);line-height:1.6">${escapeHtml(it.tips)}</p>
+            </div>
+          ` : ''}
+          <div style="display:flex;gap:0.75rem;margin-top:1.5rem">
+            <a href="bookings.html" class="detail-btn detail-btn-primary" style="flex:1;text-decoration:none;text-align:center">Book This Trip</a>
+          </div>
+        </div>
+      `;
+      
+      modal.removeAttribute('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function switchDetailItineraryDay(day, totalDays) {
+      document.querySelectorAll('#itineraryDaysNav .filter-tab').forEach((tab, i) => {
+        tab.classList.toggle('active', i + 1 === day);
+      });
+      document.querySelectorAll('.itinerary-day-section').forEach((section, i) => {
+        section.classList.toggle('active', i + 1 === day);
+      });
+    }
+
+    function closeItineraryModal(event) {
+      if (event && event.target !== event.currentTarget) return;
+      const modal = document.getElementById('itineraryModal');
+      modal.setAttribute('hidden', '');
+      document.body.style.overflow = '';
+    }
+
+    function getDestinationImage(destName) {
+      const images = {
+        'Sydney, Australia': 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800',
+        'Melbourne, Australia': 'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800',
+        'Tokyo, Japan': 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800',
+        'Kyoto, Japan': 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800',
+        'Paris, France': 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
+        'New York, USA': 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800',
+        'Rome, Italy': 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800',
+        'Venice, Italy': 'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=800',
+        'Florence, Italy': 'https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?w=800',
+        'Barcelona, Spain': 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800',
+        'Bali, Indonesia': 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800',
+        'Santorini, Greece': 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800'
+      };
+      return images[destName] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800';
+    }
   </script>
 </body>
 </html>

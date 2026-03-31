@@ -401,6 +401,11 @@ function displayResults(items, category) {
                   title="Share this destination">
             ↗ Share
           </button>
+          <button class="result-btn result-btn-itinerary"
+                  onclick="openItineraryFromSearch('${escapedName.replace(/'/g, "\\'")}', event)"
+                  title="View itinerary">
+            📋 Itinerary
+          </button>
           <button class="result-btn result-btn-book"
                   onclick="openBookingModal('${escapedName.replace(/'/g, "\\'")}', '${escapeHtml(item.imageUrl).replace(/'/g, "\\'")}', '${escapedName.replace(/'/g, "\\'")}')">
             Book Now
@@ -1348,4 +1353,147 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+// ---- ITINERARY FUNCTIONS ----
+let itineraryData = [];
+let currentItineraryDestination = null;
+
+async function loadItineraryData() {
+  if (itineraryData.length === 0) {
+    try {
+      const response = await fetch('itineraries.json');
+      const data = await response.json();
+      itineraryData = data.itineraries || [];
+    } catch (e) {
+      console.error('Failed to load itinerary data:', e);
+    }
+  }
+  return itineraryData;
+}
+
+async function openItineraryFromSearch(destName, event) {
+  if (event) event.stopPropagation();
+  await loadItineraryData();
+  const it = itineraryData.find(i => i.destination === destName);
+  if (!it) {
+    showToast('Itinerary not available for this destination');
+    return;
+  }
+  openItineraryModal(it);
+}
+
+function openItineraryModal(it) {
+  currentItineraryDestination = it;
+  
+  // Check if modal already exists, if not create it
+  let modal = document.getElementById('searchItineraryModal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'searchItineraryModal';
+    modal.className = 'modal-overlay';
+    modal.setAttribute('hidden', '');
+    modal.onclick = function(e) { if (e.target === modal) closeItineraryModal(); };
+    document.body.appendChild(modal);
+  }
+
+  modal.innerHTML = `
+    <div class="modal-panel itinerary-panel" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeItineraryModal()" aria-label="Close">✕</button>
+      <div class="itinerary-content">
+        <div class="itinerary-hero">
+          <img src="${getItineraryImage(it.destination)}" alt="${it.destination}" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800'" />
+          <div class="itinerary-hero-overlay"></div>
+          <div class="itinerary-hero-content">
+            <span class="itinerary-type">${it.days} Day Itinerary</span>
+            <h2 class="itinerary-title">${it.destination}</h2>
+          </div>
+        </div>
+        <div class="itinerary-body">
+          <div class="itinerary-header">
+            <div class="itinerary-days-badge">
+              <span>📅</span> ${it.days} Days
+            </div>
+            <p class="itinerary-desc">${it.description}</p>
+          </div>
+          <div class="itinerary-days-nav">
+            ${it.daysDetail.map((d, i) => `
+              <button class="itinerary-day-tab ${i + 1 === 1 ? 'active' : ''}" onclick="switchSearchItineraryDay(${i + 1})">
+                Day ${d.day}
+              </button>
+            `).join('')}
+          </div>
+          ${it.daysDetail.map((d, i) => `
+            <div class="itinerary-day-content ${i + 1 === 1 ? 'active' : ''}" data-day="${i + 1}">
+              <h3 class="itinerary-day-title">${d.title}</h3>
+              <ul class="itinerary-activities">
+                ${d.activities.map(a => `
+                  <li class="itinerary-activity">
+                    <div class="itinerary-activity-time">${a.time}</div>
+                    <div class="itinerary-activity-details">
+                      <div class="itinerary-activity-place">${a.place}</div>
+                      <div class="itinerary-activity-desc">${a.description}</div>
+                    </div>
+                  </li>
+                `).join('')}
+              </ul>
+            </div>
+          `).join('')}
+          ${it.tips ? `
+            <div class="itinerary-tips">
+              <h4>💡 Travel Tips</h4>
+              <p>${it.tips}</p>
+            </div>
+          ` : ''}
+          <div class="itinerary-actions">
+            <button class="booking-btn booking-btn-primary" onclick="closeItineraryModal(); setTimeout(() => openBookingModal('${escapeHtml(it.destination).replace(/'/g, "\\'")}', null), 300)">
+              Book This Trip
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
+
+  modal.removeAttribute('hidden');
+  document.body.style.overflow = 'hidden';
+}
+
+function getItineraryImage(destName) {
+  const images = {
+    'Sydney, Australia': 'https://images.unsplash.com/photo-1506973035872-a4ec16b8e8d9?w=800',
+    'Melbourne, Australia': 'https://images.unsplash.com/photo-1514395462725-fb4566210144?w=800',
+    'Tokyo, Japan': 'https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?w=800',
+    'Kyoto, Japan': 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=800',
+    'Paris, France': 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?w=800',
+    'New York, USA': 'https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?w=800',
+    'Rome, Italy': 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?w=800',
+    'Venice, Italy': 'https://images.unsplash.com/photo-1514890547357-a9ee288728e0?w=800',
+    'Florence, Italy': 'https://images.unsplash.com/photo-1543429257-3eb0b65d9c58?w=800',
+    'Barcelona, Spain': 'https://images.unsplash.com/photo-1583422409516-2895a77efded?w=800',
+    'Bali, Indonesia': 'https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=800',
+    'Santorini, Greece': 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800',
+    'Bangkok, Thailand': 'https://images.unsplash.com/photo-1563492065599-3520f775eeed?w=800',
+    'Jaipur, India': 'https://images.unsplash.com/photo-1603262110263-fb0112e7cc33?w=800',
+    'Marrakech, Morocco': 'https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=800',
+    'Cape Town, South Africa': 'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?w=800'
+  };
+  return images[destName] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800';
+}
+
+function switchSearchItineraryDay(day) {
+  document.querySelectorAll('.itinerary-day-tab').forEach((tab, i) => {
+    tab.classList.toggle('active', i + 1 === day);
+  });
+  document.querySelectorAll('.itinerary-day-content').forEach((content, i) => {
+    content.classList.toggle('active', i + 1 === day);
+  });
+}
+
+function closeItineraryModal() {
+  const modal = document.getElementById('searchItineraryModal');
+  if (modal) {
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
 }
