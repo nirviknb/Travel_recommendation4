@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>My Bookings — Wanderlust</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" /></noscript>
+  <link rel="stylesheet" href="travel_recommendation.css"/>
+  <link rel="stylesheet" href="destinations.css"/>
+  <style>
+    .bookings-section {
+      padding: 7rem 3rem 5rem;
+      background: var(--cream);
+      min-height: 100vh;
+    }
+    .bookings-header {
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto 3rem;
+    }
+    .bookings-count {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin-top: 0.5rem;
+    }
+    .bookings-empty {
+      text-align: center;
+      padding: 4rem 2rem;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+    .bookings-empty-icon {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      opacity: 0.4;
+      color: var(--gold);
+    }
+    .bookings-empty h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 400;
+      margin-bottom: 0.5rem;
+      color: var(--ink);
+    }
+    .bookings-empty p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+    .bookings-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .booking-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+    }
+    .booking-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 60px rgba(26,22,18,0.18);
+    }
+    .booking-card-img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+    }
+    .booking-card-body {
+      padding: 1.5rem;
+    }
+    .booking-card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.75rem;
+    }
+    .booking-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(56, 142, 60, 0.1);
+      color: var(--success);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 50px;
+    }
+    .booking-date {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .booking-card h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.4rem;
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 1rem;
+    }
+    .booking-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      padding: 1rem 0;
+      border-top: 1px solid rgba(26,22,18,0.06);
+      border-bottom: 1px solid rgba(26,22,18,0.06);
+      margin-bottom: 1rem;
+    }
+    .booking-detail-item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .booking-detail-item strong {
+      color: var(--ink);
+      font-weight: 500;
+      width: 80px;
+      flex-shrink: 0;
+    }
+    .booking-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+    @media (max-width: 900px) {
+      .bookings-section { padding: 5rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Skip Navigation -->
+  <a href="#results" class="skip-link">Skip to content</a>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar--simple" id="navbar">
+    <div class="nav-brand">
+      <a href="travel_recommendation.html" style="text-decoration:none;display:flex;align-items:center;gap:0.5rem">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Wanderlust</span>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="travel_recommendation.html" class="nav-link">Home</a></li>
+      <li><a href="about.html" class="nav-link">About Us</a></li>
+      <li><a href="contact.html" class="nav-link">Contact Us</a></li>
+      <li><a href="favorites.html" class="nav-link">♥ Favorites</a></li>
+      <li><a href="destinations.html" class="nav-link">Destinations</a></li>
+      <li><a href="bookings.html" class="nav-link active">My Bookings</a></li>
+    </ul>
+  </nav>
+
+  <!-- BOOKINGS SECTION -->
+  <section class="bookings-section" id="bookings">
+    <div class="bookings-header">
+      <p class="section-label">Your Itineraries</p>
+      <h1 class="section-title" style="font-size:clamp(2rem,4vw,3rem)">My Bookings</h1>
+      <p class="bookings-count" id="bookingsCount"></p>
+    </div>
+    <div class="bookings-grid" id="bookingsGrid"></div>
+    <div class="bookings-empty" id="bookingsEmpty" style="display:none">
+      <div class="bookings-empty-icon">🎟️</div>
+      <h3>No Trips Planned Yet</h3>
+      <p>Your upcoming adventures will appear here. Start exploring our world-class destinations.</p>
+      <a href="destinations.html" class="btn-book" style="display:inline-block;text-decoration:none">Find Your Next Trip</a>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter-section">
+    <div class="newsletter-inner">
+      <span class="newsletter-icon">✦</span>
+      <h2 class="newsletter-title">Stay in the Loop</h2>
+      <p class="newsletter-sub">Get curated travel guides, exclusive deals, and destination inspiration delivered to your inbox.</p>
+      <form class="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+        <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="Your email address" required />
+        <button type="submit" class="newsletter-btn">Subscribe</button>
+      </form>
+      <p class="newsletter-success" id="newsletterSuccess">✦ Welcome aboard! Check your inbox for a special travel guide.</p>
+    </div>
+  </section>
+
+  <!-- DETAIL & ITINERARY MODALS -->
+  <div class="detail-overlay" id="detailOverlay" hidden onclick="closeDetailOverlay(event)">
+    <div class="detail-panel" onclick="event.stopPropagation()" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <button class="detail-close" onclick="closeDetailOverlay()" aria-label="Close details">✕</button>
+      <div class="detail-content" id="detailContent">
+      </div>
+    </div>
+  </div>
+
+  <div class="detail-overlay" id="itineraryModal" hidden onclick="closeItineraryModal(event)">
+    <div class="detail-panel" style="max-width:800px" onclick="event.stopPropagation()">
+      <button class="detail-close" onclick="closeItineraryModal()" aria-label="Close">✕</button>
+      <div id="itineraryModalContent"></div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- BOOKING MODAL (Needed by itinerary's 'Book This Trip' button) -->
+  <div class="modal-overlay" id="bookingModal" onclick="closeBookingModal()" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" hidden>
+    <div class="modal-panel" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="bookingModalTitle">Book Your Journey</h2>
+          <p class="modal-dest" id="bookingModalDest"></p>
+        </div>
+        <button class="modal-close" onclick="closeBookingModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body" id="bookingModalBody">
+      </div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="brand-icon">✦</span>
+        <span class="brand-name">Wanderlust</span>
+      </div>
+      <p class="footer-copy">© 2025 Wanderlust Travel. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="travel_recommendation.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+        <a href="favorites.html">Favorites</a>
+        <a href="destinations.html">Destinations</a>
+        <a href="bookings.html">My Bookings</a>
+      </div>
+    </div>
+  </footer>
+
+  <script src="travel_recommendation.js"></script>
+  <script src="destinations.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      loadBookings();
+    });
+
+    function loadBookings() {
+      const bookingsInfo = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
+      const grid = document.getElementById('bookingsGrid');
+      const emptyState = document.getElementById('bookingsEmpty');
+      const countEl = document.getElementById('bookingsCount');
+
+      // Check if bookings data exists
+      if (bookingsInfo.length === 0) {
+        if (countEl) countEl.textContent = 'Ready to plan your next journey?';
+        if (grid) grid.style.display = 'none';
+        if (emptyState) emptyState.style.display = 'block';
+        return;
+      }
+
+      if (countEl) {
+        countEl.textContent = `${bookingsInfo.length} upcoming adventure${bookingsInfo.length !== 1 ? 's' : ''}`;
+      }
+      if (grid) grid.style.display = 'grid';
+      if (emptyState) emptyState.style.display = 'none';
+
+      // Load destinations data to get images
+      fetch('travel_recommendation_api.json')
+        .then(res => res.json())
+        .then(data => {
+          const allDestinations = [];
+          
+          data.countries.forEach(c => c.cities.forEach(city => allDestinations.push(city)));
+          data.temples.forEach(temple => allDestinations.push(temple));
+          data.beaches.forEach(beach => allDestinations.push(beach));
+
+          renderBookingCards(bookingsInfo, allDestinations);
+        })
+        .catch(err => {
+          console.error('Error loading API data for bookings:', err);
+          // Render even without images if API fails
+          renderBookingCards(bookingsInfo, []);
+        });
+    }
+
+    function renderBookingCards(bookings, allDestinations) {
+      const grid = document.getElementById('bookingsGrid');
+      if (!grid) return;
+
+      grid.innerHTML = bookings.reverse().map((booking, i) => {
+        // Map destination safely
+        const destObj = allDestinations.find(d => d.name === booking.destination);
+        const imageUrl = destObj && destObj.imageUrl ? destObj.imageUrl : 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600';
+        
+        // Format creation date
+        const bookedDateStr = booking.createdAt ? new Date(booking.createdAt).toLocaleDateString() : 'Recently';
+
+        return `
+          <div class="booking-card" style="animation: fadeUp 0.5s ${i * 0.08}s ease both;">
+            <img class="booking-card-img" src="${imageUrl}" alt="${escapeHtml(booking.destination)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600'" />
+            <div class="booking-card-body">
+              <div class="booking-card-top">
+                <span class="booking-status">✓ Confirmed</span>
+                <span class="booking-date">Booked ${escapeHtml(bookedDateStr)}</span>
+              </div>
+              <h3>${escapeHtml(booking.destination)}</h3>
+              
+              <div class="booking-details">
+                <div class="booking-detail-item">
+                  <strong>Name:</strong> <span>${escapeHtml(booking.name)}</span>
+                </div>
+                <div class="booking-detail-item">
+                  <strong>Dates:</strong> <span>${escapeHtml(booking.checkin)} to ${escapeHtml(booking.checkout)}</span>
+                </div>
+                <div class="booking-detail-item">
+                  <strong>Travelers:</strong> <span>${escapeHtml(booking.travelers)}</span>
+                </div>
+                <div class="booking-detail-item">
+                  <strong>Trip:</strong> <span>${escapeHtml(booking.tripType)}</span>
+                </div>
+                ${booking.notes ? `
+                <div class="booking-detail-item">
+                  <strong style="align-self: flex-start">Notes:</strong> 
+                  <span style="font-size:0.8rem">${escapeHtml(booking.notes)}</span>
+                </div>
+                ` : ''}
+              </div>
+              
+              <div class="booking-actions">
+               <button class="detail-btn detail-btn-primary" onclick="viewDetailItinerary('${escapeHtml(booking.destination).replace(/'/g, "\\'")}', event)">
+                 📋 View Itinerary
+               </button>
+               <button class="detail-btn detail-btn-secondary" onclick="shareDestination('${escapeHtml(booking.destination).replace(/'/g, "\\'")}', 'I just booked a trip to ${escapeHtml(booking.destination).replace(/'/g, "\\'")}')">
+                 ↗ Share
+               </button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Dynamic footer year
+    document.addEventListener('DOMContentLoaded', () => {
+      const footerCopy = document.querySelector('.footer-copy');
+      if (footerCopy) footerCopy.textContent = `© ${new Date().getFullYear()} Wanderlust Travel. All rights reserved.`;
+    });
+  </script>
+</body>
+</html>
