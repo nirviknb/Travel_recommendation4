@@ -571,18 +571,16 @@ function openBookingModalInline(destName, imageUrl, type) {
   }
   
   modal.removeAttribute('hidden');
+  modal.classList.add('open');
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-modal', 'true');
+  modal.setAttribute('aria-labelledby', 'bookingModalTitle');
   document.body.style.overflow = 'hidden';
   
   setTimeout(() => {
     const firstInput = document.getElementById('bookingName');
     if (firstInput) firstInput.focus();
   }, 100);
-}
-
-function closeBookingModal() {
-  const modal = document.getElementById('bookingModal');
-  modal.setAttribute('hidden', '');
-  document.body.style.overflow = '';
 }
 
 function handleBookingSubmitInline(e, destName) {
