@@ -1,45 +1,20 @@
 let allDestinations = [];
 let currentDestFilter = 'all';
 let currentDestSearch = '';
-let pendingDestHighlight = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-  const urlParams = new URLSearchParams(window.location.search);
-  const destParam = urlParams.get('destination');
-  if (destParam) {
-    pendingDestHighlight = decodeURIComponent(destParam);
-  }
-
   fetch('travel_recommendation_api.json')
     .then(res => res.json())
     .then(data => {
       allDestinations = flattenDestinations(data);
       renderDestinations();
       updateStats();
-      
-      if (pendingDestHighlight) {
-        handlePendingDestHighlight();
-      }
     });
 
   initSearch();
   initFilters();
   initNewsletter();
 });
-
-function handlePendingDestHighlight() {
-  setTimeout(() => {
-    const cards = document.querySelectorAll('.dest-card');
-    cards.forEach(card => {
-      const title = card.querySelector('h3');
-      if (title && title.textContent === pendingDestHighlight) {
-        card.classList.add('dest-card-highlight');
-        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        setTimeout(() => card.classList.remove('dest-card-highlight'), 5000);
-      }
-    });
-  }, 100);
-}
 
 function flattenDestinations(data) {
   const destinations = [];
@@ -337,8 +312,8 @@ function shareDetailDestination(name, description) {
 }
 
 function bookDetailDestination(name, imageUrl, type) {
-  const encodedDest = encodeURIComponent(name);
-  window.location.href = `bookings.html?destination=${encodedDest}`;
+  closeDetailOverlay();
+  openBookingModalInline(name, imageUrl, type);
 }
 
 function escapeHtml(str) {
@@ -393,6 +368,10 @@ document.addEventListener('keydown', (e) => {
   const itineraryModal = document.getElementById('itineraryModal');
   if (!itineraryModal.hasAttribute('hidden') && e.key === 'Escape') {
     closeItineraryModal();
+  }
+  const bookingModal = document.getElementById('bookingModal');
+  if (!bookingModal.hasAttribute('hidden') && e.key === 'Escape') {
+    closeBookingModal();
   }
 });
 
@@ -471,7 +450,7 @@ function showItineraryModal(it) {
         </div>
       ` : ''}
       <div style="display:flex;gap:0.75rem;margin-top:1.5rem">
-        <a href="bookings.html" class="detail-btn detail-btn-primary" style="flex:1;text-decoration:none;text-align:center">Book This Trip</a>
+        <button class="detail-btn detail-btn-primary" style="flex:1" onclick="closeItineraryModal(); openBookingModalInline('${escapeHtml(it.destination).replace(/'/g, "\\'")}', null, 'Itinerary')">Book This Trip</button>
       </div>
     </div>
   `;
@@ -512,4 +491,124 @@ function getDestinationImage(destName) {
     'Santorini, Greece': 'https://images.unsplash.com/photo-1570077188670-e3a8d69ac5ff?w=800'
   };
   return images[destName] || 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800';
+}
+
+function openBookingModalInline(destName, imageUrl, type) {
+  const modal = document.getElementById('bookingModal');
+  const destEl = document.getElementById('bookingModalDest');
+  const bodyEl = document.getElementById('bookingModalBody');
+  
+  const safeName = escapeHtml(destName);
+  const safeImg = imageUrl ? escapeHtml(imageUrl) : '';
+  
+  destEl.textContent = safeName;
+  
+  bodyEl.innerHTML = `
+    ${safeImg ? `<img class="modal-thumb" src="${safeImg}" alt="${safeName}" onerror="this.style.display='none'" style="width:100%;height:160px;object-fit:cover;border-radius:8px;margin-bottom:1.2rem" />` : ''}
+    <form onsubmit="handleBookingSubmitInline(event, '${safeName.replace(/'/g, "\\'")}')">
+      <div class="modal-grid">
+        <div class="modal-field">
+          <label class="modal-label" for="bookingName">Full Name</label>
+          <input type="text" class="modal-input" id="bookingName" placeholder="John Doe" required />
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="bookingEmail">Email</label>
+          <input type="email" class="modal-input" id="bookingEmail" placeholder="john@example.com" required />
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="bookingCheckin">Check-in Date</label>
+          <input type="date" class="modal-input" id="bookingCheckin" required />
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="bookingCheckout">Check-out Date</label>
+          <input type="date" class="modal-input" id="bookingCheckout" required />
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="bookingTravelers">Travelers</label>
+          <select class="modal-select" id="bookingTravelers" required>
+            <option value="">Select</option>
+            <option>1 Traveler</option>
+            <option>2 Travelers</option>
+            <option>3-4 Travelers</option>
+            <option>5-8 Travelers</option>
+            <option>9+ Travelers</option>
+          </select>
+        </div>
+        <div class="modal-field">
+          <label class="modal-label" for="bookingType">Trip Type</label>
+          <select class="modal-select" id="bookingType" required>
+            <option value="">Select</option>
+            <option>Leisure / Relaxation</option>
+            <option>Adventure / Active</option>
+            <option>Cultural / Historical</option>
+            <option>Romantic Getaway</option>
+            <option>Family Vacation</option>
+          </select>
+        </div>
+        <div class="modal-field full">
+          <label class="modal-label" for="bookingNotes">Special Requests</label>
+          <textarea class="modal-textarea" id="bookingNotes" placeholder="Any special requests..." style="width:100%;padding:0.65rem 0.9rem;border:1px solid rgba(26,22,18,0.15);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.88rem;resize:vertical;min-height:80px"></textarea>
+        </div>
+      </div>
+      <button type="submit" class="modal-submit">Confirm Booking</button>
+    </form>
+  `;
+  
+  const today = new Date().toISOString().split('T')[0];
+  const checkin = document.getElementById('bookingCheckin');
+  const checkout = document.getElementById('bookingCheckout');
+  if (checkin) checkin.min = today;
+  if (checkout) checkout.min = today;
+  if (checkin) {
+    checkin.addEventListener('change', () => {
+      if (checkout) {
+        checkout.min = checkin.value;
+        if (checkout.value && checkout.value < checkin.value) {
+          checkout.value = '';
+        }
+      }
+    });
+  }
+  
+  modal.removeAttribute('hidden');
+  document.body.style.overflow = 'hidden';
+  
+  setTimeout(() => {
+    const firstInput = document.getElementById('bookingName');
+    if (firstInput) firstInput.focus();
+  }, 100);
+}
+
+function closeBookingModal() {
+  const modal = document.getElementById('bookingModal');
+  modal.setAttribute('hidden', '');
+  document.body.style.overflow = '';
+}
+
+function handleBookingSubmitInline(e, destName) {
+  e.preventDefault();
+  const name = document.getElementById('bookingName').value;
+  const email = document.getElementById('bookingEmail').value;
+  const checkin = document.getElementById('bookingCheckin').value;
+  const checkout = document.getElementById('bookingCheckout').value;
+  const travelers = document.getElementById('bookingTravelers').value;
+  const tripType = document.getElementById('bookingType').value;
+  const notes = document.getElementById('bookingNotes').value;
+
+  const bookings = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
+  bookings.push({
+    destination: destName,
+    name,
+    email,
+    checkin,
+    checkout,
+    travelers,
+    tripType,
+    notes,
+    createdAt: new Date().toISOString()
+  });
+  localStorage.setItem('wanderlust_bookings', JSON.stringify(bookings));
+
+  showToast(`Booking confirmed for ${destName}! We'll contact you at ${email}`);
+  closeBookingModal();
 }

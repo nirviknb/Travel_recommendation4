@@ -31,7 +31,6 @@
       <li><a href="contact.html" class="nav-link">Contact Us</a></li>
       <li><a href="favorites.html" class="nav-link">♥ Favorites</a></li>
       <li><a href="destinations.html" class="nav-link active">Destinations</a></li>
-      <li><a href="bookings.html" class="nav-link">Book Now</a></li>
     </ul>
   </nav>
 
@@ -103,6 +102,21 @@
   </div>
 
   <div class="toast-container" id="toastContainer"></div>
+
+  <!-- BOOKING MODAL -->
+  <div class="modal-overlay" id="bookingModal" onclick="closeBookingModal()" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" hidden>
+    <div class="modal-panel" onclick="event.stopPropagation()">
+      <div class="modal-header">
+        <div>
+          <h2 class="modal-title" id="bookingModalTitle">Book Your Journey</h2>
+          <p class="modal-dest" id="bookingModalDest"></p>
+        </div>
+        <button class="modal-close" onclick="closeBookingModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div class="modal-body" id="bookingModalBody">
+      </div>
+    </div>
+  </div>
 
   <footer class="footer">
     <div class="footer-inner">
