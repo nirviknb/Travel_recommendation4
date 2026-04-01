@@ -156,8 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (footerCopy) {
     footerCopy.textContent = `© ${new Date().getFullYear()} Wanderlust Travel. All rights reserved.`;
   }
-  initAutocomplete();
-  initKeyboardSearch();
+  if (document.getElementById('searchInput')) {
+    initAutocomplete();
+    initKeyboardSearch();
+  }
   initLazyMap();
 });
 
@@ -497,12 +499,12 @@ async function shareDestination(name, description) {
 }
 
 // ---- BOOKING MODAL ----
-function openBookingModal(destName, imageUrl, destType) {
+function openBookingModal(destName, imageUrl, destType, contentId) {
   const modal = document.getElementById('bookingModal');
-  const content = document.getElementById('modalContent');
+  const content = document.getElementById(contentId || 'modalContent');
   const safeName = escapeHtml(destName);
   const safeImg = escapeHtml(imageUrl);
-  const safeType = escapeHtml(destType);
+  const safeType = escapeHtml(destType || destName);
 
   content.innerHTML = `
     <div class="modal-header">
