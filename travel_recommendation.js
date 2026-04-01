@@ -358,7 +358,7 @@ function displayResults(items, category) {
     const isFav = getFavorites().includes(item.name);
     const starsHtml = renderStars(rating);
     const escapedName = escapeHtml(item.name);
-    
+
     const coords = destCoords[item.name];
     const mapHtml = coords ? getMapPreviewHTML(item.name, coords) : '';
 
@@ -425,7 +425,7 @@ function getMapPreviewHTML(name, coords) {
   const [lat, lng] = coords;
   const mapImageUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lng}&zoom=12&size=300x120&maptype=roadmap&markers=${lat},${lng}&key=`;
   const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-  
+
   return `
     <div class="result-map-section">
       <div class="result-map-preview" onclick="openGoogleMaps('${googleMapsUrl}')" title="View location on Google Maps">
@@ -434,9 +434,6 @@ function getMapPreviewHTML(name, coords) {
           <span class="map-label">View on Map</span>
         </div>
       </div>
-      <a href="${googleMapsUrl}" target="_blank" rel="noopener noreferrer" class="result-map-link">
-        <span class="map-link-icon">🗺️</span>
-        <span>Open in Google Maps</span>
       </a>
     </div>
   `;
@@ -734,7 +731,7 @@ document.addEventListener('keydown', (e) => {
 
 function handleBookingSubmit(e, destName) {
   e.preventDefault();
-  
+
   // Validate all required fields
   const nameInput = document.getElementById('bookingName');
   const emailInput = document.getElementById('bookingEmail');
@@ -744,7 +741,7 @@ function handleBookingSubmit(e, destName) {
   const tripType = document.getElementById('bookingType');
 
   let isValid = true;
-  
+
   if (!validateBookingField(nameInput, { required: true, minLength: 2 })) isValid = false;
   if (!validateBookingField(emailInput, { required: true, pattern: /^[^\s@]+@[^\s@]+\.[^\s@]+$/ })) isValid = false;
   if (!checkin.value) { showFieldError(checkin, 'Please select a check-in date'); isValid = false; }
@@ -1387,7 +1384,7 @@ async function openItineraryFromSearch(destName, event) {
 
 function openItineraryModal(it) {
   currentItineraryDestination = it;
-  
+
   // Check if modal already exists, if not create it
   let modal = document.getElementById('searchItineraryModal');
   if (!modal) {
@@ -1395,7 +1392,7 @@ function openItineraryModal(it) {
     modal.id = 'searchItineraryModal';
     modal.className = 'modal-overlay';
     modal.setAttribute('hidden', '');
-    modal.onclick = function(e) { if (e.target === modal) closeItineraryModal(); };
+    modal.onclick = function (e) { if (e.target === modal) closeItineraryModal(); };
     document.body.appendChild(modal);
   }
 
