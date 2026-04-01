@@ -454,7 +454,7 @@ function openBookingModalBookings(destName, imageUrl, type, event) {
   const modal = document.getElementById('bookingModal');
   const content = document.getElementById('bookingModalContent');
   const safeName = escapeHtml(destName);
-  const safeImg = escapeHtml(imageUrl);
+  const safeImg = imageUrl ? escapeHtml(imageUrl) : '';
 
   content.innerHTML = `
     <div class="modal-header">
@@ -465,7 +465,7 @@ function openBookingModalBookings(destName, imageUrl, type, event) {
       <button class="modal-close" onclick="closeBookingModalBookings()" aria-label="Close modal">✕</button>
     </div>
     <div class="modal-body">
-      <img class="modal-thumb" src="${safeImg}" alt="${safeName}" onerror="this.style.display='none'" />
+      ${safeImg ? `<img class="modal-thumb" src="${safeImg}" alt="${safeName}" onerror="this.style.display='none'" />` : ''}
       <form id="bookingForm" onsubmit="handleBookingSubmitBookings(event, '${safeName.replace(/'/g, "\\'")}')">
         <div class="modal-grid">
           <div class="modal-field">
@@ -517,6 +517,22 @@ function openBookingModalBookings(destName, imageUrl, type, event) {
   `;
 
   modal.removeAttribute('hidden');
+  
+  const today = new Date().toISOString().split('T')[0];
+  const checkin = document.getElementById('bookingCheckin');
+  const checkout = document.getElementById('bookingCheckout');
+  if (checkin) checkin.min = today;
+  if (checkout) checkout.min = today;
+  if (checkin) {
+    checkin.addEventListener('change', () => {
+      if (checkout) {
+        checkout.min = checkin.value;
+        if (checkout.value && checkout.value < checkin.value) {
+          checkout.value = '';
+        }
+      }
+    });
+  }
 }
 
 function closeBookingModalBookings(event) {
@@ -608,6 +624,6 @@ function showToast(message) {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeItineraryModal();
-    closeBookingModal();
+    closeBookingModalBookings();
   }
 });

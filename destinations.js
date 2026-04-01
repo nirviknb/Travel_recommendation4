@@ -1,20 +1,45 @@
 let allDestinations = [];
 let currentDestFilter = 'all';
 let currentDestSearch = '';
+let pendingDestHighlight = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const destParam = urlParams.get('destination');
+  if (destParam) {
+    pendingDestHighlight = decodeURIComponent(destParam);
+  }
+
   fetch('travel_recommendation_api.json')
     .then(res => res.json())
     .then(data => {
       allDestinations = flattenDestinations(data);
       renderDestinations();
       updateStats();
+      
+      if (pendingDestHighlight) {
+        handlePendingDestHighlight();
+      }
     });
 
   initSearch();
   initFilters();
   initNewsletter();
 });
+
+function handlePendingDestHighlight() {
+  setTimeout(() => {
+    const cards = document.querySelectorAll('.dest-card');
+    cards.forEach(card => {
+      const title = card.querySelector('h3');
+      if (title && title.textContent === pendingDestHighlight) {
+        card.classList.add('dest-card-highlight');
+        card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        setTimeout(() => card.classList.remove('dest-card-highlight'), 5000);
+      }
+    });
+  }, 100);
+}
 
 function flattenDestinations(data) {
   const destinations = [];
