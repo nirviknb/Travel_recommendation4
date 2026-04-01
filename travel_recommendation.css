@@ -2097,10 +2097,22 @@ select:focus-visible,
   .toast { width: 100%; }
 }
 
+.nav-link-auth {
+  border: 1px solid rgba(201,168,76,0.4);
+  border-radius: 4px;
+  margin-left: 0.5rem;
+}
+.nav-link-auth:hover {
+  background: var(--gold);
+  color: var(--ink) !important;
+  border-color: var(--gold);
+}
+
 @media (max-width: 600px) {
   .team-grid { grid-template-columns: 1fr; }
   .form-row { grid-template-columns: 1fr; }
   .about-stats { grid-template-columns: 1fr 1fr; }
   .footer-inner { flex-direction: column; text-align: center; }
   #destinationsMap { height: 300px; }
+  .nav-link-auth { margin-left: 0; }
 }
