@@ -1702,8 +1702,12 @@ body {
 /* =========== NEWSLETTER =========== */
 .newsletter-section {
   padding: 5rem 3rem;
-  background: var(--ink);
+  background: var(--newsletter-bg, var(--ink));
   text-align: center;
+}
+
+[data-theme="dark"] .newsletter-section {
+  --newsletter-bg: #0d0b09;
 }
 
 .newsletter-inner {
@@ -1722,14 +1726,22 @@ body {
   font-family: 'Cormorant Garamond', serif;
   font-size: 2.2rem;
   font-weight: 300;
-  color: var(--white);
+  color: var(--newsletter-text, var(--white));
   margin-bottom: 0.6rem;
+}
+
+[data-theme="dark"] .newsletter-section {
+  --newsletter-text: #f5f0e8;
 }
 
 .newsletter-sub {
   font-size: 0.9rem;
-  color: rgba(255,255,255,0.5);
+  color: var(--newsletter-subtext, rgba(255,255,255,0.5));
   margin-bottom: 2rem;
+}
+
+[data-theme="dark"] .newsletter-section {
+  --newsletter-subtext: rgba(245,240,232,0.5);
 }
 
 .newsletter-form {
@@ -1742,16 +1754,23 @@ body {
 .newsletter-input {
   flex: 1;
   padding: 0.7rem 1rem;
-  background: rgba(255,255,255,0.08);
-  border: 1px solid rgba(255,255,255,0.15);
+  background: var(--newsletter-input-bg, rgba(255,255,255,0.08));
+  border: 1px solid var(--newsletter-input-border, rgba(255,255,255,0.15));
   border-radius: 6px;
-  color: var(--white);
+  color: var(--newsletter-input-text, var(--white));
   font-family: 'DM Sans', sans-serif;
   font-size: 0.88rem;
   transition: border-color 0.2s;
 }
 
-.newsletter-input::placeholder { color: rgba(255,255,255,0.35); }
+[data-theme="dark"] .newsletter-section {
+  --newsletter-input-bg: rgba(255,255,255,0.06);
+  --newsletter-input-border: rgba(255,255,255,0.12);
+  --newsletter-input-text: #f5f0e8;
+  --newsletter-input-placeholder: rgba(245,240,232,0.35);
+}
+
+.newsletter-input::placeholder { color: var(--newsletter-input-placeholder, rgba(255,255,255,0.35)); }
 
 .newsletter-input:focus {
   outline: none;
@@ -1770,6 +1789,10 @@ body {
   cursor: pointer;
   transition: background 0.2s;
   white-space: nowrap;
+}
+
+[data-theme="dark"] .newsletter-btn {
+  color: #1a1612;
 }
 
 .newsletter-btn:hover { background: var(--gold-hover); }
