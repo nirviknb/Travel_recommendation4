@@ -2124,7 +2124,7 @@ function swapCurrencies() {
 function calculateBudget() {
   const budget = parseFloat(document.getElementById('budgetAmount')?.value) || 0;
   const days = parseInt(document.getElementById('budgetDays')?.value) || 7;
-  const style = document.getElementById('budgetStyle')?.value || 'mid';
+  const style = document.querySelector('input[name="budgetStyle"]:checked')?.value || 'mid';
   if (budget <= 0 || days <= 0) {
     showToast('Please enter a valid budget and trip duration');
     return;

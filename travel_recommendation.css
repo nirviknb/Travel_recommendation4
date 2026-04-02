@@ -2820,6 +2820,64 @@ select:focus-visible,
   color: var(--text-primary);
   font-size: 0.9rem;
 }
+
+.budget-style-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+
+.budget-style-option {
+  cursor: pointer;
+}
+
+.budget-style-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.budget-style-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.2rem 0.75rem;
+  border: 1.5px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--input-bg);
+  transition: all 0.2s ease;
+  gap: 0.4rem;
+}
+
+.budget-style-card:hover {
+  border-color: var(--gold);
+  background: var(--tag-bg);
+}
+
+.budget-style-option input[type="radio"]:checked + .budget-style-card {
+  border-color: var(--gold);
+  background: var(--tag-bg);
+  box-shadow: 0 0 0 1px var(--gold);
+}
+
+.budget-style-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.budget-style-name {
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+}
+
+.budget-style-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  line-height: 1.3;
+}
 .budget-results {
   margin-top: 2rem;
   background: var(--card-bg);
@@ -3331,5 +3389,8 @@ select:focus-visible,
   .compare-table th,
   .compare-table td {
     padding: 0.5rem 0.3rem;
+  }
+  .budget-style-options {
+    grid-template-columns: 1fr;
   }
 }

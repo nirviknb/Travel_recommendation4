@@ -54,12 +54,33 @@
           <input type="number" id="budgetDays" placeholder="e.g. 10" min="1" />
         </div>
         <div class="form-group">
-          <label for="budgetStyle">Travel Style</label>
-          <select id="budgetStyle">
-            <option value="budget">Budget — Hostels, street food, free activities</option>
-            <option value="mid" selected>Mid-Range — Hotels, restaurants, guided tours</option>
-            <option value="luxury">Luxury — Resorts, fine dining, private experiences</option>
-          </select>
+          <label>Travel Style</label>
+          <div class="budget-style-options">
+            <label class="budget-style-option">
+              <input type="radio" name="budgetStyle" value="budget" />
+              <div class="budget-style-card">
+                <span class="budget-style-icon">🎒</span>
+                <span class="budget-style-name">Budget</span>
+                <span class="budget-style-desc">Hostels, street food, free activities</span>
+              </div>
+            </label>
+            <label class="budget-style-option">
+              <input type="radio" name="budgetStyle" value="mid" checked />
+              <div class="budget-style-card">
+                <span class="budget-style-icon">🏨</span>
+                <span class="budget-style-name">Mid-Range</span>
+                <span class="budget-style-desc">Hotels, restaurants, guided tours</span>
+              </div>
+            </label>
+            <label class="budget-style-option">
+              <input type="radio" name="budgetStyle" value="luxury" />
+              <div class="budget-style-card">
+                <span class="budget-style-icon">✨</span>
+                <span class="budget-style-name">Luxury</span>
+                <span class="budget-style-desc">Resorts, fine dining, private experiences</span>
+              </div>
+            </label>
+          </div>
         </div>
         <button class="btn-book" style="width:100%;margin-top:1rem" onclick="calculateBudget()">Calculate Budget</button>
       </div>
