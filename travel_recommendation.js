@@ -2282,6 +2282,7 @@ function saveJournalEntries(entries) {
 function addJournalEntry() {
   const title = document.getElementById('journalTitle')?.value?.trim();
   const destination = document.getElementById('journalDestination')?.value?.trim();
+  const tripType = document.getElementById('journalTripType')?.value?.trim();
   const date = document.getElementById('journalDate')?.value;
   const text = document.getElementById('journalText')?.value?.trim();
   if (!title || !text) {
@@ -2293,6 +2294,7 @@ function addJournalEntry() {
     id: Date.now(),
     title,
     destination: destination || '',
+    tripType: tripType || '',
     date: date || new Date().toISOString().split('T')[0],
     text,
     createdAt: new Date().toISOString()
@@ -2300,6 +2302,7 @@ function addJournalEntry() {
   saveJournalEntries(entries);
   document.getElementById('journalTitle').value = '';
   document.getElementById('journalDestination').value = '';
+  document.getElementById('journalTripType').value = '';
   document.getElementById('journalDate').value = '';
   document.getElementById('journalText').value = '';
   renderJournalEntries();
@@ -2319,12 +2322,14 @@ function renderJournalEntries() {
     `;
     return;
   }
+  const tripTypeLabels = { solo: 'Solo', couple: 'Couple', family: 'Family', friends: 'Friends', business: 'Business', adventure: 'Adventure' };
   container.innerHTML = entries.map(entry => `
     <div class="journal-entry">
       <div class="journal-entry-header">
         <span class="journal-entry-title">${escapeHtml(entry.title)}</span>
         <span class="journal-entry-date">${formatJournalDate(entry.date)}</span>
       </div>
+      ${entry.tripType ? `<span class="journal-entry-destination">${escapeHtml(tripTypeLabels[entry.tripType] || entry.tripType)}</span>` : ''}
       ${entry.destination ? `<span class="journal-entry-destination">${escapeHtml(entry.destination)}</span>` : ''}
       <div class="journal-entry-text">${escapeHtml(entry.text)}</div>
       <div class="journal-entry-actions">
@@ -2356,6 +2361,7 @@ function editJournalEntry(id) {
   if (!entry) return;
   document.getElementById('journalTitle').value = entry.title;
   document.getElementById('journalDestination').value = entry.destination || '';
+  document.getElementById('journalTripType').value = entry.tripType || '';
   document.getElementById('journalDate').value = entry.date;
   document.getElementById('journalText').value = entry.text;
   entries.splice(entries.indexOf(entry), 1);
@@ -2384,7 +2390,10 @@ function initNewFeatures() {
   renderCurrencyConverter();
   if (document.getElementById('compareDest1')) renderComparePage();
   if (document.getElementById('checklistBookingSelect')) loadBookingChecklist();
-  if (document.getElementById('journalEntries')) renderJournalEntries();
+  if (document.getElementById('journalEntries')) {
+    renderJournalEntries();
+    populateJournalDestinations();
+  }
   if (document.getElementById('packingDestination')) populatePackingDestinations();
 }
 
@@ -2393,6 +2402,15 @@ function populatePackingDestinations() {
   if (!select) return;
   const all = flattenDestinations(travelData);
   select.innerHTML = `<option value="">Select destination...</option>` + all.map(d =>
+    `<option value="${escapeHtml(d.name)}">${escapeHtml(d.name)}</option>`
+  ).join('');
+}
+
+function populateJournalDestinations() {
+  const select = document.getElementById('journalDestination');
+  if (!select) return;
+  const all = flattenDestinations(travelData);
+  select.innerHTML = `<option value="">Select a destination...</option>` + all.map(d =>
     `<option value="${escapeHtml(d.name)}">${escapeHtml(d.name)}</option>`
   ).join('');
 }

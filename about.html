@@ -148,6 +148,7 @@
     </div>
   </footer>
 
+  <script src="travel_recommendation.js"></script>
   <script>
     function handleNewsletterSubmit(e) {
       e.preventDefault();
@@ -168,6 +169,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const footerCopy = document.querySelector('.footer-copy');
       if (footerCopy) footerCopy.textContent = `© ${new Date().getFullYear()} Wanderlust Travel. All rights reserved.`;
+      initDarkMode();
     });
   </script>
 </body>
