@@ -1702,12 +1702,12 @@ body {
 /* =========== NEWSLETTER =========== */
 .newsletter-section {
   padding: 5rem 3rem;
-  background: var(--newsletter-bg, var(--ink));
+  background: var(--ink);
   text-align: center;
 }
 
 [data-theme="dark"] .newsletter-section {
-  --newsletter-bg: #0d0b09;
+  background: #0d0b09;
 }
 
 .newsletter-inner {
