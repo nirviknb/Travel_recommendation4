@@ -146,7 +146,7 @@ const dataLoadedPromise = fetch('travel_recommendation_api.json')
   })
   .catch(err => {
     console.error('Could not load travel data:', err);
-    showMessage('<span style="color:#d32f2f">Unable to load travel data. Please refresh the page.</span>');
+    showMessage('<span style="color:var(--error)">Unable to load travel data. Please refresh the page.</span>');
     throw err;
   });
 
@@ -1100,7 +1100,7 @@ function initLazyMap() {
 function showMapError(message) {
   const loader = document.getElementById('mapLoading');
   if (loader) {
-    loader.innerHTML = `<span style="color:#d32f2f">${message}</span><button onclick="retryMapLoad()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:var(--gold);border:none;border-radius:4px;cursor:pointer;font-size:0.85rem">Retry</button>`;
+    loader.innerHTML = `<span style="color:var(--error)">${message}</span><button onclick="retryMapLoad()" style="margin-top:0.5rem;padding:0.4rem 1rem;background:var(--gold);border:none;border-radius:4px;cursor:pointer;font-size:0.85rem">Retry</button>`;
   }
 }
 
@@ -1182,9 +1182,9 @@ function addMapMarkers(data) {
              alt="${safeName}"
              loading="lazy"
              onerror="this.style.display='none'" />
-        <strong style="font-size:14px;color:#1a1612;display:block;margin-bottom:4px">${safeName}</strong>
-        <div style="font-size:12px;color:#7a7065;margin-bottom:4px">★ ${safeRating} · ${reviewCount.toLocaleString()} reviews</div>
-        <div style="font-size:11px;color:#7a7065;line-height:1.4">${safeDesc}…</div>
+        <strong style="font-size:14px;color:var(--ink);display:block;margin-bottom:4px">${safeName}</strong>
+        <div style="font-size:12px;color:var(--muted);margin-bottom:4px">★ ${safeRating} · ${reviewCount.toLocaleString()} reviews</div>
+        <div style="font-size:11px;color:var(--muted);line-height:1.4">${safeDesc}…</div>
       </div>
     `;
   }

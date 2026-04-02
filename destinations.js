@@ -443,7 +443,7 @@ function showItineraryModal(it) {
           <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.2rem;color:var(--ink);margin-bottom:1rem">${escapeHtml(d.title)}</h3>
           <ul style="list-style:none">
             ${d.activities.map(a => `
-              <li style="display:flex;gap:1rem;padding:0.75rem 0;border-bottom:1px solid rgba(26,22,18,0.06)">
+              <li style="display:flex;gap:1rem;padding:0.75rem 0;border-bottom:1px solid var(--border-color)">
                 <div style="flex-shrink:0;width:70px;font-size:0.75rem;font-weight:600;color:var(--gold)">${escapeHtml(a.time)}</div>
                 <div style="flex:1">
                   <div style="font-weight:600;font-size:0.9rem;color:var(--ink);margin-bottom:0.2rem">${escapeHtml(a.place)}</div>
@@ -558,7 +558,7 @@ function openBookingModalInline(destName, imageUrl, type) {
         </div>
         <div class="modal-field full">
           <label class="modal-label" for="bookingNotes">Special Requests</label>
-          <textarea class="modal-textarea" id="bookingNotes" placeholder="Any special requests..." style="width:100%;padding:0.65rem 0.9rem;border:1px solid rgba(26,22,18,0.15);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.88rem;resize:vertical;min-height:80px"></textarea>
+          <textarea class="modal-textarea" id="bookingNotes" placeholder="Any special requests..." style="width:100%;padding:0.65rem 0.9rem;border:1px solid var(--border-color);border-radius:6px;font-family:'DM Sans',sans-serif;font-size:0.88rem;resize:vertical;min-height:80px"></textarea>
         </div>
       </div>
       <button type="submit" class="modal-submit">Confirm Booking</button>

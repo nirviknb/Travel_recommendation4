@@ -651,3 +651,65 @@ input:focus-visible {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* =========== DARK MODE =========== */
+[data-theme="dark"] {
+  --ink: #f5f0e8;
+  --cream: #1a1612;
+  --sand: #242019;
+  --warm: #c9a84c;
+  --muted: #a09888;
+  --white: #f5f0e8;
+  --card-bg: #242019;
+  --shadow: 0 4px 32px rgba(0,0,0,0.3);
+  --error: #ef5350;
+  --success: #66bb6a;
+  --gold: #d4b35a;
+  --gold-hover: #c9a84c;
+  --bg-primary: #12100e;
+  --bg-secondary: #1a1612;
+  --border-color: rgba(255,255,255,0.08);
+  --input-bg: #242019;
+}
+
+[data-theme="dark"] body {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .auth-card {
+  box-shadow: 0 4px 32px rgba(0,0,0,0.3), 0 1px 3px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.06);
+}
+
+[data-theme="dark"] .form-input {
+  background: var(--input-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .form-input::placeholder {
+  color: rgba(160,152,136,0.6);
+}
+
+[data-theme="dark"] .auth-divider::before,
+[data-theme="dark"] .auth-divider::after {
+  background: rgba(255,255,255,0.1);
+}
+
+[data-theme="dark"] .checkbox-custom {
+  background: var(--input-bg);
+  border-color: var(--border-color);
+}
+
+[data-theme="dark"] .strength-bar {
+  background: rgba(255,255,255,0.08);
+}
+
+[data-theme="dark"] .auth-message.success {
+  background: rgba(102,187,106,0.1);
+  border-color: rgba(102,187,106,0.3);
+}
+
+[data-theme="dark"] .auth-message.error {
+  background: rgba(239,83,80,0.1);
+  border-color: rgba(239,83,80,0.3);
+}
