@@ -41,20 +41,34 @@
     <div class="compare-container">
       <div class="compare-header">
         <h1>Compare Destinations</h1>
-        <p style="color:var(--text-secondary)">Side-by-side comparison to help you choose</p>
+        <p style="color:var(--text-secondary)">Type to search and select 2-3 destinations to compare side by side</p>
       </div>
 
       <div class="compare-selector" id="compareSelector">
-        <select class="compare-select" id="compareDest1"></select>
-        <select class="compare-select" id="compareDest2"></select>
-        <select class="compare-select" id="compareDest3"></select>
-        <button class="compare-btn" onclick="compareDestinations()">Compare</button>
+        <div class="compare-search-wrap">
+          <div class="compare-autocomplete">
+            <input type="text" class="compare-input" id="compareInput1" placeholder="Search destination 1…" autocomplete="off" />
+            <div class="compare-dropdown" id="compareDropdown1"></div>
+            <span class="compare-selected" id="compareSelected1"></span>
+          </div>
+          <div class="compare-autocomplete">
+            <input type="text" class="compare-input" id="compareInput2" placeholder="Search destination 2…" autocomplete="off" />
+            <div class="compare-dropdown" id="compareDropdown2"></div>
+            <span class="compare-selected" id="compareSelected2"></span>
+          </div>
+          <div class="compare-autocomplete">
+            <input type="text" class="compare-input" id="compareInput3" placeholder="Search destination 3 (optional)…" autocomplete="off" />
+            <div class="compare-dropdown" id="compareDropdown3"></div>
+            <span class="compare-selected" id="compareSelected3"></span>
+          </div>
+          <button class="compare-btn" onclick="compareDestinations()">Compare</button>
+        </div>
       </div>
 
       <div id="compareResults">
         <div class="compare-empty">
           <h2>Select destinations to compare</h2>
-          <p>Choose 2-3 destinations above to see a detailed comparison</p>
+          <p>Type in the search fields above to find destinations, then click Compare</p>
         </div>
       </div>
     </div>

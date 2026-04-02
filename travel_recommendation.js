@@ -162,7 +162,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   initLazyMap();
   initNewFeatures();
+  initDropdownsAfterDataLoad();
 });
+
+function initDropdownsAfterDataLoad() {
+  dataLoadedPromise.then(() => {
+    populatePackingDestinations();
+    populateJournalDestinations();
+    renderComparePage();
+    renderRecentlyViewed();
+  }).catch(() => {});
+}
 
 // ---- STAR RENDERER ----
 function renderStars(rating) {
@@ -1861,13 +1871,15 @@ function flattenDestinations(data) {
 }
 
 // ---- DESTINATION COMPARISON ----
+let compareSelections = { 1: null, 2: null, 3: null };
+
 function getCompareDestinations() {
+  if (!travelData) return [];
   const all = flattenDestinations(travelData);
   const recent = getRecentlyViewed();
-  const favs = getFavorites();
   const unique = [];
   const seen = new Set();
-  [...recent.map(r => ({ name: r.name, imageUrl: r.imageUrl })), ...all].forEach(d => {
+  [...recent.map(r => ({ name: r.name, imageUrl: r.imageUrl, type: r.type || 'Destination' })), ...all].forEach(d => {
     if (!seen.has(d.name)) {
       seen.add(d.name);
       unique.push(d);
@@ -1876,24 +1888,69 @@ function getCompareDestinations() {
   return unique;
 }
 
+function initCompareSearch() {
+  [1, 2, 3].forEach(num => {
+    const input = document.getElementById(`compareInput${num}`);
+    const dropdown = document.getElementById(`compareDropdown${num}`);
+    if (!input || !dropdown) return;
+
+    input.addEventListener('input', debounce(() => {
+      const query = input.value.trim().toLowerCase();
+      if (!query) {
+        dropdown.classList.remove('show');
+        return;
+      }
+      const all = getCompareDestinations();
+      const filtered = all.filter(d => d.name.toLowerCase().includes(query));
+      if (filtered.length === 0) {
+        dropdown.innerHTML = `<div class="compare-dropdown-item"><span class="cd-type">No destinations found</span></div>`;
+      } else {
+        dropdown.innerHTML = filtered.slice(0, 10).map(d => `
+          <div class="compare-dropdown-item" onclick="selectCompareDest(${num}, '${escapeHtml(d.name).replace(/'/g, "\\'")}')">
+            <div>
+              <div class="cd-name">${escapeHtml(d.name)}</div>
+              <div class="cd-type">${escapeHtml(d.type || 'Destination')}</div>
+            </div>
+          </div>
+        `).join('');
+      }
+      dropdown.classList.add('show');
+    }, 150));
+
+    input.addEventListener('focus', () => {
+      if (input.value.trim()) input.dispatchEvent(new Event('input'));
+    });
+
+    input.addEventListener('blur', () => {
+      setTimeout(() => dropdown.classList.remove('show'), 200);
+    });
+  });
+}
+
+function selectCompareDest(num, name) {
+  const input = document.getElementById(`compareInput${num}`);
+  const dropdown = document.getElementById(`compareDropdown${num}`);
+  const selected = document.getElementById(`compareSelected${num}`);
+  if (!input) return;
+
+  compareSelections[num] = name;
+  input.value = name;
+  dropdown.classList.remove('show');
+
+  if (selected) {
+    selected.textContent = `✓ ${name}`;
+    selected.classList.add('show');
+  }
+}
+
 function renderComparePage() {
-  const destinations = getCompareDestinations();
-  const select1 = document.getElementById('compareDest1');
-  const select2 = document.getElementById('compareDest2');
-  const select3 = document.getElementById('compareDest3');
-  if (!select1 || !select2) return;
-  const options = `<option value="">Select destination...</option>` + destinations.map(d =>
-    `<option value="${escapeHtml(d.name)}">${escapeHtml(d.name)}</option>`
-  ).join('');
-  select1.innerHTML = options;
-  select2.innerHTML = options;
-  if (select3) select3.innerHTML = options + `<option value="">(optional)</option>`;
+  initCompareSearch();
 }
 
 function compareDestinations() {
-  const name1 = document.getElementById('compareDest1').value;
-  const name2 = document.getElementById('compareDest2').value;
-  const name3 = document.getElementById('compareDest3')?.value || '';
+  const name1 = compareSelections[1];
+  const name2 = compareSelections[2];
+  const name3 = compareSelections[3];
   if (!name1 || !name2) {
     showToast('Please select at least 2 destinations to compare');
     return;
