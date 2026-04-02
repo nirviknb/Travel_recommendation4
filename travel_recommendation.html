@@ -32,14 +32,22 @@
       <li><a href="favorites.html" class="nav-link">♥ Favorites</a></li>
       <li><a href="destinations.html" class="nav-link">Destinations</a></li>
       <li><a href="bookings.html" class="nav-link">My Bookings</a></li>
+      <li><a href="compare.html" class="nav-link">Compare</a></li>
+      <li><a href="budget.html" class="nav-link">Budget</a></li>
+      <li><a href="packing.html" class="nav-link">Packing</a></li>
+      <li><a href="journal.html" class="nav-link">Journal</a></li>
       <li><a href="login.html" class="nav-link nav-link-auth">Sign In</a></li>
     </ul>
     <div class="nav-search autocomplete-wrap">
       <input type="text" id="searchInput" class="search-input" placeholder="Search beaches, temples, countries…" autocomplete="off" aria-label="Search destinations" aria-autocomplete="list" aria-controls="autocompleteDropdown" />
       <div class="autocomplete-dropdown" id="autocompleteDropdown" role="listbox" aria-label="Destination suggestions"></div>
+      <div class="search-history-dropdown" id="searchHistoryDropdown"></div>
       <button class="btn-search" onclick="handleSearch()">Search</button>
       <button class="btn-reset" onclick="handleReset()">Clear</button>
     </div>
+    <button class="nav-theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+      <span class="theme-toggle-icon">🌙</span>
+    </button>
     <button class="nav-toggle" onclick="toggleMenu()">☰</button>
   </nav>
 
@@ -179,6 +187,21 @@
     </div>
   </section>
 
+  <!-- ===== RECENTLY VIEWED ===== -->
+  <section class="recently-viewed-section" id="recentlyViewedSection" style="display:none">
+    <div class="recently-viewed-header">
+      <h2>Recently Viewed</h2>
+      <p>Destinations you've explored recently</p>
+    </div>
+    <div class="recently-viewed-grid" id="recentlyViewedGrid"></div>
+    <button class="recent-clear-btn" onclick="clearRecentlyViewed()">Clear History</button>
+  </section>
+
+  <!-- ===== CURRENCY CONVERTER ===== -->
+  <section class="results-section" id="currencySection">
+    <div id="currencyConverter"></div>
+  </section>
+
   <!-- ===== NEWSLETTER ===== -->
   <section class="newsletter-section" id="newsletter">
     <div class="newsletter-inner">
@@ -217,6 +240,10 @@
         <a href="favorites.html">Favorites</a>
         <a href="destinations.html">Destinations</a>
         <a href="bookings.html">My Bookings</a>
+        <a href="compare.html">Compare</a>
+        <a href="budget.html">Budget</a>
+        <a href="packing.html">Packing</a>
+        <a href="journal.html">Journal</a>
       </div>
     </div>
   </footer>

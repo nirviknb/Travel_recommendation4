@@ -100,8 +100,15 @@
       <li><a href="favorites.html" class="nav-link active">♥ Favorites</a></li>
       <li><a href="destinations.html" class="nav-link">Destinations</a></li>
       <li><a href="bookings.html" class="nav-link">My Bookings</a></li>
+      <li><a href="compare.html" class="nav-link">Compare</a></li>
+      <li><a href="budget.html" class="nav-link">Budget</a></li>
+      <li><a href="packing.html" class="nav-link">Packing</a></li>
+      <li><a href="journal.html" class="nav-link">Journal</a></li>
       <li><a href="login.html" class="nav-link nav-link-auth">Sign In</a></li>
     </ul>
+    <button class="nav-theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+      <span class="theme-toggle-icon">🌙</span>
+    </button>
   </nav>
 
   <!-- FAVORITES SECTION -->
@@ -236,20 +243,6 @@
     function renderFavoriteCards(destinations) {
       const grid = document.getElementById('favoritesGrid');
       if (!grid) return;
-
-      const reviewsData = {
-        'Sydney, Australia': { rating: 4.7, reviews: 3241 },
-        'Melbourne, Australia': { rating: 4.5, reviews: 2876 },
-        'Tokyo, Japan': { rating: 4.9, reviews: 5623 },
-        'Rio de Janeiro, Brazil': { rating: 4.6, reviews: 4102 },
-        'Paris, France': { rating: 4.8, reviews: 8934 },
-        'Pokhara, Nepal': { rating: 4.4, reviews: 1532 },
-        'New York, USA': { rating: 4.7, reviews: 7211 },
-        'Angkor Wat, Cambodia': { rating: 4.9, reviews: 4512 },
-        'Taj Mahal, India': { rating: 4.9, reviews: 6879 },
-        'Bora Bora, French Polynesia': { rating: 4.8, reviews: 2103 },
-        'Copacabana Beach, Brazil': { rating: 4.3, reviews: 3890 }
-      };
 
       grid.innerHTML = destinations.map((dest, i) => {
         const reviews = reviewsData[dest.nameKey] || { rating: 4.5, reviews: 100 };

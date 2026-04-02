@@ -160,8 +160,15 @@
       <li><a href="favorites.html" class="nav-link">♥ Favorites</a></li>
       <li><a href="destinations.html" class="nav-link">Destinations</a></li>
       <li><a href="bookings.html" class="nav-link active">My Bookings</a></li>
+      <li><a href="compare.html" class="nav-link">Compare</a></li>
+      <li><a href="budget.html" class="nav-link">Budget</a></li>
+      <li><a href="packing.html" class="nav-link">Packing</a></li>
+      <li><a href="journal.html" class="nav-link">Journal</a></li>
       <li><a href="login.html" class="nav-link nav-link-auth">Sign In</a></li>
     </ul>
+    <button class="nav-theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+      <span class="theme-toggle-icon">🌙</span>
+    </button>
   </nav>
 
   <!-- BOOKINGS SECTION -->
@@ -177,6 +184,23 @@
       <h3>No Trips Planned Yet</h3>
       <p>Your upcoming adventures will appear here. Start exploring our world-class destinations.</p>
       <a href="destinations.html" class="btn-book" style="display:inline-block;text-decoration:none">Find Your Next Trip</a>
+    </div>
+  </section>
+
+  <!-- PRE-TRIP CHECKLIST -->
+  <section class="checklist-section" id="checklistSection">
+    <div class="checklist-container">
+      <div class="checklist-header">
+        <h1>Pre-Trip Checklist</h1>
+        <p style="color:var(--text-secondary)">Make sure you're prepared for your adventure</p>
+      </div>
+      <div class="checklist-booking-select">
+        <label for="checklistBookingSelect">Select a booking to generate checklist:</label>
+        <select id="checklistBookingSelect" onchange="selectBookingChecklist()">
+          <option value="">Select a booking...</option>
+        </select>
+      </div>
+      <div id="checklistContainer"></div>
     </div>
   </section>
 
@@ -241,6 +265,10 @@
         <a href="favorites.html">Favorites</a>
         <a href="destinations.html">Destinations</a>
         <a href="bookings.html">My Bookings</a>
+        <a href="compare.html">Compare</a>
+        <a href="budget.html">Budget</a>
+        <a href="packing.html">Packing</a>
+        <a href="journal.html">Journal</a>
       </div>
     </div>
   </footer>
@@ -295,7 +323,7 @@
       const grid = document.getElementById('bookingsGrid');
       if (!grid) return;
 
-      grid.innerHTML = bookings.reverse().map((booking, i) => {
+      grid.innerHTML = [...bookings].reverse().map((booking, i) => {
         // Map destination safely
         const destObj = allDestinations.find(d => d.name === booking.destination);
         const imageUrl = destObj && destObj.imageUrl ? destObj.imageUrl : 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600';

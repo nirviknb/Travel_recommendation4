@@ -161,6 +161,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initKeyboardSearch();
   }
   initLazyMap();
+  initNewFeatures();
 });
 
 // ---- STAR RENDERER ----
@@ -270,6 +271,16 @@ async function handleSearch() {
 
   if (results.length > 0) {
     currentResults = results;
+    addToSearchHistory(input.value.trim());
+    results.forEach(r => {
+      addToRecentlyViewed({
+        name: r.name || `${r.name}, ${r.type}`,
+        imageUrl: r.imageUrl || '',
+        type: r.type || 'Destination',
+        description: r.description || '',
+        timezone: r.timezone || ''
+      });
+    });
     showResultsSection();
     displayResults(results, category);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -434,7 +445,6 @@ function getMapPreviewHTML(name, coords) {
           <span class="map-label">View on Map</span>
         </div>
       </div>
-      </a>
     </div>
   `;
 }
@@ -758,6 +768,29 @@ function handleBookingSubmit(e, destName) {
     return;
   }
 
+  const name = nameInput.value;
+  const email = emailInput.value;
+  const checkinVal = checkin.value;
+  const checkoutVal = checkout.value;
+  const travelersVal = travelers.value;
+  const tripTypeVal = tripType.value;
+  const notesInput = document.getElementById('bookingNotes');
+  const notesVal = notesInput ? notesInput.value : '';
+
+  const bookings = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
+  bookings.push({
+    destination: destName,
+    name,
+    email,
+    checkin: checkinVal,
+    checkout: checkoutVal,
+    travelers: travelersVal,
+    tripType: tripTypeVal,
+    notes: notesVal,
+    createdAt: new Date().toISOString()
+  });
+  localStorage.setItem('wanderlust_bookings', JSON.stringify(bookings));
+
   const content = document.getElementById('modalContent');
   const safeName = escapeHtml(destName);
 
@@ -779,6 +812,8 @@ function handleBookingSubmit(e, destName) {
       <button class="modal-submit" onclick="closeBookingModal()">Done</button>
     </div>
   `;
+
+  showToast(`Booking confirmed for ${safeName}! We'll contact you at ${escapeHtml(email)}`);
 }
 
 // ---- FILTERS ----
@@ -1495,4 +1530,869 @@ function closeItineraryModal() {
     modal.setAttribute('hidden', '');
     document.body.style.overflow = '';
   }
+}
+
+// =====================================================
+// NEW FEATURES
+// =====================================================
+
+// ---- DARK MODE ----
+function initDarkMode() {
+  const saved = localStorage.getItem('wanderlust_dark_mode');
+  const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const isDark = saved !== null ? saved === 'true' : prefersDark;
+  applyDarkMode(isDark);
+}
+
+function applyDarkMode(isDark) {
+  document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+  localStorage.setItem('wanderlust_dark_mode', JSON.stringify(isDark));
+  updateThemeToggleButtons(isDark);
+}
+
+function toggleDarkMode() {
+  const current = document.documentElement.getAttribute('data-theme') === 'dark';
+  applyDarkMode(!current);
+}
+
+function updateThemeToggleButtons(isDark) {
+  document.querySelectorAll('.theme-toggle-icon').forEach(el => {
+    el.textContent = isDark ? '☀️' : '🌙';
+  });
+}
+
+// ---- RECENTLY VIEWED ----
+function getRecentlyViewed() {
+  try {
+    return JSON.parse(localStorage.getItem('wanderlust_recently_viewed') || '[]');
+  } catch { return []; }
+}
+
+function saveRecentlyViewed(items) {
+  localStorage.setItem('wanderlust_recently_viewed', JSON.stringify(items.slice(0, 12)));
+}
+
+function addToRecentlyViewed(dest) {
+  if (!dest || !dest.name) return;
+  let recent = getRecentlyViewed();
+  recent = recent.filter(r => r.name !== dest.name);
+  recent.unshift({
+    name: dest.name,
+    imageUrl: dest.imageUrl || '',
+    type: dest.type || '',
+    description: dest.description || '',
+    timezone: dest.timezone || '',
+    viewedAt: new Date().toISOString()
+  });
+  saveRecentlyViewed(recent);
+  renderRecentlyViewed();
+}
+
+function clearRecentlyViewed() {
+  localStorage.removeItem('wanderlust_recently_viewed');
+  renderRecentlyViewed();
+  showToast('Recently viewed history cleared');
+}
+
+function renderRecentlyViewed() {
+  const section = document.getElementById('recentlyViewedSection');
+  if (!section) return;
+  const recent = getRecentlyViewed();
+  const grid = document.getElementById('recentlyViewedGrid');
+  if (!grid) return;
+  if (recent.length === 0) {
+    section.style.display = 'none';
+    return;
+  }
+  section.style.display = '';
+  grid.innerHTML = recent.map(dest => `
+    <div class="recent-card" onclick="viewRecentDestination('${escapeHtml(dest.name)}')">
+      <img class="recent-card-img" src="${dest.imageUrl}" alt="${escapeHtml(dest.name)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600'" />
+      <div class="recent-card-body">
+        <h4>${escapeHtml(dest.name)}</h4>
+        <p>${escapeHtml(dest.description.substring(0, 80))}${dest.description.length > 80 ? '...' : ''}</p>
+      </div>
+    </div>
+  `).join('');
+}
+
+function viewRecentDestination(name) {
+  const results = currentResults.length > 0 ? currentResults : flattenDestinations(travelData);
+  const dest = results.find(d => d.name === name) || flattenDestinations(travelData).find(d => d.name === name);
+  if (dest) {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    setTimeout(() => {
+      if (typeof openDetailOverlay === 'function') {
+        openDetailOverlay(dest);
+      } else {
+        const input = document.getElementById('searchInput');
+        if (input) {
+          input.value = dest.name;
+          handleSearch();
+        }
+      }
+    }, 500);
+  }
+}
+
+// ---- SEARCH HISTORY ----
+function getSearchHistory() {
+  try {
+    return JSON.parse(localStorage.getItem('wanderlust_search_history') || '[]');
+  } catch { return []; }
+}
+
+function saveSearchHistory(history) {
+  localStorage.setItem('wanderlust_search_history', JSON.stringify(history.slice(0, 8)));
+}
+
+function addToSearchHistory(query) {
+  if (!query || query.trim() === '') return;
+  let history = getSearchHistory();
+  history = history.filter(h => h.toLowerCase() !== query.toLowerCase());
+  history.unshift(query.trim());
+  saveSearchHistory(history);
+}
+
+function showSearchHistory() {
+  const dropdown = document.getElementById('searchHistoryDropdown');
+  if (!dropdown) return;
+  const history = getSearchHistory();
+  if (history.length === 0) {
+    dropdown.classList.remove('show');
+    return;
+  }
+  dropdown.innerHTML = history.map(h => `
+    <div class="search-history-item" onclick="rerunSearch('${escapeHtml(h)}')">
+      <span><span class="history-icon">🕐</span> ${escapeHtml(h)}</span>
+    </div>
+  `).join('') + `<button class="search-history-clear" onclick="clearSearchHistory()">Clear search history</button>`;
+  dropdown.classList.add('show');
+}
+
+function hideSearchHistory() {
+  const dropdown = document.getElementById('searchHistoryDropdown');
+  if (dropdown) dropdown.classList.remove('show');
+}
+
+function rerunSearch(query) {
+  const input = document.getElementById('searchInput');
+  if (input) {
+    input.value = query;
+    hideSearchHistory();
+    handleSearch();
+  }
+}
+
+function clearSearchHistory() {
+  localStorage.removeItem('wanderlust_search_history');
+  hideSearchHistory();
+  showToast('Search history cleared');
+}
+
+function initSearchHistory() {
+  const input = document.getElementById('searchInput');
+  if (!input) return;
+  input.addEventListener('focus', () => {
+    if (input.value.trim() === '') {
+      showSearchHistory();
+    }
+  });
+  input.addEventListener('blur', () => {
+    setTimeout(hideSearchHistory, 200);
+  });
+}
+
+// ---- BEST TIME TO VISIT WIDGET ----
+function getBestTimeMonths(bestTimeStr) {
+  const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const months = monthNames.map((name, i) => ({ name, index: i, status: 'neutral' }));
+  if (!bestTimeStr) return months;
+  const lower = bestTimeStr.toLowerCase();
+  const bestMonths = [];
+  const okMonths = [];
+  const avoidMonths = [];
+  if (lower.includes('nov') || lower.includes('dec') || lower.includes('jan') || lower.includes('feb') || lower.includes('mar')) {
+    if (lower.includes('apr') || lower.includes('may') || lower.includes('jun')) {
+      [10, 11, 0, 1, 2, 3, 4, 5].forEach(m => bestMonths.push(m));
+    } else {
+      [10, 11, 0, 1, 2].forEach(m => bestMonths.push(m));
+    }
+  }
+  if (lower.includes('mar') || lower.includes('apr') || lower.includes('may')) {
+    [2, 3, 4].forEach(m => { if (!bestMonths.includes(m)) bestMonths.push(m); });
+  }
+  if (lower.includes('jun') || lower.includes('jul') || lower.includes('aug') || lower.includes('sep')) {
+    if (lower.includes('oct') || lower.includes('nov')) {
+      [5, 6, 7, 8, 9, 10].forEach(m => bestMonths.push(m));
+    } else {
+      [5, 6, 7, 8].forEach(m => { if (!bestMonths.includes(m)) bestMonths.push(m); });
+    }
+  }
+  if (lower.includes('sep') || lower.includes('oct')) {
+    [8, 9].forEach(m => { if (!bestMonths.includes(m)) okMonths.push(m); });
+  }
+  if (lower.includes('monsoon') || lower.includes('rainy') || lower.includes('wet season')) {
+    [5, 6, 7, 8].forEach(m => { if (!bestMonths.includes(m)) avoidMonths.push(m); });
+  }
+  if (lower.includes('winter') && !lower.includes('avoid')) {
+    [11, 0, 1].forEach(m => { if (!bestMonths.includes(m) && !avoidMonths.includes(m)) okMonths.push(m); });
+  }
+  if (bestMonths.length === 0 && okMonths.length === 0 && avoidMonths.length === 0) {
+    [2, 3, 4, 5, 6, 7, 8, 9].forEach(m => bestMonths.push(m));
+  }
+  months.forEach(m => {
+    if (bestMonths.includes(m.index)) m.status = 'best';
+    else if (avoidMonths.includes(m.index)) m.status = 'avoid';
+    else if (okMonths.includes(m.index)) m.status = 'ok';
+    else if (bestMonths.length > 0) m.status = 'neutral';
+    else m.status = 'ok';
+  });
+  return months;
+}
+
+function renderBestTimeWidget(bestTimeStr) {
+  const months = getBestTimeMonths(bestTimeStr);
+  return `
+    <div class="best-time-widget">
+      <div class="best-time-title">Best Time to Visit</div>
+      <div class="best-time-calendar">
+        ${months.map(m => `
+          <div class="best-time-month ${m.status}" title="${getMonthTooltip(m.status)}">
+            <span class="month-abbr">${m.name}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="best-time-legend">
+        <span><span class="legend-dot" style="background:var(--calendar-best)"></span> Best</span>
+        <span><span class="legend-dot" style="background:var(--calendar-ok)"></span> OK</span>
+        <span><span class="legend-dot" style="background:var(--calendar-avoid)"></span> Avoid</span>
+      </div>
+    </div>
+  `;
+}
+
+function getMonthTooltip(status) {
+  if (status === 'best') return 'Best time to visit';
+  if (status === 'avoid') return 'Less ideal conditions';
+  if (status === 'ok') return 'Acceptable conditions';
+  return 'Neutral season';
+}
+
+// ---- HIGHLIGHTS CAROUSEL ----
+function renderHighlightsCarousel(highlights) {
+  if (!highlights || highlights.length === 0) return '';
+  const icons = ['✦', '◆', '●', '▲', '★', '♦', '◉', '⬟', '⬡', '◎'];
+  return `
+    <div class="highlights-carousel">
+      <h4>Highlights</h4>
+      <div class="highlights-track">
+        ${highlights.map((h, i) => `
+          <div class="highlight-item">
+            <span class="highlight-icon">${icons[i % icons.length]}</span>
+            <span class="highlight-text">${escapeHtml(h)}</span>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+  `;
+}
+
+// ---- FLATTEN DESTINATIONS ----
+function flattenDestinations(data) {
+  if (!data) return [];
+  const results = [];
+  if (data.countries) {
+    data.countries.forEach(country => {
+      if (country.cities) {
+        country.cities.forEach(city => {
+          results.push({
+            name: `${city.name}, ${country.name}`,
+            nameKey: `${city.name}, ${country.name}`,
+            imageUrl: city.imageUrl || country.imageUrl || '',
+            description: city.description || country.description || '',
+            type: 'Country',
+            timezone: city.timezone || country.timezone || '',
+            highlights: city.highlights || country.highlights || [],
+            bestTime: city.bestTime || country.bestTime || '',
+            currency: country.currency || '',
+            language: country.language || '',
+            country: country.name
+          });
+        });
+      }
+    });
+  }
+  if (data.temples) {
+    data.temples.forEach(temple => {
+      results.push({
+        name: temple.name,
+        nameKey: temple.name,
+        imageUrl: temple.imageUrl || '',
+        description: temple.description || '',
+        type: 'Temple',
+        timezone: temple.timezone || '',
+        highlights: temple.highlights || [],
+        bestTime: temple.bestTime || '',
+        currency: '',
+        language: '',
+        country: temple.country || ''
+      });
+    });
+  }
+  if (data.beaches) {
+    data.beaches.forEach(beach => {
+      results.push({
+        name: beach.name,
+        nameKey: beach.name,
+        imageUrl: beach.imageUrl || '',
+        description: beach.description || '',
+        type: 'Beach',
+        timezone: beach.timezone || '',
+        highlights: beach.highlights || [],
+        bestTime: beach.bestTime || '',
+        currency: '',
+        language: '',
+        country: beach.country || ''
+      });
+    });
+  }
+  return results;
+}
+
+// ---- DESTINATION COMPARISON ----
+function getCompareDestinations() {
+  const all = flattenDestinations(travelData);
+  const recent = getRecentlyViewed();
+  const favs = getFavorites();
+  const unique = [];
+  const seen = new Set();
+  [...recent.map(r => ({ name: r.name, imageUrl: r.imageUrl })), ...all].forEach(d => {
+    if (!seen.has(d.name)) {
+      seen.add(d.name);
+      unique.push(d);
+    }
+  });
+  return unique;
+}
+
+function renderComparePage() {
+  const destinations = getCompareDestinations();
+  const select1 = document.getElementById('compareDest1');
+  const select2 = document.getElementById('compareDest2');
+  const select3 = document.getElementById('compareDest3');
+  if (!select1 || !select2) return;
+  const options = `<option value="">Select destination...</option>` + destinations.map(d =>
+    `<option value="${escapeHtml(d.name)}">${escapeHtml(d.name)}</option>`
+  ).join('');
+  select1.innerHTML = options;
+  select2.innerHTML = options;
+  if (select3) select3.innerHTML = options + `<option value="">(optional)</option>`;
+}
+
+function compareDestinations() {
+  const name1 = document.getElementById('compareDest1').value;
+  const name2 = document.getElementById('compareDest2').value;
+  const name3 = document.getElementById('compareDest3')?.value || '';
+  if (!name1 || !name2) {
+    showToast('Please select at least 2 destinations to compare');
+    return;
+  }
+  const all = flattenDestinations(travelData);
+  const dests = [name1, name2, name3].filter(Boolean).map(name =>
+    all.find(d => d.name === name) || { name, imageUrl: '', description: '', type: '', timezone: '', highlights: [], bestTime: '', currency: '', language: '' }
+  );
+  const container = document.getElementById('compareResults');
+  if (!container) return;
+  const maxRating = 5;
+  container.innerHTML = `
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Feature</th>
+          ${dests.map(d => `<th>${escapeHtml(d.name)}</th>`).join('')}
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Type</td>
+          ${dests.map(d => `<td>${escapeHtml(d.type || 'N/A')}</td>`).join('')}
+        </tr>
+        <tr>
+          <td>Rating</td>
+          ${dests.map(d => {
+            const r = reviewsData[d.name] || { rating: 4.5 };
+            const pct = (r.rating / maxRating) * 100;
+            return `<td>${r.rating}/5<div class="compare-bar"><div class="compare-bar-fill" style="width:${pct}%"></div></div></td>`;
+          }).join('')}
+        </tr>
+        <tr>
+          <td>Best Time</td>
+          ${dests.map(d => `<td>${escapeHtml(d.bestTime || 'N/A')}</td>`).join('')}
+        </tr>
+        <tr>
+          <td>Currency</td>
+          ${dests.map(d => `<td>${escapeHtml(d.currency || 'N/A')}</td>`).join('')}
+        </tr>
+        <tr>
+          <td>Language</td>
+          ${dests.map(d => `<td>${escapeHtml(d.language || 'N/A')}</td>`).join('')}
+        </tr>
+        <tr>
+          <td>Timezone</td>
+          ${dests.map(d => `<td>${escapeHtml(d.timezone || 'N/A')}</td>`).join('')}
+        </tr>
+        <tr>
+          <td>Highlights</td>
+          ${dests.map(d => `<td>${(d.highlights || []).map(h => escapeHtml(h)).join(', ') || 'N/A'}</td>`).join('')}
+        </tr>
+        <tr>
+          <td>Weather Now</td>
+          ${dests.map(d => {
+            const w = getMockWeather(d.timezone);
+            return `<td>${w.icon} ${w.temp}°C ${w.condition}</td>`;
+          }).join('')}
+        </tr>
+        <tr>
+          <td>Action</td>
+          ${dests.map(d => `<td><button class="compare-btn" onclick="quickSearch('${escapeHtml(d.name.split(',')[0].trim())}')">Search</button></td>`).join('')}
+        </tr>
+      </tbody>
+    </table>
+  `;
+}
+
+// ---- CURRENCY CONVERTER ----
+const defaultExchangeRates = {
+  'USD': 1,
+  'EUR': 0.92,
+  'GBP': 0.79,
+  'JPY': 149.50,
+  'AUD': 1.53,
+  'BRL': 4.97,
+  'NPR': 133.00,
+  'INR': 83.12,
+  'THB': 35.50,
+  'IDR': 15650,
+  'CNY': 7.24,
+  'KRW': 1320,
+  'CHF': 0.88,
+  'CAD': 1.36,
+  'MXN': 17.15,
+  'SGD': 1.34,
+  'NZD': 1.63,
+  'ZAR': 18.90,
+  'MAD': 10.10,
+  'KHR': 4100,
+  'XPF': 110
+};
+
+function getExchangeRates() {
+  try {
+    const stored = localStorage.getItem('wanderlust_exchange_rates');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed.updated && (Date.now() - parsed.updated < 7 * 24 * 60 * 60 * 1000)) {
+        return parsed.rates;
+      }
+    }
+  } catch {}
+  return defaultExchangeRates;
+}
+
+function convertCurrency(amount, from, to) {
+  const rates = getExchangeRates();
+  const fromRate = rates[from] || 1;
+  const toRate = rates[to] || 1;
+  const usdAmount = amount / fromRate;
+  return usdAmount * toRate;
+}
+
+function renderCurrencyConverter() {
+  const container = document.getElementById('currencyConverter');
+  if (!container) return;
+  const rates = getExchangeRates();
+  const currencies = Object.keys(rates).sort();
+  const options = currencies.map(c => `<option value="${c}">${c}</option>`).join('');
+  container.innerHTML = `
+    <div class="currency-converter">
+      <h3>Currency Converter</h3>
+      <div class="currency-row">
+        <input type="number" id="currencyAmount" value="100" min="0" oninput="updateCurrencyResult()" />
+        <select id="currencyFrom" onchange="updateCurrencyResult()">${options}</select>
+      </div>
+      <div style="text-align:center">
+        <button class="currency-swap" onclick="swapCurrencies()" title="Swap currencies">⇄</button>
+      </div>
+      <div class="currency-row">
+        <input type="text" id="currencyResultDisplay" readonly value="" style="background:var(--weather-bg);font-weight:600" />
+        <select id="currencyTo" onchange="updateCurrencyResult()">${options}</select>
+      </div>
+      <div class="currency-result" id="currencyResultInfo"></div>
+    </div>
+  `;
+  const fromSelect = document.getElementById('currencyFrom');
+  const toSelect = document.getElementById('currencyTo');
+  if (fromSelect) fromSelect.value = 'USD';
+  if (toSelect) toSelect.value = 'EUR';
+  updateCurrencyResult();
+}
+
+function updateCurrencyResult() {
+  const amount = parseFloat(document.getElementById('currencyAmount')?.value) || 0;
+  const from = document.getElementById('currencyFrom')?.value || 'USD';
+  const to = document.getElementById('currencyTo')?.value || 'EUR';
+  const result = convertCurrency(amount, from, to);
+  const display = document.getElementById('currencyResultDisplay');
+  const info = document.getElementById('currencyResultInfo');
+  if (display) display.value = `${result.toFixed(2)} ${to}`;
+  if (info) {
+    const rate = convertCurrency(1, from, to);
+    info.innerHTML = `<div class="amount">${result.toFixed(2)} ${to}</div><div class="rate">1 ${from} = ${rate.toFixed(4)} ${to}</div>`;
+  }
+}
+
+function swapCurrencies() {
+  const from = document.getElementById('currencyFrom');
+  const to = document.getElementById('currencyTo');
+  if (from && to) {
+    const temp = from.value;
+    from.value = to.value;
+    to.value = temp;
+    updateCurrencyResult();
+  }
+}
+
+// ---- BUDGET CALCULATOR ----
+function calculateBudget() {
+  const budget = parseFloat(document.getElementById('budgetAmount')?.value) || 0;
+  const days = parseInt(document.getElementById('budgetDays')?.value) || 7;
+  const style = document.getElementById('budgetStyle')?.value || 'mid';
+  if (budget <= 0 || days <= 0) {
+    showToast('Please enter a valid budget and trip duration');
+    return;
+  }
+  const ratios = {
+    budget: { flights: 0.30, accommodation: 0.25, food: 0.20, activities: 0.10, transport: 0.10, misc: 0.05 },
+    mid: { flights: 0.25, accommodation: 0.30, food: 0.20, activities: 0.15, transport: 0.05, misc: 0.05 },
+    luxury: { flights: 0.20, accommodation: 0.35, food: 0.25, activities: 0.10, transport: 0.05, misc: 0.05 }
+  };
+  const r = ratios[style] || ratios.mid;
+  const breakdown = {
+    flights: Math.round(budget * r.flights),
+    accommodation: Math.round(budget * r.accommodation),
+    food: Math.round(budget * r.food),
+    activities: Math.round(budget * r.activities),
+    transport: Math.round(budget * r.transport),
+    misc: Math.round(budget * r.misc)
+  };
+  const perDay = Math.round(budget / days);
+  const results = document.getElementById('budgetResults');
+  if (!results) return;
+  results.classList.add('show');
+  results.innerHTML = `
+    <h3 style="font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--text-primary);margin-bottom:0.5rem">Budget Breakdown</h3>
+    <p style="color:var(--text-secondary);margin-bottom:1.5rem">Total: <strong>$${budget.toLocaleString()}</strong> for <strong>${days} days</strong> — <strong>$${perDay.toLocaleString()}/day</strong></p>
+    <div class="budget-breakdown">
+      ${Object.entries(breakdown).map(([key, val]) => `
+        <div class="budget-item">
+          <span class="budget-item-label">${key.charAt(0).toUpperCase() + key.slice(1)}</span>
+          <span class="budget-item-amount">$${val.toLocaleString()}</span>
+        </div>
+      `).join('')}
+    </div>
+    <div class="budget-bar-container">
+      ${Object.entries(breakdown).map(([key, val]) => `
+        <div class="budget-bar-item">
+          <div class="budget-bar-label">
+            <span>${key.charAt(0).toUpperCase() + key.slice(1)}</span>
+            <span>$${val.toLocaleString()} (${Math.round(val / budget * 100)}%)</span>
+          </div>
+          <div class="budget-bar">
+            <div class="budget-bar-fill" style="width:${val / budget * 100}%"></div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+// ---- PACKING LIST ----
+const packingTemplates = {
+  essentials: ['Passport/ID', 'Travel insurance documents', 'Phone & charger', 'Wallet & cards', 'Prescription medications', 'Sunglasses', 'Reusable water bottle', 'Travel adapter'],
+  beach: ['Swimsuit', 'Beach towel', 'Sunscreen (SPF 50+)', 'Flip-flops', 'Snorkel gear', 'Beach bag', 'Hat/cap', 'After-sun lotion'],
+  temple: ['Modest clothing', 'Scarf/shawl', 'Comfortable walking shoes', 'Camera', 'Small backpack', 'Guidebook'],
+  city: ['Comfortable walking shoes', 'Day backpack', 'City map/offline maps', 'Transit card', 'Casual outfits', 'Evening outfit', 'Umbrella'],
+  adventure: ['Hiking boots', 'Weather-appropriate layers', 'First aid kit', 'Headlamp/flashlight', 'Multi-tool', 'Energy bars', 'Trekking poles', 'Waterproof jacket'],
+  cold: ['Warm coat', 'Thermal layers', 'Gloves', 'Scarf', 'Warm hat', 'Thermal socks', 'Hand warmers', 'Lip balm'],
+  hot: ['Light clothing', 'Sunscreen', 'Hat', 'Insect repellent', 'Electrolyte packets', 'Cooling towel', 'Sandals'],
+  rainy: ['Raincoat/poncho', 'Waterproof shoes', 'Compact umbrella', 'Waterproof bag cover', 'Quick-dry clothing', 'Extra socks']
+};
+
+function generatePackingList() {
+  const destName = document.getElementById('packingDestination')?.value || '';
+  const days = parseInt(document.getElementById('packingDays')?.value) || 7;
+  const style = document.getElementById('packingStyle')?.value || 'general';
+  const all = flattenDestinations(travelData);
+  const dest = all.find(d => d.name === destName);
+  const weather = dest ? getMockWeather(dest.timezone) : { condition: 'sunny', temp: 25 };
+  const type = dest ? (dest.type || '').toLowerCase() : '';
+  const items = {
+    'Essentials': [...packingTemplates.essentials],
+    'Clothing': []
+  };
+  if (type.includes('beach')) items['Clothing'].push(...packingTemplates.beach);
+  else if (type.includes('temple')) items['Clothing'].push(...packingTemplates.temple);
+  else items['Clothing'].push(...packingTemplates.city);
+  if (style === 'adventure') items['Clothing'].push(...packingTemplates.adventure);
+  if (weather.condition === 'rainy' || weather.condition === 'stormy') items['Clothing'].push(...packingTemplates.rainy);
+  if (weather.temp < 10) items['Clothing'].push(...packingTemplates.cold);
+  else if (weather.temp > 30) items['Clothing'].push(...packingTemplates.hot);
+  const dayMultiplier = Math.ceil(days / 3);
+  items['Clothing'] = [...new Set(items['Clothing'])];
+  items['Electronics'] = ['Phone charger', 'Power bank', 'Camera', 'Headphones', 'Travel adapter'];
+  items['Documents'] = ['Passport', 'Visa (if required)', 'Travel insurance', 'Flight tickets', 'Hotel reservations', 'Emergency contacts'];
+  items['Health'] = ['Prescription medications', 'Pain relievers', 'Band-aids', 'Hand sanitizer', 'Insect repellent', 'Sunscreen'];
+  renderPackingList(items);
+}
+
+function renderPackingList(items) {
+  const container = document.getElementById('packingListContainer');
+  if (!container) return;
+  let totalItems = 0;
+  const categories = Object.entries(items).map(([cat, itemList]) => {
+    const itemsHtml = itemList.map((item, i) => {
+      totalItems++;
+      return `
+        <div class="packing-item">
+          <input type="checkbox" id="pack_${cat}_${i}" onchange="updatePackingProgress()" />
+          <label for="pack_${cat}_${i}">${escapeHtml(item)}</label>
+        </div>
+      `;
+    }).join('');
+    return `
+      <div class="packing-category">
+        <div class="packing-category-header" onclick="togglePackingCategory(this)">
+          <span class="packing-category-title">${cat}</span>
+          <span class="packing-category-count">${itemList.length} items</span>
+        </div>
+        <div class="packing-items">${itemsHtml}</div>
+      </div>
+    `;
+  }).join('');
+  container.innerHTML = `
+    <div class="packing-progress">
+      <div class="packing-progress-text"><span id="packingProgressText">0 of ${totalItems} items packed</span></div>
+      <div class="packing-progress-bar">
+        <div class="packing-progress-fill" id="packingProgressFill" style="width:0%"></div>
+      </div>
+    </div>
+    <div class="packing-list">${categories}</div>
+  `;
+}
+
+function updatePackingProgress() {
+  const checkboxes = document.querySelectorAll('.packing-item input[type="checkbox"]');
+  const total = checkboxes.length;
+  const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+  const pct = total > 0 ? Math.round(checked / total * 100) : 0;
+  const text = document.getElementById('packingProgressText');
+  const fill = document.getElementById('packingProgressFill');
+  if (text) text.textContent = `${checked} of ${total} items packed`;
+  if (fill) fill.style.width = `${pct}%`;
+}
+
+function togglePackingCategory(header) {
+  const items = header.nextElementSibling;
+  if (items) {
+    items.style.display = items.style.display === 'none' ? '' : 'none';
+  }
+}
+
+// ---- TRAVEL CHECKLIST ----
+const checklistTemplates = {
+  '30 days before': ['Check passport validity (6+ months)', 'Research visa requirements', 'Book flights', 'Book accommodation', 'Purchase travel insurance', 'Schedule vaccinations'],
+  '14 days before': ['Apply for visa (if needed)', 'Notify bank of travel', 'Arrange pet/house sitting', 'Check weather forecast', 'Start packing list', 'Download offline maps'],
+  '7 days before': ['Confirm all bookings', 'Check in online for flights', 'Exchange currency', 'Print important documents', 'Charge all electronics', 'Buy travel-sized toiletries'],
+  '1 day before': ['Final packing check', 'Confirm flight status', 'Set up email auto-reply', 'Water plants', 'Take out trash', 'Charge power bank', 'Download entertainment']
+};
+
+function renderChecklist(booking) {
+  const container = document.getElementById('checklistContainer');
+  if (!container) return;
+  const phases = Object.entries(checklistTemplates);
+  container.innerHTML = `
+    <div class="checklist-timeline">
+      ${phases.map(([phase, tasks]) => `
+        <div class="checklist-phase" id="phase_${phase.replace(/\s+/g, '_')}">
+          <div class="checklist-phase-title">${phase}</div>
+          ${tasks.map((task, i) => `
+            <div class="checklist-task">
+              <input type="checkbox" id="task_${phase.replace(/\s+/g, '_')}_${i}" onchange="updateChecklistProgress()" />
+              <label for="task_${phase.replace(/\s+/g, '_')}_${i}">${escapeHtml(task)}</label>
+            </div>
+          `).join('')}
+        </div>
+      `).join('')}
+    </div>
+  `;
+}
+
+function updateChecklistProgress() {
+  const checkboxes = document.querySelectorAll('.checklist-task input[type="checkbox"]');
+  const total = checkboxes.length;
+  const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
+  const phases = document.querySelectorAll('.checklist-phase');
+  phases.forEach(phase => {
+    const phaseCheckboxes = phase.querySelectorAll('input[type="checkbox"]');
+    const phaseTotal = phaseCheckboxes.length;
+    const phaseChecked = Array.from(phaseCheckboxes).filter(cb => cb.checked).length;
+    phase.classList.toggle('completed', phaseChecked === phaseTotal);
+  });
+}
+
+function loadBookingChecklist() {
+  const select = document.getElementById('checklistBookingSelect');
+  if (!select) return;
+  const bookings = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
+  select.innerHTML = `<option value="">Select a booking...</option>` + bookings.map((b, i) =>
+    `<option value="${i}">${escapeHtml(b.destination)} — ${escapeHtml(b.checkin || 'No date')}</option>`
+  ).join('');
+}
+
+function selectBookingChecklist() {
+  const select = document.getElementById('checklistBookingSelect');
+  if (!select || !select.value) return;
+  const bookings = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
+  const booking = bookings[parseInt(select.value)];
+  if (booking) renderChecklist(booking);
+}
+
+// ---- TRAVEL JOURNAL ----
+function getJournalEntries() {
+  try {
+    return JSON.parse(localStorage.getItem('wanderlust_journal') || '[]');
+  } catch { return []; }
+}
+
+function saveJournalEntries(entries) {
+  localStorage.setItem('wanderlust_journal', JSON.stringify(entries));
+}
+
+function addJournalEntry() {
+  const title = document.getElementById('journalTitle')?.value?.trim();
+  const destination = document.getElementById('journalDestination')?.value?.trim();
+  const date = document.getElementById('journalDate')?.value;
+  const text = document.getElementById('journalText')?.value?.trim();
+  if (!title || !text) {
+    showToast('Please enter a title and your thoughts');
+    return;
+  }
+  const entries = getJournalEntries();
+  entries.unshift({
+    id: Date.now(),
+    title,
+    destination: destination || '',
+    date: date || new Date().toISOString().split('T')[0],
+    text,
+    createdAt: new Date().toISOString()
+  });
+  saveJournalEntries(entries);
+  document.getElementById('journalTitle').value = '';
+  document.getElementById('journalDestination').value = '';
+  document.getElementById('journalDate').value = '';
+  document.getElementById('journalText').value = '';
+  renderJournalEntries();
+  showToast('Journal entry saved!');
+}
+
+function renderJournalEntries() {
+  const container = document.getElementById('journalEntries');
+  if (!container) return;
+  const entries = getJournalEntries();
+  if (entries.length === 0) {
+    container.innerHTML = `
+      <div class="journal-empty">
+        <h2>No journal entries yet</h2>
+        <p>Start documenting your travel experiences!</p>
+      </div>
+    `;
+    return;
+  }
+  container.innerHTML = entries.map(entry => `
+    <div class="journal-entry">
+      <div class="journal-entry-header">
+        <span class="journal-entry-title">${escapeHtml(entry.title)}</span>
+        <span class="journal-entry-date">${formatJournalDate(entry.date)}</span>
+      </div>
+      ${entry.destination ? `<span class="journal-entry-destination">${escapeHtml(entry.destination)}</span>` : ''}
+      <div class="journal-entry-text">${escapeHtml(entry.text)}</div>
+      <div class="journal-entry-actions">
+        <button onclick="editJournalEntry(${entry.id})">Edit</button>
+        <button onclick="exportJournalEntry(${entry.id})">Export</button>
+        <button class="delete-btn" onclick="deleteJournalEntry(${entry.id})">Delete</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function formatJournalDate(dateStr) {
+  try {
+    return new Date(dateStr).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  } catch { return dateStr; }
+}
+
+function deleteJournalEntry(id) {
+  let entries = getJournalEntries();
+  entries = entries.filter(e => e.id !== id);
+  saveJournalEntries(entries);
+  renderJournalEntries();
+  showToast('Journal entry deleted');
+}
+
+function editJournalEntry(id) {
+  const entries = getJournalEntries();
+  const entry = entries.find(e => e.id === id);
+  if (!entry) return;
+  document.getElementById('journalTitle').value = entry.title;
+  document.getElementById('journalDestination').value = entry.destination || '';
+  document.getElementById('journalDate').value = entry.date;
+  document.getElementById('journalText').value = entry.text;
+  entries.splice(entries.indexOf(entry), 1);
+  saveJournalEntries(entries);
+  renderJournalEntries();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function exportJournalEntry(id) {
+  const entries = getJournalEntries();
+  const entry = entries.find(e => e.id === id);
+  if (!entry) return;
+  const text = `${entry.title}\n${entry.destination ? `Destination: ${entry.destination}\n` : ''}Date: ${entry.date}\n\n${entry.text}`;
+  navigator.clipboard.writeText(text).then(() => {
+    showToast('Journal entry copied to clipboard');
+  }).catch(() => {
+    showToast('Could not copy to clipboard');
+  });
+}
+
+// ---- INITIALIZATION ----
+function initNewFeatures() {
+  initDarkMode();
+  initSearchHistory();
+  renderRecentlyViewed();
+  renderCurrencyConverter();
+  if (document.getElementById('compareDest1')) renderComparePage();
+  if (document.getElementById('checklistBookingSelect')) loadBookingChecklist();
+  if (document.getElementById('journalEntries')) renderJournalEntries();
+  if (document.getElementById('packingDestination')) populatePackingDestinations();
+}
+
+function populatePackingDestinations() {
+  const select = document.getElementById('packingDestination');
+  if (!select) return;
+  const all = flattenDestinations(travelData);
+  select.innerHTML = `<option value="">Select destination...</option>` + all.map(d =>
+    `<option value="${escapeHtml(d.name)}">${escapeHtml(d.name)}</option>`
+  ).join('');
 }

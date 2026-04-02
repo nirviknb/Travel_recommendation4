@@ -23,9 +23,16 @@ function flattenDestinations(data) {
     country.cities.forEach(city => {
       destinations.push({
         ...city,
+        name: `${city.name}, ${country.name}`,
+        nameKey: `${city.name}, ${country.name}`,
         category: 'city',
         country: country.name,
-        type: country.name
+        type: 'Country',
+        timezone: city.timezone || country.timezone || '',
+        highlights: city.highlights || country.highlights || [],
+        bestTime: city.bestTime || country.bestTime || '',
+        currency: country.currency || '',
+        language: country.language || ''
       });
     });
   });
@@ -33,16 +40,32 @@ function flattenDestinations(data) {
   data.temples.forEach(temple => {
     destinations.push({
       ...temple,
+      name: temple.name,
+      nameKey: temple.name,
       category: 'temple',
-      country: temple.name.split(',').pop()?.trim() || 'Historic Site'
+      country: temple.name.split(',').pop()?.trim() || 'Historic Site',
+      type: 'Temple',
+      timezone: temple.timezone || '',
+      highlights: temple.highlights || [],
+      bestTime: temple.bestTime || '',
+      currency: '',
+      language: ''
     });
   });
   
   data.beaches.forEach(beach => {
     destinations.push({
       ...beach,
+      name: beach.name,
+      nameKey: beach.name,
       category: 'beach',
-      country: beach.name.split(',').pop()?.trim() || 'Beach'
+      country: beach.name.split(',').pop()?.trim() || 'Beach',
+      type: 'Beach',
+      timezone: beach.timezone || '',
+      highlights: beach.highlights || [],
+      bestTime: beach.bestTime || '',
+      currency: '',
+      language: ''
     });
   });
   
@@ -144,6 +167,8 @@ function openDetailOverlay(destName) {
   const dest = allDestinations.find(d => d.name === destName);
   if (!dest) return;
 
+  addToRecentlyViewed(dest);
+
   const overlay = document.getElementById('detailOverlay');
   const content = document.getElementById('detailContent');
   const reviews = reviewsData[dest.name] || { rating: 4.5, reviews: 100 };
@@ -200,6 +225,10 @@ function openDetailOverlay(destName) {
           ${highlights.map(h => `<span class="detail-highlight-tag">• ${escapeHtml(h)}</span>`).join('')}
         </div>
       </div>
+
+      ${renderHighlightsCarousel(highlights)}
+
+      ${renderBestTimeWidget(dest.bestTime || '')}
 
       <div class="detail-infographics">
         <div class="detail-infographic">
@@ -314,24 +343,6 @@ function shareDetailDestination(name, description) {
 function bookDetailDestination(name, imageUrl, type) {
   closeDetailOverlay();
   openBookingModalInline(name, imageUrl, type);
-}
-
-function escapeHtml(str) {
-  if (typeof str !== 'string') return '';
-  return str
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#039;');
-}
-
-function debounce(fn, delay) {
-  let timer = null;
-  return function (...args) {
-    clearTimeout(timer);
-    timer = setTimeout(() => fn.apply(this, args), delay);
-  };
 }
 
 function initNewsletter() {
