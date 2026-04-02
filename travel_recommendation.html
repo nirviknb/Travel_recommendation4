@@ -38,17 +38,19 @@
       <li><a href="journal.html" class="nav-link">Journal</a></li>
       <li><a href="login.html" class="nav-link nav-link-auth">Sign In</a></li>
     </ul>
-    <div class="nav-search autocomplete-wrap">
-      <input type="text" id="searchInput" class="search-input" placeholder="Search beaches, temples, countries…" autocomplete="off" aria-label="Search destinations" aria-autocomplete="list" aria-controls="autocompleteDropdown" />
-      <div class="autocomplete-dropdown" id="autocompleteDropdown" role="listbox" aria-label="Destination suggestions"></div>
-      <div class="search-history-dropdown" id="searchHistoryDropdown"></div>
-      <button class="btn-search" onclick="handleSearch()">Search</button>
-      <button class="btn-reset" onclick="handleReset()">Clear</button>
+    <div class="nav-tools">
+      <div class="nav-search autocomplete-wrap">
+        <input type="text" id="searchInput" class="search-input" placeholder="Search beaches, temples, countries…" autocomplete="off" aria-label="Search destinations" aria-autocomplete="list" aria-controls="autocompleteDropdown" />
+        <div class="autocomplete-dropdown" id="autocompleteDropdown" role="listbox" aria-label="Destination suggestions"></div>
+        <div class="search-history-dropdown" id="searchHistoryDropdown"></div>
+        <button class="btn-search" onclick="handleSearch()">Search</button>
+        <button class="btn-reset" onclick="handleReset()">Clear</button>
+      </div>
+      <button class="nav-theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
+        <span class="theme-toggle-icon">🌙</span>
+      </button>
+      <button class="nav-toggle" onclick="toggleMenu()">☰</button>
     </div>
-    <button class="nav-theme-toggle" onclick="toggleDarkMode()" title="Toggle dark mode">
-      <span class="theme-toggle-icon">🌙</span>
-    </button>
-    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
   </nav>
 
   <!-- ===== HERO ===== -->
