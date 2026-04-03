@@ -342,18 +342,18 @@ function updateNavigation() {
   const user = getUserSession();
   const navLogin = document.getElementById('nav-login');
   const navSignup = document.getElementById('nav-signup');
-  const navProfile = document.getElementById('nav-profile');
+  const navAccount = document.getElementById('nav-account');
   const navLogout = document.getElementById('nav-logout');
 
   if (user) {
     if (navLogin) navLogin.style.display = 'none';
     if (navSignup) navSignup.style.display = 'none';
-    if (navProfile) navProfile.style.display = '';
+    if (navAccount) navAccount.style.display = '';
     if (navLogout) navLogout.style.display = '';
   } else {
     if (navLogin) navLogin.style.display = '';
     if (navSignup) navSignup.style.display = '';
-    if (navProfile) navProfile.style.display = 'none';
+    if (navAccount) navAccount.style.display = 'none';
     if (navLogout) navLogout.style.display = 'none';
   }
 }

@@ -1661,6 +1661,10 @@ function updateThemeToggleButtons(isDark) {
   document.querySelectorAll('.theme-toggle-icon').forEach(el => {
     el.textContent = isDark ? '☀️' : '🌙';
   });
+  const prefDarkMode = document.getElementById('prefDarkMode');
+  if (prefDarkMode) {
+    prefDarkMode.checked = isDark;
+  }
 }
 
 // ---- RECENTLY VIEWED ----
