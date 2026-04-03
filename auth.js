@@ -336,3 +336,38 @@ function simulateAuth(email, password) {
     }, 1000);
   });
 }
+
+/* =========== DYNAMIC NAVIGATION =========== */
+function updateNavigation() {
+  const user = getUserSession();
+  const navLogin = document.getElementById('nav-login');
+  const navSignup = document.getElementById('nav-signup');
+  const navProfile = document.getElementById('nav-profile');
+  const navLogout = document.getElementById('nav-logout');
+
+  if (user) {
+    if (navLogin) navLogin.style.display = 'none';
+    if (navSignup) navSignup.style.display = 'none';
+    if (navProfile) navProfile.style.display = '';
+    if (navLogout) navLogout.style.display = '';
+  } else {
+    if (navLogin) navLogin.style.display = '';
+    if (navSignup) navSignup.style.display = '';
+    if (navProfile) navProfile.style.display = 'none';
+    if (navLogout) navLogout.style.display = 'none';
+  }
+}
+
+function handleLogout() {
+  clearUserSession();
+  window.location.href = 'login.html';
+}
+
+function requireAuth() {
+  const user = getUserSession();
+  if (!user) {
+    window.location.href = 'login.html';
+    return null;
+  }
+  return user;
+}

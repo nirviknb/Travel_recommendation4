@@ -163,7 +163,21 @@ document.addEventListener('DOMContentLoaded', () => {
   initLazyMap();
   initNewFeatures();
   initDropdownsAfterDataLoad();
+  initAuthNavigation();
 });
+
+function initAuthNavigation() {
+  if (typeof updateNavigation === 'function') {
+    updateNavigation();
+  }
+  const logoutBtn = document.getElementById('nav-logout');
+  if (logoutBtn) {
+    logoutBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      if (typeof handleLogout === 'function') handleLogout();
+    });
+  }
+}
 
 function initDropdownsAfterDataLoad() {
   dataLoadedPromise.then(() => {
