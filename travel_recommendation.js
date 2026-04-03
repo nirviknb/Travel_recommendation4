@@ -1375,7 +1375,85 @@ function showMessage(html) {
 // ---- MOBILE NAV ----
 function toggleMenu() {
   const links = document.querySelector('.nav-links');
-  if (links) links.classList.toggle('open');
+  const toggle = document.querySelector('.nav-toggle');
+  if (!links) return;
+
+  const isOpen = links.classList.contains('open');
+
+  if (isOpen) {
+    closeMobileMenu(links, toggle);
+  } else {
+    openMobileMenu(links, toggle);
+  }
+}
+
+function openMobileMenu(links, toggle) {
+  links.classList.add('open');
+  document.body.classList.add('menu-open');
+  if (toggle) {
+    toggle.textContent = '✕';
+    toggle.setAttribute('aria-label', 'Close menu');
+  }
+
+  // Inject mobile search bar if it doesn't exist and search is available
+  if (!links.querySelector('.mobile-search-bar')) {
+    const desktopSearch = document.querySelector('.nav-search');
+    if (desktopSearch) {
+      const mobileSearch = document.createElement('div');
+      mobileSearch.className = 'mobile-search-bar';
+      mobileSearch.innerHTML = `
+        <input type="text" id="mobileSearchInput" class="search-input" placeholder="Search destinations…" aria-label="Search destinations" />
+        <div class="mobile-search-actions">
+          <button class="btn-search" onclick="handleMobileSearch()">Search</button>
+          <button class="btn-reset" onclick="handleMobileReset()">Clear</button>
+        </div>
+      `;
+      links.insertBefore(mobileSearch, links.firstChild);
+
+      // Sync mobile search input
+      const mobileInput = document.getElementById('mobileSearchInput');
+      if (mobileInput) {
+        mobileInput.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            handleMobileSearch();
+          }
+        });
+      }
+    }
+  }
+
+  // Close menu when a link is clicked
+  links.querySelectorAll('.nav-link').forEach(link => {
+    link.addEventListener('click', () => {
+      closeMobileMenu(links, toggle);
+    }, { once: true });
+  });
+}
+
+function closeMobileMenu(links, toggle) {
+  links.classList.remove('open');
+  document.body.classList.remove('menu-open');
+  if (toggle) {
+    toggle.textContent = '☰';
+    toggle.setAttribute('aria-label', 'Open menu');
+  }
+}
+
+function handleMobileSearch() {
+  const mobileInput = document.getElementById('mobileSearchInput');
+  const desktopInput = document.getElementById('searchInput');
+  if (mobileInput && desktopInput) {
+    desktopInput.value = mobileInput.value;
+  }
+  closeMobileMenu(document.querySelector('.nav-links'), document.querySelector('.nav-toggle'));
+  handleSearch();
+}
+
+function handleMobileReset() {
+  const mobileInput = document.getElementById('mobileSearchInput');
+  if (mobileInput) mobileInput.value = '';
+  closeMobileMenu(document.querySelector('.nav-links'), document.querySelector('.nav-toggle'));
+  handleReset();
 }
 
 // ---- SCROLL NAVBAR ----

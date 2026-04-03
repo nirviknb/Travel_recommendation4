@@ -320,7 +320,7 @@ body {
 /* =========== HERO =========== */
 .hero {
   position: relative;
-  height: 100vh;
+  height: 100dvh;
   min-height: 600px;
   background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600');
   background-size: cover;
@@ -714,7 +714,7 @@ body {
 
 /* =========== PAGE HERO (Inner Pages) =========== */
 .page-hero {
-  height: 44vh;
+  height: 44dvh;
   min-height: 300px;
   background-size: cover;
   background-position: center;
@@ -2240,58 +2240,351 @@ select:focus-visible,
   }
 }
 
-/* =========== RESPONSIVE =========== */
+/* =========================================
+   RESPONSIVE — Mobile-First Breakpoints
+   900px: Tablet / Large phones
+   600px: Phones
+   480px: Small phones
+   ========================================= */
+
+/* Tablet & Below (900px) */
 @media (max-width: 900px) {
-  .navbar { padding: 0 1.5rem; }
+  /* --- Navbar --- */
+  .navbar { padding: 0 1rem; }
   .nav-links { display: none; }
   .nav-search { display: none; }
-  .nav-toggle { display: block; }
+  .nav-toggle { display: flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
+
+  /* Enhanced Mobile Menu with Blur Overlay */
   .nav-links.open {
     display: flex;
     flex-direction: column;
     position: fixed;
     top: 64px; left: 0; right: 0; bottom: 0;
-    background: var(--ink);
+    background: rgba(26, 22, 18, 0.98);
+    backdrop-filter: blur(20px);
     padding: 1.5rem;
     gap: 0.25rem;
-    border-top: 1px solid rgba(255,255,255,0.1);
     z-index: 1000;
-    animation: slideDown 0.25s ease both;
+    animation: menuSlideIn 0.35s cubic-bezier(0.4, 0, 0.2, 1) both;
+    overflow-y: auto;
+    overscroll-behavior: contain;
   }
+
   .nav-links.open .nav-link {
-    padding: 0.75rem 1rem;
-    border-radius: 4px;
+    padding: 0.85rem 1rem;
+    border-radius: 8px;
     width: 100%;
+    font-size: 0.95rem;
+    min-height: 48px;
+    display: flex;
+    align-items: center;
   }
-  .nav-links.open .nav-link:hover {
-    background: rgba(255,255,255,0.08);
+
+  .nav-links.open .nav-link:hover,
+  .nav-links.open .nav-link:active {
+    background: rgba(201, 168, 76, 0.12);
   }
+
   .nav-links.open .nav-link-auth {
     margin-left: 0;
     text-align: center;
-    margin-top: 0.5rem;
+    justify-content: center;
+    margin-top: 0.75rem;
+    border: 1px solid var(--gold);
   }
-  @keyframes slideDown {
-    from { opacity: 0; transform: translateY(-8px); }
-    to { opacity: 1; transform: translateY(0); }
+
+  /* Mobile search inside menu */
+  .nav-links.open .mobile-search-bar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1rem 0.25rem;
+    margin-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-  .hero-content { padding: 0 1.5rem; }
+
+  .nav-links.open .mobile-search-bar .search-input {
+    width: 100%;
+  }
+
+  .nav-links.open .mobile-search-bar .mobile-search-actions {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .nav-links.open .mobile-search-bar .mobile-search-actions button {
+    flex: 1;
+  }
+
+  @keyframes menuSlideIn {
+    from { opacity: 0; transform: translateX(100%); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  /* Body scroll lock when menu is open */
+  body.menu-open {
+    overflow: hidden;
+  }
+
+  /* --- Hero --- */
+  .hero { min-height: 100dvh; }
+  .hero-content { padding: 0 1.5rem; max-width: 100%; }
+  .hero-subtext { max-width: 100%; font-size: 0.95rem; }
   .hero-scroll { display: none; }
-  .feature-cards { grid-template-columns: 1fr; }
+  .hero-social { gap: 0.75rem; }
+  .social-link { width: 36px; height: 36px; }
+
+  /* --- Sections --- */
+  .featured-section, .about-section, .team-section, .contact-section,
+  .results-section, .map-section, .newsletter-section,
+  .recently-viewed-section, .compare-section, .budget-section,
+  .packing-section, .checklist-section, .journal-section {
+    padding: 4rem 1.5rem;
+  }
+
+  /* --- Grids --- */
+  .feature-cards { grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.25rem; }
+  .results-grid { grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 1.5rem; }
   .about-container { grid-template-columns: 1fr; gap: 3rem; }
   .team-grid { grid-template-columns: repeat(2, 1fr); }
   .contact-container { grid-template-columns: 1fr; gap: 3rem; }
-  .featured-section, .about-section, .team-section, .contact-section { padding: 4rem 1.5rem; }
-  .results-section { padding: 3rem 1.5rem; }
-  .filter-bar { justify-content: center; }
+
+  /* --- Filter Bar --- */
+  .filter-bar { flex-wrap: wrap; justify-content: center; gap: 0.5rem; }
+
+  /* --- Modal --- */
   .modal-grid { grid-template-columns: 1fr; }
   .modal-header { padding: 1.4rem 1.5rem 1rem; }
   .modal-body { padding: 1.2rem 1.5rem 1.5rem; }
+  .modal-panel { max-width: 95vw; }
+
+  /* --- Newsletter --- */
   .newsletter-form { flex-direction: column; }
-  .map-section { padding: 4rem 1.5rem; }
-  .newsletter-section { padding: 4rem 1.5rem; }
+  .newsletter-input { width: 100%; }
+  .newsletter-btn { width: 100%; }
+
+  /* --- Toast --- */
   .toast-container { bottom: 1rem; right: 1rem; left: 1rem; }
   .toast { width: 100%; }
+
+  /* --- Itinerary --- */
+  .itinerary-actions { flex-direction: column; }
+  .booking-btn { width: 100%; text-align: center; }
+
+  /* --- Destinations Page --- */
+  .destinations-hero { padding: 6rem 1.5rem 3rem; }
+  .destinations-section { padding: 3rem 1.5rem; }
+  .destinations-controls { flex-direction: column; align-items: stretch; }
+  .destinations-search { max-width: 100%; }
+  .filter-tabs { justify-content: center; }
+
+  /* --- Currency --- */
+  .currency-row { flex-direction: column; }
+  .currency-converter { max-width: 100%; padding: 1.25rem; }
+
+  /* --- Compare --- */
+  .compare-selector { flex-direction: column; align-items: center; }
+  .compare-autocomplete { max-width: 100%; }
+
+  /* --- Budget --- */
+  .budget-style-options { grid-template-columns: repeat(3, 1fr); }
+
+  /* --- Best Time --- */
+  .best-time-calendar { grid-template-columns: repeat(6, 1fr); }
+}
+
+/* Phones (600px) */
+@media (max-width: 600px) {
+  /* --- Grids --- */
+  .team-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .about-stats { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+  .feature-cards { grid-template-columns: 1fr; }
+  .results-grid { grid-template-columns: 1fr; }
+
+  /* --- Footer --- */
+  .footer-inner { flex-direction: column; text-align: center; gap: 1.25rem; }
+  .footer-links { flex-wrap: wrap; justify-content: center; gap: 0.75rem 1.25rem; }
+
+  /* --- Map --- */
+  #destinationsMap { height: 280px; }
+  .map-section { padding: 3rem 1rem; }
+
+  /* --- Nav --- */
+  .nav-link-auth { margin-left: 0; }
+
+  /* --- Hero --- */
+  .hero-actions { flex-direction: column; gap: 0.75rem; }
+  .btn-book, .btn-ghost { width: 100%; text-align: center; padding: 0.85rem 1.5rem; }
+
+  /* --- Detail Panel --- */
+  .detail-panel { max-height: 95dvh; border-radius: 12px; }
+  .detail-hero { height: 220px; }
+  .detail-body { padding: 1rem; }
+  .detail-infographics { grid-template-columns: repeat(2, 1fr); }
+  .detail-actions { flex-direction: column; }
+
+  /* --- Itinerary --- */
+  .itinerary-hero { height: 180px; }
+  .itinerary-body { padding: 1.25rem; }
+  .itinerary-days-nav { gap: 0.35rem; }
+  .itinerary-day-tab { padding: 0.5rem 0.75rem; font-size: 0.75rem; }
+
+  /* --- Budget --- */
+  .budget-style-options { grid-template-columns: 1fr; }
+
+  /* --- Best Time --- */
+  .best-time-calendar { grid-template-columns: repeat(4, 1fr); }
+
+  /* --- Recently Viewed --- */
+  .recently-viewed-grid { grid-template-columns: 1fr; }
+
+  /* --- Compare --- */
+  .compare-table { font-size: 0.8rem; }
+  .compare-table th, .compare-table td { padding: 0.5rem 0.3rem; }
+
+  /* --- Destinations --- */
+  .destinations-grid { grid-template-columns: 1fr; }
+  .dest-card-img { height: 180px; }
+}
+
+/* Small Phones (480px) */
+@media (max-width: 480px) {
+  /* --- Navbar --- */
+  .navbar { padding: 0 0.75rem; }
+  .brand-name { font-size: 1.2rem; }
+
+  /* --- Hero --- */
+  .hero-content { padding: 0 1rem; }
+  .hero-eyebrow { font-size: 0.65rem; letter-spacing: 0.2em; }
+  .hero-subtext { font-size: 0.88rem; line-height: 1.6; }
+  .hero-actions { gap: 0.5rem; }
+
+  /* --- Sections --- */
+  .featured-section, .about-section, .team-section, .contact-section,
+  .results-section, .map-section, .newsletter-section,
+  .recently-viewed-section, .compare-section, .budget-section,
+  .packing-section, .checklist-section, .journal-section {
+    padding: 3rem 1rem;
+  }
+
+  /* --- Grids --- */
+  .about-stats { grid-template-columns: 1fr; gap: 1.25rem; }
+  .stat-number { font-size: 2.5rem; }
+
+  /* --- Modal --- */
+  .modal-panel { max-width: 100%; border-radius: 12px; }
+  .modal-header { padding: 1.2rem 1rem 0.8rem; }
+  .modal-body { padding: 1rem; }
+  .modal-title { font-size: 1.3rem; }
+  .modal-thumb { height: 120px; }
+
+  /* --- Cards --- */
+  .result-card-img { height: 180px; }
+  .feature-card-img { height: 180px; }
+  .team-img { height: 180px; }
+
+  /* --- Map --- */
+  #destinationsMap { height: 240px; }
+
+  /* --- Footer --- */
+  .footer { padding: 2rem 1rem; }
+  .footer-copy { font-size: 0.75rem; }
+  .footer-links a { font-size: 0.75rem; }
+
+  /* --- Auth --- */
+  .auth-bg-text { font-size: 12rem; }
+
+  /* --- Destinations --- */
+  .destinations-hero { padding: 5rem 1rem 2.5rem; }
+  .destinations-section { padding: 2.5rem 1rem; }
+  .dest-stat-number { font-size: 2rem; }
+  .destinations-stats { gap: 2rem; }
+
+  /* --- Detail Panel --- */
+  .detail-hero { height: 180px; }
+  .detail-type { font-size: 0.65rem; }
+  .detail-title { font-size: 1.3rem; }
+  .detail-meta { gap: 1rem; }
+  .detail-meta-item { font-size: 0.8rem; }
+  .detail-weather { flex-direction: column; align-items: flex-start; }
+  .detail-weather-time { margin-left: 0; text-align: left; }
+
+  /* --- Itinerary --- */
+  .itinerary-hero { height: 160px; }
+  .itinerary-type { font-size: 0.6rem; }
+  .itinerary-title { font-size: 1.2rem; }
+  .itinerary-day-tab { padding: 0.45rem 0.65rem; font-size: 0.7rem; }
+  .itinerary-activity { flex-direction: column; gap: 0.25rem; }
+  .itinerary-activity-time { width: auto; }
+
+  /* --- Contact --- */
+  .contact-form-wrap { padding: 1.5rem; }
+
+  /* --- Budget --- */
+  .budget-form { padding: 1.25rem; }
+  .budget-results { padding: 1.25rem; }
+
+  /* --- Packing --- */
+  .packing-form { padding: 1.25rem; }
+
+  /* --- Journal --- */
+  .journal-form { padding: 1.25rem; }
+  .journal-entry { padding: 1rem; }
+
+  /* --- Compare --- */
+  .compare-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* Ultra-small phones (360px) */
+@media (max-width: 360px) {
+  .navbar { padding: 0 0.5rem; }
+  .brand-name { font-size: 1.1rem; }
+  .hero-content { padding: 0 0.75rem; }
+  .hero-headline { font-size: clamp(2.2rem, 8vw, 3rem); }
+  .hero-subtext { font-size: 0.82rem; }
+  .section-title { font-size: clamp(1.5rem, 5vw, 2rem); }
+  .featured-section, .about-section, .team-section, .contact-section,
+  .results-section, .map-section, .newsletter-section { padding: 2.5rem 0.75rem; }
+  .result-card-img { height: 160px; }
+  .feature-card-img { height: 160px; }
+  #destinationsMap { height: 200px; }
+  .auth-card { padding: 1.25rem; }
+  .auth-title { font-size: 1.5rem; }
+}
+
+/* Tall screens / modern phones with narrow aspect ratios */
+@media (max-aspect-ratio: 9/16) {
+  .hero { min-height: 100dvh; }
+  .hero-content { max-width: 540px; }
+  .hero-subtext { max-width: 400px; }
+  .detail-hero { height: 35dvh; min-height: 200px; }
+  .itinerary-hero { height: 30dvh; min-height: 160px; }
+}
+
+/* Foldables and wide small screens */
+@media (min-width: 600px) and (max-width: 900px) {
+  .feature-cards { grid-template-columns: repeat(2, 1fr); }
+  .results-grid { grid-template-columns: repeat(2, 1fr); }
+  .team-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-stats { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .result-card:hover { transform: none; box-shadow: var(--shadow); }
+  .feature-card:hover { transform: none; box-shadow: var(--shadow); }
+  .team-card:hover { transform: none; }
+  .btn-book:hover { transform: none; }
+  .view-all-link:hover { transform: none; }
+  .social-link:hover { transform: none; }
+  .filter-chip:hover { background: transparent; border-color: var(--border-color); }
+  .filter-chip.active { background: var(--gold); border-color: var(--gold); color: var(--ink); }
+  .autocomplete-item:hover { background: transparent; }
+  .autocomplete-item.selected { background: rgba(201, 168, 76, 0.08); }
+  .nav-link:hover { background: transparent; }
+  .nav-link.active { color: var(--gold); background: rgba(201,168,76,0.08); }
 }
 
 .nav-link-auth {
@@ -2303,15 +2596,6 @@ select:focus-visible,
   background: var(--gold);
   color: var(--ink) !important;
   border-color: var(--gold);
-}
-
-@media (max-width: 600px) {
-  .team-grid { grid-template-columns: 1fr; }
-  .form-row { grid-template-columns: 1fr; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
-  .footer-inner { flex-direction: column; text-align: center; }
-  #destinationsMap { height: 300px; }
-  .nav-link-auth { margin-left: 0; }
 }
 
 /* =========================================

@@ -614,6 +614,77 @@ input:focus-visible {
   .auth-bg-text {
     font-size: 15rem;
   }
+
+  .auth-brand-name {
+    font-size: 1.5rem;
+  }
+
+  .auth-submit-btn {
+    min-height: 48px;
+  }
+
+  .form-input {
+    min-height: 44px;
+  }
+}
+
+@media (max-width: 480px) {
+  .auth-page {
+    padding: 0.75rem;
+  }
+
+  .auth-card {
+    padding: 1.25rem;
+    border-radius: 12px;
+  }
+
+  .auth-title {
+    font-size: 1.4rem;
+  }
+
+  .auth-subtitle {
+    font-size: 0.85rem;
+  }
+
+  .auth-bg-text {
+    font-size: 10rem;
+  }
+
+  .auth-brand {
+    margin-bottom: 1.5rem;
+  }
+
+  .auth-brand-icon {
+    font-size: 1.2rem;
+  }
+
+  .auth-brand-name {
+    font-size: 1.3rem;
+  }
+
+  .auth-back-link {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+}
+
+@media (max-width: 360px) {
+  .auth-page {
+    padding: 0.5rem;
+  }
+
+  .auth-card {
+    padding: 1rem;
+  }
+
+  .auth-title {
+    font-size: 1.3rem;
+  }
+
+  .auth-bg-text {
+    font-size: 8rem;
+  }
 }
 
 /* =========== HIGH CONTRAST =========== */
