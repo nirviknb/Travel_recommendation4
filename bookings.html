@@ -134,6 +134,49 @@
     .booking-actions {
       display: flex;
       gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+    .booking-cancel-btn {
+      flex: 1;
+      min-width: 120px;
+      padding: 0.85rem 1rem;
+      border-radius: 8px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      background: transparent;
+      border: 1px solid rgba(231, 76, 60, 0.3);
+      color: var(--error);
+    }
+    .booking-cancel-btn:hover {
+      background: rgba(231, 76, 60, 0.08);
+      border-color: #e74c3c;
+      transform: translateY(-2px);
+    }
+    .booking-status-cancelled {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.25rem 0.6rem;
+      background: rgba(231, 76, 60, 0.1);
+      color: var(--error);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      border-radius: 50px;
+    }
+    .booking-card.cancelled {
+      opacity: 0.6;
+    }
+    .booking-card.cancelled .booking-card-img {
+      filter: grayscale(100%);
     }
     @media (max-width: 900px) {
       .bookings-section { padding: 5rem 1.5rem 3rem; }
@@ -332,19 +375,20 @@
       if (!grid) return;
 
       grid.innerHTML = [...bookings].reverse().map((booking, i) => {
-        // Map destination safely
         const destObj = allDestinations.find(d => d.name === booking.destination);
         const imageUrl = destObj && destObj.imageUrl ? destObj.imageUrl : 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600';
-        
-        // Format creation date
         const bookedDateStr = booking.createdAt ? new Date(booking.createdAt).toLocaleDateString() : 'Recently';
+        const isCancelled = booking.status === 'cancelled';
+        const bookingIndex = bookings.indexOf(booking);
 
         return `
-          <div class="booking-card" style="animation: fadeUp 0.5s ${i * 0.08}s ease both;">
+          <div class="booking-card ${isCancelled ? 'cancelled' : ''}" style="animation: fadeUp 0.5s ${i * 0.08}s ease both;">
             <img class="booking-card-img" src="${imageUrl}" alt="${escapeHtml(booking.destination)}" loading="lazy" onerror="this.src='https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600'" />
             <div class="booking-card-body">
               <div class="booking-card-top">
-                <span class="booking-status">✓ Confirmed</span>
+                ${isCancelled
+                  ? `<span class="booking-status-cancelled">✕ Cancelled</span>`
+                  : `<span class="booking-status">✓ Confirmed</span>`}
                 <span class="booking-date">Booked ${escapeHtml(bookedDateStr)}</span>
               </div>
               <h3>${escapeHtml(booking.destination)}</h3>
@@ -371,17 +415,57 @@
               </div>
               
               <div class="booking-actions">
-               <button class="detail-btn detail-btn-primary" onclick="viewDetailItinerary('${escapeHtml(booking.destination).replace(/'/g, "\\'")}', event)">
-                 📋 View Itinerary
-               </button>
-               <button class="detail-btn detail-btn-secondary" onclick="shareDestination('${escapeHtml(booking.destination).replace(/'/g, "\\'")}', 'I just booked a trip to ${escapeHtml(booking.destination).replace(/'/g, "\\'")}')">
-                 ↗ Share
-               </button>
+                ${!isCancelled ? `
+                <button class="detail-btn detail-btn-primary" onclick="viewDetailItinerary('${escapeHtml(booking.destination).replace(/'/g, "\\'")}', event)">
+                  📋 View Itinerary
+                </button>
+                <button class="detail-btn detail-btn-secondary" onclick="shareDestination('${escapeHtml(booking.destination).replace(/'/g, "\\'")}', 'I just booked a trip to ${escapeHtml(booking.destination).replace(/'/g, "\\'")}')">
+                  ↗ Share
+                </button>
+                <button class="booking-cancel-btn" onclick="cancelBooking(${bookingIndex})">
+                  ✕ Cancel
+                </button>
+                ` : `
+                <button class="detail-btn detail-btn-secondary" onclick="removeBooking(${bookingIndex})">
+                  🗑 Remove
+                </button>
+                `}
               </div>
             </div>
           </div>
         `;
       }).join('');
+    }
+
+    function cancelBooking(index) {
+      const bookings = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
+      const booking = bookings[index];
+      if (!booking) return;
+
+      const confirmed = confirm(`Are you sure you want to cancel your booking to "${booking.destination}"?\n\nDates: ${booking.checkin} to ${booking.checkout}`);
+      if (!confirmed) return;
+
+      bookings[index].status = 'cancelled';
+      bookings[index].cancelledAt = new Date().toISOString();
+      localStorage.setItem('wanderlust_bookings', JSON.stringify(bookings));
+
+      showToast(`Booking to "${booking.destination}" has been cancelled`);
+      loadBookings();
+    }
+
+    function removeBooking(index) {
+      const bookings = JSON.parse(localStorage.getItem('wanderlust_bookings') || '[]');
+      const booking = bookings[index];
+      if (!booking) return;
+
+      const confirmed = confirm(`Remove the cancelled booking to "${booking.destination}" from your list?`);
+      if (!confirmed) return;
+
+      bookings.splice(index, 1);
+      localStorage.setItem('wanderlust_bookings', JSON.stringify(bookings));
+
+      showToast(`Booking to "${booking.destination}" has been removed`);
+      loadBookings();
     }
 
     // Dynamic footer year
