@@ -1,0 +1,21 @@
+{
+  "name": "Wanderlust — Travel Recommendations",
+  "short_name": "Wanderlust",
+  "description": "Discover, plan, and pack for your next adventure with personalized travel recommendations.",
+  "start_url": "./travel_recommendation.html",
+  "display": "standalone",
+  "background_color": "#faf7f2",
+  "theme_color": "#1a1612",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✦</text></svg>",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ],
+  "categories": ["travel", "lifestyle"],
+  "lang": "en",
+  "dir": "ltr"
+}

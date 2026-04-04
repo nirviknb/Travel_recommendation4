@@ -117,6 +117,19 @@
     </div>
   </nav>
 
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="breadcrumb-link" href="travel_recommendation.html" itemprop="item"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb-current" aria-current="page" itemprop="name">Favorites</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
+
   <!-- FAVORITES SECTION -->
   <section class="favorites-section" id="favorites">
     <div class="favorites-header">
@@ -314,16 +327,26 @@
       let favorites = getFavorites();
       const idx = favorites.indexOf(name);
       if (idx > -1) {
-        favorites.splice(idx, 1);
+        const removedItem = favorites.splice(idx, 1)[0];
         saveFavorites(favorites);
-        showToast(`Removed "${name}" from favorites`);
-        
-        // Animate card out
+
         const card = btn.closest('.result-card');
         if (card) {
           card.style.transition = 'opacity 0.3s, transform 0.3s';
           card.style.opacity = '0';
           card.style.transform = 'scale(0.9)';
+        }
+
+        showUndoToast(`Removed "${name}" from favorites`, () => {
+          const favs = getFavorites();
+          if (!favs.includes(name)) {
+            favs.push(name);
+            saveFavorites(favs);
+            loadFavorites();
+          }
+        });
+
+        if (card) {
           setTimeout(() => {
             loadFavorites();
           }, 300);

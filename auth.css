@@ -10,9 +10,9 @@
   --cream:   #faf7f2;
   --ink:     #1a1612;
   --warm:    #8b6f47;
-  --gold:    #c9a84c;
-  --gold-hover: #b8923e;
-  --muted:   #7a7065;
+  --gold:    #8b6f2e;
+  --gold-hover: #7a6028;
+  --muted:   #5a5047;
   --white:   #ffffff;
   --card-bg: #ffffff;
   --shadow:  0 4px 32px rgba(26,22,18,0.10);
@@ -729,7 +729,7 @@ input:focus-visible {
   --cream: #1a1612;
   --sand: #242019;
   --warm: #c9a84c;
-  --muted: #a09888;
+  --muted: #b0a898;
   --white: #f5f0e8;
   --card-bg: #242019;
   --shadow: 0 4px 32px rgba(0,0,0,0.3);

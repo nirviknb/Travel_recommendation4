@@ -288,6 +288,12 @@ function openDetailOverlay(destName) {
           Book Now
         </button>
       </div>
+
+      <div class="detail-reviews-section">
+        <h3>Reviews & Ratings</h3>
+        <div id="detailReviewsContainer"></div>
+        <div id="detailReviewFormContainer"></div>
+      </div>
     </div>
   `;
 
@@ -296,6 +302,9 @@ function openDetailOverlay(destName) {
   overlay.setAttribute('aria-modal', 'true');
   overlay.setAttribute('aria-labelledby', 'detailTitle');
   document.body.style.overflow = 'hidden';
+
+  if (typeof renderReviewsSection === 'function') renderReviewsSection(destName);
+  if (typeof renderReviewForm === 'function') renderReviewForm(destName);
 
   if (window.clockInterval) clearInterval(window.clockInterval);
   window.clockInterval = setInterval(updateClocks, 1000);

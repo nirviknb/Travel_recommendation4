@@ -42,13 +42,26 @@
   </nav>
 
   <!-- PAGE HERO -->
-  <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1400')">
+  <section class="page-hero" style="--page-hero-bg-light:url('https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=1400');--page-hero-bg-dark:url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1400')">
     <div class="page-hero-overlay"></div>
     <div class="page-hero-content">
       <p class="hero-eyebrow">Our Story</p>
       <h1 class="page-title">About <em>Wanderlust</em></h1>
     </div>
   </section>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="breadcrumb-link" href="travel_recommendation.html" itemprop="item"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb-current" aria-current="page" itemprop="name">About Us</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
 
   <!-- COMPANY INFO -->
   <section class="about-section">

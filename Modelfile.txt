@@ -1,0 +1,1 @@
+text FROM gemma4:26b PARAMETER num_gpu 99

@@ -71,6 +71,19 @@
     </div>
   </section>
 
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="breadcrumb-link" href="travel_recommendation.html" itemprop="item"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb-current" aria-current="page" itemprop="name">All Destinations</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
+
   <main class="destinations-section" id="main">
     <div class="destinations-controls">
       <div class="destinations-search">
@@ -158,6 +171,7 @@
   </footer>
 
   <script src="travel_recommendation.js"></script>
+  <script src="reviews.js"></script>
   <script src="destinations.js"></script>
 </body>
 </html>

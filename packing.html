@@ -9,6 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="travel_recommendation.css"/>
+  <link rel="stylesheet" href="packing.css"/>
 </head>
 <body>
   <a href="#packingForm" class="skip-link">Skip to packing form</a>
@@ -42,12 +43,27 @@
     </div>
   </nav>
 
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="breadcrumb-link" href="travel_recommendation.html" itemprop="item"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb-current" aria-current="page" itemprop="name">Packing List</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
+
   <section class="packing-section" style="padding-top:6rem">
     <div class="packing-container">
       <div class="packing-header">
         <h1>Packing List Generator</h1>
-        <p style="color:var(--text-secondary)">Weather-aware packing lists for your trip</p>
+        <p>Weather-aware, editable packing lists for your trip</p>
       </div>
+
+      <div class="packing-list-manager" id="packingListManager" style="display:none"></div>
 
       <div class="packing-form" id="packingForm">
         <div class="form-group">
@@ -76,6 +92,39 @@
     </div>
   </section>
 
+  <div class="packing-share-modal" id="packingShareModal" role="dialog" aria-modal="true" aria-labelledby="shareModalTitle">
+    <div class="packing-share-panel">
+      <h3 id="shareModalTitle">Share / Export</h3>
+      <div class="packing-share-options">
+        <button class="packing-share-btn" onclick="shareViaWeb()">
+          <span class="packing-share-icon">&#x2197;</span>
+          Share to Apps (Reminders, Todoist, etc.)
+        </button>
+        <button class="packing-share-btn" onclick="exportAsText()">
+          <span class="packing-share-icon">&#x1F4C4;</span>
+          Export as Text File
+        </button>
+        <button class="packing-share-btn" onclick="exportAsCSV()">
+          <span class="packing-share-icon">&#x1F4CA;</span>
+          Export as CSV
+        </button>
+        <button class="packing-share-btn" onclick="exportAsJSON()">
+          <span class="packing-share-icon">&#x1F4BE;</span>
+          Export as JSON (Backup)
+        </button>
+        <button class="packing-share-btn" onclick="exportAsICS()">
+          <span class="packing-share-icon">&#x1F4C5;</span>
+          Export as Calendar (.ics) for Reminders
+        </button>
+        <button class="packing-share-btn" onclick="printPackingList()">
+          <span class="packing-share-icon">&#x1F5A8;</span>
+          Print Checklist
+        </button>
+      </div>
+      <button class="packing-share-close" onclick="closeShareModal()">Close</button>
+    </div>
+  </div>
+
   <footer class="footer">
     <div class="footer-inner">
       <div class="footer-brand">
@@ -103,5 +152,7 @@
   <div class="toast-container" id="toastContainer"></div>
 
   <script src="travel_recommendation.js"></script>
+  <script src="country-legal-requirements.js"></script>
+  <script src="packing.js"></script>
 </body>
 </html>

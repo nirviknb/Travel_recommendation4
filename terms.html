@@ -46,13 +46,26 @@
   </nav>
 
   <!-- PAGE HERO -->
-  <section class="page-hero" style="background-image:url('https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1400')">
+  <section class="page-hero" style="--page-hero-bg-light:url('https://images.unsplash.com/photo-1454496522488-7a8e488e8606?w=1400');--page-hero-bg-dark:url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1400')">
     <div class="page-hero-overlay"></div>
     <div class="page-hero-content">
       <p class="hero-eyebrow">Legal</p>
       <h1 class="page-title">Terms of <em>Service</em></h1>
     </div>
   </section>
+
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <ol class="breadcrumb-list" itemscope itemtype="https://schema.org/BreadcrumbList">
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a class="breadcrumb-link" href="travel_recommendation.html" itemprop="item"><span itemprop="name">Home</span></a>
+        <meta itemprop="position" content="1" />
+      </li>
+      <li class="breadcrumb-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <span class="breadcrumb-current" aria-current="page" itemprop="name">Terms of Service</span>
+        <meta itemprop="position" content="2" />
+      </li>
+    </ol>
+  </nav>
 
   <!-- TERMS CONTENT -->
   <section class="legal-section">

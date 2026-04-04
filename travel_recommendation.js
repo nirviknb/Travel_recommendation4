@@ -1323,7 +1323,6 @@ function showToast(message) {
   const container = document.getElementById('toastContainer');
   if (!container) return;
 
-  // Remove existing toasts if too many
   const existingToasts = container.querySelectorAll('.toast');
   if (existingToasts.length >= 3) {
     existingToasts[0].remove();
@@ -1337,13 +1336,49 @@ function showToast(message) {
   toast.innerHTML = `<span aria-hidden="true">✦</span><span>${escapeHtml(message)}</span>`;
   container.appendChild(toast);
 
-  // Announce to screen readers
   announceToScreenReader(message);
 
   setTimeout(() => {
     toast.classList.add('leaving');
     setTimeout(() => toast.remove(), 300);
   }, 3000);
+}
+
+function showUndoToast(message, undoCallback, duration) {
+  const container = document.getElementById('toastContainer');
+  if (!container) return;
+
+  const existingToasts = container.querySelectorAll('.toast');
+  if (existingToasts.length >= 3) {
+    existingToasts[0].remove();
+  }
+
+  const toast = document.createElement('div');
+  toast.className = 'toast toast--undo';
+  toast.setAttribute('role', 'status');
+  toast.setAttribute('aria-live', 'polite');
+
+  const msgSpan = document.createElement('span');
+  msgSpan.textContent = message;
+
+  const undoBtn = document.createElement('button');
+  undoBtn.className = 'toast-undo-btn';
+  undoBtn.textContent = 'Undo';
+  undoBtn.addEventListener('click', () => {
+    clearTimeout(timer);
+    undoCallback();
+    toast.classList.add('leaving');
+    setTimeout(() => toast.remove(), 300);
+  });
+
+  toast.appendChild(msgSpan);
+  toast.appendChild(undoBtn);
+  container.appendChild(toast);
+
+  const timer = setTimeout(() => {
+    toast.classList.add('leaving');
+    setTimeout(() => toast.remove(), 300);
+  }, duration || 5000);
 }
 
 function announceToScreenReader(message) {
@@ -2271,96 +2306,8 @@ function calculateBudget() {
 }
 
 // ---- PACKING LIST ----
-const packingTemplates = {
-  essentials: ['Passport/ID', 'Travel insurance documents', 'Phone & charger', 'Wallet & cards', 'Prescription medications', 'Sunglasses', 'Reusable water bottle', 'Travel adapter'],
-  beach: ['Swimsuit', 'Beach towel', 'Sunscreen (SPF 50+)', 'Flip-flops', 'Snorkel gear', 'Beach bag', 'Hat/cap', 'After-sun lotion'],
-  temple: ['Modest clothing', 'Scarf/shawl', 'Comfortable walking shoes', 'Camera', 'Small backpack', 'Guidebook'],
-  city: ['Comfortable walking shoes', 'Day backpack', 'City map/offline maps', 'Transit card', 'Casual outfits', 'Evening outfit', 'Umbrella'],
-  adventure: ['Hiking boots', 'Weather-appropriate layers', 'First aid kit', 'Headlamp/flashlight', 'Multi-tool', 'Energy bars', 'Trekking poles', 'Waterproof jacket'],
-  cold: ['Warm coat', 'Thermal layers', 'Gloves', 'Scarf', 'Warm hat', 'Thermal socks', 'Hand warmers', 'Lip balm'],
-  hot: ['Light clothing', 'Sunscreen', 'Hat', 'Insect repellent', 'Electrolyte packets', 'Cooling towel', 'Sandals'],
-  rainy: ['Raincoat/poncho', 'Waterproof shoes', 'Compact umbrella', 'Waterproof bag cover', 'Quick-dry clothing', 'Extra socks']
-};
-
-function generatePackingList() {
-  const destName = document.getElementById('packingDestination')?.value || '';
-  const days = parseInt(document.getElementById('packingDays')?.value) || 7;
-  const style = document.getElementById('packingStyle')?.value || 'general';
-  const all = flattenDestinations(travelData);
-  const dest = all.find(d => d.name === destName);
-  const weather = dest ? getMockWeather(dest.timezone) : { condition: 'sunny', temp: 25 };
-  const type = dest ? (dest.type || '').toLowerCase() : '';
-  const items = {
-    'Essentials': [...packingTemplates.essentials],
-    'Clothing': []
-  };
-  if (type.includes('beach')) items['Clothing'].push(...packingTemplates.beach);
-  else if (type.includes('temple')) items['Clothing'].push(...packingTemplates.temple);
-  else items['Clothing'].push(...packingTemplates.city);
-  if (style === 'adventure') items['Clothing'].push(...packingTemplates.adventure);
-  if (weather.condition === 'rainy' || weather.condition === 'stormy') items['Clothing'].push(...packingTemplates.rainy);
-  if (weather.temp < 10) items['Clothing'].push(...packingTemplates.cold);
-  else if (weather.temp > 30) items['Clothing'].push(...packingTemplates.hot);
-  const dayMultiplier = Math.ceil(days / 3);
-  items['Clothing'] = [...new Set(items['Clothing'])];
-  items['Electronics'] = ['Phone charger', 'Power bank', 'Camera', 'Headphones', 'Travel adapter'];
-  items['Documents'] = ['Passport', 'Visa (if required)', 'Travel insurance', 'Flight tickets', 'Hotel reservations', 'Emergency contacts'];
-  items['Health'] = ['Prescription medications', 'Pain relievers', 'Band-aids', 'Hand sanitizer', 'Insect repellent', 'Sunscreen'];
-  renderPackingList(items);
-}
-
-function renderPackingList(items) {
-  const container = document.getElementById('packingListContainer');
-  if (!container) return;
-  let totalItems = 0;
-  const categories = Object.entries(items).map(([cat, itemList]) => {
-    const itemsHtml = itemList.map((item, i) => {
-      totalItems++;
-      return `
-        <div class="packing-item">
-          <input type="checkbox" id="pack_${cat}_${i}" onchange="updatePackingProgress()" />
-          <label for="pack_${cat}_${i}">${escapeHtml(item)}</label>
-        </div>
-      `;
-    }).join('');
-    return `
-      <div class="packing-category">
-        <div class="packing-category-header" onclick="togglePackingCategory(this)">
-          <span class="packing-category-title">${cat}</span>
-          <span class="packing-category-count">${itemList.length} items</span>
-        </div>
-        <div class="packing-items">${itemsHtml}</div>
-      </div>
-    `;
-  }).join('');
-  container.innerHTML = `
-    <div class="packing-progress">
-      <div class="packing-progress-text"><span id="packingProgressText">0 of ${totalItems} items packed</span></div>
-      <div class="packing-progress-bar">
-        <div class="packing-progress-fill" id="packingProgressFill" style="width:0%"></div>
-      </div>
-    </div>
-    <div class="packing-list">${categories}</div>
-  `;
-}
-
-function updatePackingProgress() {
-  const checkboxes = document.querySelectorAll('.packing-item input[type="checkbox"]');
-  const total = checkboxes.length;
-  const checked = Array.from(checkboxes).filter(cb => cb.checked).length;
-  const pct = total > 0 ? Math.round(checked / total * 100) : 0;
-  const text = document.getElementById('packingProgressText');
-  const fill = document.getElementById('packingProgressFill');
-  if (text) text.textContent = `${checked} of ${total} items packed`;
-  if (fill) fill.style.width = `${pct}%`;
-}
-
-function togglePackingCategory(header) {
-  const items = header.nextElementSibling;
-  if (items) {
-    items.style.display = items.style.display === 'none' ? '' : 'none';
-  }
-}
+// Moved to packing.js with full editable, shareable, persistent feature set
+// (packingTemplates, generatePackingList, renderPackingList, updatePackingProgress, togglePackingCategory)
 
 // ---- TRAVEL CHECKLIST ----
 const checklistTemplates = {
