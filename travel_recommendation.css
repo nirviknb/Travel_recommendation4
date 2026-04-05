@@ -3358,7 +3358,22 @@ select:focus-visible,
   gap: 1rem;
   justify-content: center;
   flex-wrap: wrap;
-  align-items: flex-start;
+  align-items: stretch;
+}
+.compare-btn {
+  padding: 0.7rem 1.5rem;
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+  align-self: center;
+  width: 100%;
+  max-width: 400px;
+  margin-top: 1rem;
 }
 .compare-autocomplete {
   position: relative;
@@ -3435,23 +3450,17 @@ select:focus-visible,
 .compare-selected.show {
   display: inline-block;
 }
-.compare-btn {
-  padding: 0.7rem 1.5rem;
-  background: var(--gold);
-  color: var(--white);
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-size: 0.9rem;
-  font-weight: 500;
-  transition: background 0.2s;
-  align-self: center;
-}
 .compare-btn:hover {
   background: var(--gold-hover);
 }
+.compare-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 8px;
+}
 .compare-table {
   width: 100%;
+  min-width: 600px;
   border-collapse: collapse;
   background: var(--card-bg);
   border-radius: 8px;
@@ -4040,6 +4049,11 @@ select:focus-visible,
   background: var(--input-bg);
   color: var(--text-primary);
   font-size: 0.9rem;
+}
+.currency-swap-wrap {
+  display: flex;
+  justify-content: center;
+  margin: 0.75rem 0;
 }
 .currency-swap {
   background: none;

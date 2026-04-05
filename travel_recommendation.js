@@ -2087,13 +2087,20 @@ function compareDestinations() {
     return;
   }
   const all = flattenDestinations(travelData);
-  const dests = [name1, name2, name3].filter(Boolean).map(name =>
-    all.find(d => d.name === name) || { name, imageUrl: '', description: '', type: '', timezone: '', highlights: [], bestTime: '', currency: '', language: '' }
-  );
+  const dests = [name1, name2, name3].filter(Boolean).map(name => {
+    let found = all.find(d => d.name === name);
+    if (!found) {
+      const parts = name.split(',');
+      const searchName = parts[0].trim().toLowerCase();
+      found = all.find(d => d.name.toLowerCase().includes(searchName));
+    }
+    return found || { name, imageUrl: '', description: '', type: '', timezone: '', highlights: [], bestTime: '', currency: '', language: '' };
+  });
   const container = document.getElementById('compareResults');
   if (!container) return;
   const maxRating = 5;
   container.innerHTML = `
+    <div class="compare-table-wrapper">
     <table class="compare-table">
       <thead>
         <tr>
@@ -2120,11 +2127,11 @@ function compareDestinations() {
         </tr>
         <tr>
           <td>Currency</td>
-          ${dests.map(d => `<td>${escapeHtml(d.currency || 'N/A')}</td>`).join('')}
+          ${dests.map(d => `<td>${escapeHtml(d.currency || getCurrencyForDestination(d.name))}</td>`).join('')}
         </tr>
         <tr>
           <td>Language</td>
-          ${dests.map(d => `<td>${escapeHtml(d.language || 'N/A')}</td>`).join('')}
+          ${dests.map(d => `<td>${escapeHtml(d.language || getLanguageForDestination(d.name))}</td>`).join('')}
         </tr>
         <tr>
           <td>Timezone</td>
@@ -2141,13 +2148,46 @@ function compareDestinations() {
             return `<td>${w.icon} ${w.temp}°C ${w.condition}</td>`;
           }).join('')}
         </tr>
-        <tr>
-          <td>Action</td>
-          ${dests.map(d => `<td><button class="compare-btn" onclick="quickSearch('${escapeHtml(d.name.split(',')[0].trim())}')">Search</button></td>`).join('')}
-        </tr>
       </tbody>
     </table>
+    </div>
   `;
+}
+
+function getCurrencyForDestination(name) {
+  const all = flattenDestinations(travelData);
+  const found = all.find(d => d.name === name || d.name.toLowerCase().includes(name.split(',')[0].trim().toLowerCase()));
+  if (found && found.currency) return found.currency;
+  const currencyMap = {
+    'angkor wat': 'USD', 'taj mahal': 'INR', 'borobudur': 'IDR',
+    'petra': 'JOD', 'machu picchu': 'PEN', 'great wall': 'CNY',
+    'bora bora': 'XPF', 'copacabana': 'BRL', 'maya bay': 'THB',
+    'bondi': 'AUD', 'ngapali': 'MMK', 'navagio': 'EUR',
+    'tulum': 'MXN', 'raja ampat': 'IDR'
+  };
+  const lower = name.toLowerCase();
+  for (const [key, val] of Object.entries(currencyMap)) {
+    if (lower.includes(key)) return val;
+  }
+  return 'N/A';
+}
+
+function getLanguageForDestination(name) {
+  const all = flattenDestinations(travelData);
+  const found = all.find(d => d.name === name || d.name.toLowerCase().includes(name.split(',')[0].trim().toLowerCase()));
+  if (found && found.language) return found.language;
+  const langMap = {
+    'angkor wat': 'Khmer', 'taj mahal': 'Hindi', 'borobudur': 'Indonesian',
+    'petra': 'Arabic', 'machu picchu': 'Spanish', 'great wall': 'Mandarin',
+    'bora bora': 'French', 'copacabana': 'Portuguese', 'maya bay': 'Thai',
+    'bondi': 'English', 'ngapali': 'Burmese', 'navagio': 'Greek',
+    'tulum': 'Spanish', 'raja ampat': 'Indonesian'
+  };
+  const lower = name.toLowerCase();
+  for (const [key, val] of Object.entries(langMap)) {
+    if (lower.includes(key)) return val;
+  }
+  return 'N/A';
 }
 
 // ---- CURRENCY CONVERTER ----
@@ -2209,7 +2249,7 @@ function renderCurrencyConverter() {
         <input type="number" id="currencyAmount" value="100" min="0" oninput="updateCurrencyResult()" />
         <select id="currencyFrom" onchange="updateCurrencyResult()">${options}</select>
       </div>
-      <div style="text-align:center">
+      <div class="currency-swap-wrap">
         <button class="currency-swap" onclick="swapCurrencies()" title="Swap currencies">⇄</button>
       </div>
       <div class="currency-row">
