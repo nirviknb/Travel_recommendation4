@@ -1956,8 +1956,8 @@ function flattenDestinations(data) {
             timezone: city.timezone || country.timezone || '',
             highlights: city.highlights || country.highlights || [],
             bestTime: city.bestTime || country.bestTime || '',
-            currency: country.currency || '',
-            language: country.language || '',
+            currency: city.currency || country.currency || '',
+            language: city.language || country.language || '',
             country: country.name
           });
         });
@@ -1975,8 +1975,8 @@ function flattenDestinations(data) {
         timezone: temple.timezone || '',
         highlights: temple.highlights || [],
         bestTime: temple.bestTime || '',
-        currency: '',
-        language: '',
+        currency: temple.currency || '',
+        language: temple.language || '',
         country: temple.country || ''
       });
     });
@@ -1992,8 +1992,8 @@ function flattenDestinations(data) {
         timezone: beach.timezone || '',
         highlights: beach.highlights || [],
         bestTime: beach.bestTime || '',
-        currency: '',
-        language: '',
+        currency: beach.currency || '',
+        language: beach.language || '',
         country: beach.country || ''
       });
     });
@@ -2127,11 +2127,11 @@ function compareDestinations() {
         </tr>
         <tr>
           <td>Currency</td>
-          ${dests.map(d => `<td>${escapeHtml(d.currency || getCurrencyForDestination(d.name))}</td>`).join('')}
+          ${dests.map(d => `<td>${escapeHtml(d.currency || 'N/A')}</td>`).join('')}
         </tr>
         <tr>
           <td>Language</td>
-          ${dests.map(d => `<td>${escapeHtml(d.language || getLanguageForDestination(d.name))}</td>`).join('')}
+          ${dests.map(d => `<td>${escapeHtml(d.language || 'N/A')}</td>`).join('')}
         </tr>
         <tr>
           <td>Timezone</td>
@@ -2152,42 +2152,6 @@ function compareDestinations() {
     </table>
     </div>
   `;
-}
-
-function getCurrencyForDestination(name) {
-  const all = flattenDestinations(travelData);
-  const found = all.find(d => d.name === name || d.name.toLowerCase().includes(name.split(',')[0].trim().toLowerCase()));
-  if (found && found.currency) return found.currency;
-  const currencyMap = {
-    'angkor wat': 'USD', 'taj mahal': 'INR', 'borobudur': 'IDR',
-    'petra': 'JOD', 'machu picchu': 'PEN', 'great wall': 'CNY',
-    'bora bora': 'XPF', 'copacabana': 'BRL', 'maya bay': 'THB',
-    'bondi': 'AUD', 'ngapali': 'MMK', 'navagio': 'EUR',
-    'tulum': 'MXN', 'raja ampat': 'IDR'
-  };
-  const lower = name.toLowerCase();
-  for (const [key, val] of Object.entries(currencyMap)) {
-    if (lower.includes(key)) return val;
-  }
-  return 'N/A';
-}
-
-function getLanguageForDestination(name) {
-  const all = flattenDestinations(travelData);
-  const found = all.find(d => d.name === name || d.name.toLowerCase().includes(name.split(',')[0].trim().toLowerCase()));
-  if (found && found.language) return found.language;
-  const langMap = {
-    'angkor wat': 'Khmer', 'taj mahal': 'Hindi', 'borobudur': 'Indonesian',
-    'petra': 'Arabic', 'machu picchu': 'Spanish', 'great wall': 'Mandarin',
-    'bora bora': 'French', 'copacabana': 'Portuguese', 'maya bay': 'Thai',
-    'bondi': 'English', 'ngapali': 'Burmese', 'navagio': 'Greek',
-    'tulum': 'Spanish', 'raja ampat': 'Indonesian'
-  };
-  const lower = name.toLowerCase();
-  for (const [key, val] of Object.entries(langMap)) {
-    if (lower.includes(key)) return val;
-  }
-  return 'N/A';
 }
 
 // ---- CURRENCY CONVERTER ----

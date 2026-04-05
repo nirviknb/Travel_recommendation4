@@ -3352,6 +3352,9 @@ select:focus-visible,
 }
 .compare-selector {
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .compare-search-wrap {
   display: flex;
@@ -3359,6 +3362,7 @@ select:focus-visible,
   justify-content: center;
   flex-wrap: wrap;
   align-items: stretch;
+  width: 100%;
 }
 .compare-btn {
   padding: 0.7rem 1.5rem;
@@ -3370,9 +3374,8 @@ select:focus-visible,
   font-size: 0.9rem;
   font-weight: 500;
   transition: background 0.2s;
-  align-self: center;
   width: 100%;
-  max-width: 400px;
+  max-width: 600px;
   margin-top: 1rem;
 }
 .compare-autocomplete {
