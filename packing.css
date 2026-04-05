@@ -130,6 +130,14 @@
   font-size: 0.9rem;
 }
 
+.packing-form select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none !important;
+  cursor: pointer;
+}
+
 .packing-form select:focus,
 .packing-form input:focus {
   outline: none;

@@ -20,8 +20,8 @@
   --cream:   #faf7f2;
   --ink:     #1a1612;
   --warm:    #8b6f47;
-  --gold:    #8b6f2e;
-  --gold-hover: #7a6028;
+  --gold:    #e3a302;
+  --gold-hover: #c99202;
   --muted:   #5a5047;
   --white:   #ffffff;
   --card-bg: #ffffff;
@@ -39,7 +39,7 @@
   --overlay-bg: rgba(26,22,18,0.5);
   --input-bg: #ffffff;
   --chip-bg: rgba(26,22,18,0.06);
-  --chip-active-bg: #8b6f2e;
+  --chip-active-bg: #e3a302;
   --chip-active-text: #ffffff;
   --card-hover-shadow: 0 8px 40px rgba(26,22,18,0.15);
   --navbar-bg: rgba(26,22,18,0.85);
@@ -49,9 +49,9 @@
   --modal-overlay: rgba(26,22,18,0.6);
   --skeleton-base: #e8e0d5;
   --skeleton-shine: #f5f0e8;
-  --tag-bg: rgba(139,111,46,0.12);
-  --tag-text: #6b5530;
-  --weather-bg: rgba(139,111,46,0.08);
+  --tag-bg: rgba(227,163,2,0.12);
+  --tag-text: #8a6d01;
+  --weather-bg: rgba(227,163,2,0.08);
   --map-placeholder: #f0ebe3;
   --detail-overlay: rgba(26,22,18,0.85);
   --detail-panel: #ffffff;
@@ -61,7 +61,7 @@
   --checklist-item-bg: #ffffff;
   --budget-bar-bg: #e8e0d5;
   --calendar-best: #388e3c;
-  --calendar-ok: #8b6f2e;
+  --calendar-ok: #e3a302;
   --calendar-avoid: #d32f2f;
   --hero-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=1600');
   --page-hero-image: url('https://images.unsplash.com/photo-1476514525535-07fb3b4ae5f1?w=1600');
@@ -71,7 +71,7 @@
   --ink: #f5f0e8;
   --cream: #1a1612;
   --sand: #242019;
-  --warm: #c9a84c;
+  --warm: #e3a302;
   --muted: #b0a898;
   --white: #f5f0e8;
   --bg-primary: #12100e;
@@ -84,7 +84,7 @@
   --overlay-bg: rgba(0,0,0,0.6);
   --input-bg: #242019;
   --chip-bg: rgba(255,255,255,0.06);
-  --chip-active-bg: #c9a84c;
+  --chip-active-bg: #e3a302;
   --chip-active-text: #1a1612;
   --card-bg: #242019;
   --shadow: 0 4px 32px rgba(0,0,0,0.3);
@@ -96,9 +96,9 @@
   --modal-overlay: rgba(0,0,0,0.7);
   --skeleton-base: #2a2520;
   --skeleton-shine: #342e28;
-  --tag-bg: rgba(201,168,76,0.15);
-  --tag-text: #c9a84c;
-  --weather-bg: rgba(201,168,76,0.1);
+  --tag-bg: rgba(227,163,2,0.15);
+  --tag-text: #e3a302;
+  --weather-bg: rgba(227,163,2,0.1);
   --map-placeholder: #2a2520;
   --detail-overlay: rgba(0,0,0,0.85);
   --detail-panel: #242019;
@@ -108,13 +108,13 @@
   --checklist-item-bg: #242019;
   --budget-bar-bg: #2a2520;
   --calendar-best: #4caf50;
-  --calendar-ok: #c9a84c;
+  --calendar-ok: #e3a302;
   --calendar-avoid: #ef5350;
   --star-inactive: #6a6055;
   --error: #ef5350;
   --success: #66bb6a;
-  --gold: #d4b35a;
-  --gold-hover: #c9a84c;
+  --gold: #e3a302;
+  --gold-hover: #c99202;
   --hero-image: url('https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1600');
   --page-hero-image: url('https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=1600');
 }
